@@ -1,5 +1,6 @@
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
 import { Button } from '@mantine/core';
+import SignIn from '../SignIn/SignIn'
 
 const NavbarBoot = () => {
    return (
