@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Modal, Group, Button } from '@mantine/core';
-
 import React, { FC } from 'react';
 // icons
 import { FcGoogle } from "react-icons/fc"
@@ -12,11 +11,13 @@ import SignIn from '../Authenticacion/SignIn';
 // import SignIn from '../Authenticacion/SignIn';
 
 import style from "../SignInComplete/styles.module.sass"
+
+import { Col, Row } from 'react-bootstrap'
 interface DataProps {
   color: string,
   text: string,
   variant?: 'outline' | 'light',
-  form ?: 'SignUp' | 'SignIn'
+  form?: 'SignUp' | 'SignIn'
 }
 
 // Sign IN 
@@ -34,95 +35,107 @@ const SignInComplete: FC<DataProps> = (props) => {
       >
         {/* form of sign Up */}
         {/* <{props.form}/> */}
-        <SignIn/>
-    
+        <SignIn />
+
 
         {/* Button Google */}
         <div style={{ textAlign: 'center', marginBottom: '30px' }}>
+          <Row>
+            <Col xs = {12} >
+              <Button className={style.ButtonGoogle}
+                component="a"
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://google.com"
+                leftIcon={<FcGoogle />}
+                styles={{
+                  root: {
+                    backgroundColor: '#ffffff',
+                    border: 1,
+                    height: 42,
+                    paddingLeft: 28,
+                    paddingRight: 28,
+                    marginBottom: 10,
+                    marginTop: 10,
 
-          <Button className={style.ButtonGoogle}
-            component="a"
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://google.com"
-            leftIcon={<FcGoogle />}
-            styles={{
-              root: {
-                backgroundColor: '#ffffff',
-                border: 1,
-                height: 42,
-                paddingLeft: 28,
-                paddingRight: 28,
-                marginBottom: 10,
-                marginTop: 10,
+                    color: '#898989',
+                    // border: "1px", "solid", "black"
+                  },
 
-                color: '#898989',
-                // border: "1px", "solid", "black"
-              },
+                  leftIcon: {
+                    marginRight: 15,
+                  },
 
-              leftIcon: {
-                marginRight: 15,
-              },
+                }}
+              >Sign in with google
+              </Button>
+            </Col>
+            <Col xs={12} >
+              {/* Button Facebook */}
+              <Button
+                component="a"
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://facebook.com"
+                leftIcon={<SiFacebook />}
+                styles={{
+                  root: {
+                    backgroundColor: '#4267b2',
+                    border: 0,
+                    height: 42,
+                    paddingLeft: 20,
+                    paddingRight: 20,
+                    marginBottom: 10,
+                    color: 'white'
+                  },
 
-            }}
-          >Sign in with google
-          </Button>
+                  leftIcon: {
+                    marginRight: 15,
+                  },
 
-          {/* Button Facebook */}
-          <Button
-            component="a"
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://facebook.com"
-            leftIcon={<SiFacebook />}
-            styles={{
-              root: {
-                backgroundColor: '#4267b2',
-                border: 0,
-                height: 42,
-                paddingLeft: 20,
-                paddingRight: 20,
-                marginBottom: 10,
-                color: 'white'
-              },
+                }}
+              >Sign in with Facebook
+              </Button>
+            </Col>
 
-              leftIcon: {
-                marginRight: 15,
-              },
+            <Col xs = {12} >
+              {/* Button Twitter */}
+              <Button
+                className={style.buttonTwitter}
+                component="a"
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://twitter.com"
+                leftIcon={<FaTwitter />}
+                styles={{
+                  root: {
+                    backgroundColor: '#5aaaf4',
+                    border: 0,
+                    height: 42,
+                    paddingLeft: 31,
+                    paddingRight: 31,
+                    color: 'white',
+                    // icon: { color: 'red' },
+                  },
 
-            }}
-          >Sign in with Facebook
-          </Button>
+                  leftIcon: {
+                    marginRight: 15,
+                  },
 
-          {/* Button Twitter */}
-          <Button
-            className = {style.buttonTwitter}
-            component="a"
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://twitter.com"
-            leftIcon={<FaTwitter />}
-            styles={{
-              root: {
-                backgroundColor: '#5aaaf4',
-                border: 0,
-                height: 42,
-                paddingLeft: 31,
-                paddingRight: 31,
-                color: 'white',
-                // icon: { color: 'red' },
-              },
+                }}
+              >Sign in with twitter
+              </Button>
+            </Col>
+          </Row>
 
-              leftIcon: {
-                marginRight: 15,
-              },
 
-            }}
-          >Sign in with twitter
-          </Button>
+
+
+
+
         </div>
-          
-       {/* ////////////// final form    */}
+
+        {/* ////////////// final form    */}
 
 
       </Modal>
