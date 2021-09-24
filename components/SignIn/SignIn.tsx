@@ -1,15 +1,20 @@
 import { useFocusReturn } from '@mantine/hooks';
 import { useState } from 'react';
 import { Modal } from '@mantine/core';
-import { AuthenticationForm } from '@mantine/core'
+// import { AuthenticationForm } from '@mantine/core'
 import { Group } from '@mantine/core'
 import { Button } from '@mantine/core'
 import { MODAL_SIZES } from '@mantine/core';
+import React, { FC } from 'react';
 
-// import React, { useState } from 'react';
-// import { Modal, Button, Group } from '@mantine/core';
 
-const SignIn = () => {
+interface DataProps {
+  color: string,
+  text: string,
+  variant ?: 'outline' | 'light'
+}
+
+const SignIn: FC<DataProps> = (props) => {
   const [opened, setOpened] = useState(false);
 
   return (
@@ -28,7 +33,16 @@ const SignIn = () => {
       </Modal>
 
       <Group position="center">
-        <Button color='teal ' onClick={() => setOpened(true)}>Login Up</Button>
+        <Button
+          color={props.color}
+          onClick={() => setOpened(true)}
+          variant= {props.variant}
+          radius='lg'
+          size="md"
+          style={{ marginRight: '10px' }}
+        >
+          {props.text}
+        </Button>
       </Group>
     </>
   );
@@ -36,4 +50,4 @@ const SignIn = () => {
 
 
 
-export default SignIn;  
+export default SignIn;
