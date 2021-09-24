@@ -13,6 +13,7 @@ const AllCards = () => {
             {/* <div style={{marginTop: '60px', marginBottom: '60px'}}> */}
             <Container style={{paddingTop: '60px', paddingBottom: '60px'}}>
                 <Row>
+                    
                     <Col>
                         <Cards title='Sala De Presentacion' text='las mejoras salas de reuniones' img={meetingRoom.src} color= 'pink' />
                     </Col>
