@@ -20,14 +20,15 @@ export interface AuthenticationFormProps {
     noPadding?: boolean;
     noSubmit?: boolean;
     style?: React.CSSProperties;
+    formVersion ?: 'login' | 'register'
 }
 
 // imports 
 
 
 
-export function SignIn({noShadow,noPadding,noSubmit,style,}: AuthenticationFormProps) {
-    const [formType, setFormType] = useState<'register' | 'login'>('register');
+export function SignIn({noShadow,noPadding,noSubmit,style,formVersion}: AuthenticationFormProps) {
+    const [formType, setFormType] = useState<'register' | 'login'>('login');
     const [loading, setLoading] = useState(false);
     // const [error, setError] = useState<string>(null);
     const theme = useMantineTheme();

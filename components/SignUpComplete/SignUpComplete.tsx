@@ -12,12 +12,12 @@ import { RiTwitterLine } from "react-icons/ri"
 import SignUp from '../Authenticacion/SignUp';
 // import SignIn from '../Authenticacion/SignIn';
 
-import style from "../SignIn/styles.module.sass"
+import style from "../SignUpComplete/styles.module.sass"
 interface DataProps {
   color: string,
   text: string,
   variant?: 'outline' | 'light',
-  form : 'SignUp' | 'SignIn'
+  form ?: 'SignUp' | 'SignIn'
 }
 
 import { useForm } from '@mantine/hooks';
@@ -46,7 +46,7 @@ export interface AuthenticationFormProps {
 
 // SIGN UP
 
-export function SignIn({noShadow,noPadding,noSubmit,style,}: AuthenticationFormProps) {
+export function SignUpComplete({noShadow,noPadding,noSubmit,style,}: AuthenticationFormProps) {
     const [formType, setFormType] = useState<'register' | 'login'>('register');
     const [loading, setLoading] = useState(false);
     // const [error, setError] = useState<string>(null);
