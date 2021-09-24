@@ -1,6 +1,6 @@
 import HeaderHome from '../components/Header/HeaderHome'
 import AllCards from '../components/allCards/allCards'
-import SignIn from '../components/SignIn/SignIn'
+import SignInComplete from '../components/SignIn/SignInComplete'
 import Cards from '../components/Cards/Cards'
 import { Container } from 'react-bootstrap';
 
@@ -11,7 +11,7 @@ export default function Home() {
       <div>
          <HeaderHome />
          <AllCards/>
-         <SignIn/>
+         <SignInComplete/>
       </div>
    );
 }

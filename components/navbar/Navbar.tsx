@@ -1,6 +1,6 @@
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
 import { Button } from '@mantine/core';
-import SignIn from '../SignIn/SignIn'
+import SignInComplete from '../SignIn/SignInComplete'
 import { SiCampaignmonitor } from 'react-icons/si';
 
 const NavbarBoot = () => {
@@ -13,8 +13,8 @@ const NavbarBoot = () => {
                <Nav className="me-auto">
                </Nav>
                <Nav className="justify-content-end" style = {{marginRight: '50px'}}>
-                  <SignIn color = 'teal' text = 'Sign Up' />
-                  <SignIn color = 'teal' text = 'Sign In' variant = "outline"/>
+                  <SignInComplete color = 'teal' text = 'Sign Up' />
+                  <SignInComplete color = 'teal' text = 'Sign In' variant = "outline"  />
                   {/* <Button color='teal' radius='lg' size ='md' style = {{marginRight: '10px'}} >Sign Up</Button>
                   <Button color="teal" variant='outline' radius='lg' size = "md" style = {{marginRight: '10px'}}>Sign In</Button> */}
                </Nav>
