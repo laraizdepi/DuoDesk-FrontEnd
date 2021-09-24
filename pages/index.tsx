@@ -4,6 +4,7 @@ import SignIn from '../components/SignIn/SignIn'
 import Cards from '../components/Cards/Cards'
 import { Container } from 'react-bootstrap';
 
+import Link from 'next/link'
 
 export default function Home() {
    return (

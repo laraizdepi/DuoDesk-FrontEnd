@@ -1,0 +1,15 @@
+{
+  "extends": [
+    "@mantine/eslint-config",
+    "plugin:@typescript-eslint/recommended"],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+
+  "rules": {
+    "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/indent": ["error", 3],
+    "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/no-explicit-any": "error"
+  }
+}
