@@ -11,6 +11,7 @@ import {IoPeopleOutline} from 'react-icons/io5'
 import {BsCalendar} from 'react-icons/bs'
 import {BiSearchAlt} from 'react-icons/bi'
 
+
 const SearchImput = () => {
     const [value, setValue] = useState<[Date, Date]>([
         dayjs(new Date()).startOf('month').toDate(),
