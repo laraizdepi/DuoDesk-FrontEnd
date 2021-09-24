@@ -127,7 +127,7 @@ export function SignUp({noShadow,noPadding,noSubmit,style,}: AuthenticationFormP
 
               style={{ marginTop: 15 }}
               required
-              placeholder="Micoworking1"
+              placeholder="Tu Contraseña"
               label="Contraseña"
               showPasswordLabel="Show password"
               hidePasswordLabel="Hide password"
