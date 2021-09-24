@@ -166,7 +166,7 @@ export function SignUp({noShadow,noPadding,noSubmit,style,}: AuthenticationFormP
                 <Button variant="link" color="teal" onClick={toggleFormType} size="sm">
                   {formType === 'register'
                     ? 'Tienes Una Cuenta? Inicie Sesion'
-                    : "Don't have an account? Register"}
+                    : "No Tienes Una Cuenta? Registro"}
                 </Button>
     
                 <Button color="teal" type="submit">

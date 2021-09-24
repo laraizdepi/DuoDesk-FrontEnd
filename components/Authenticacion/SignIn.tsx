@@ -167,7 +167,7 @@ export function SignIn({noShadow,noPadding,noSubmit,style,formVersion}: Authenti
                 <Button variant="link" color="teal" onClick={toggleFormType} size="sm">
                   {formType === 'register'
                     ? 'Tienes Una Cuenta? Inicie Sesion'
-                    : "Don't have an account? Register"}
+                    : "No Tienes Una Cuenta? Registrate"}
                 </Button>
     
                 <Button color="teal" type="submit">
