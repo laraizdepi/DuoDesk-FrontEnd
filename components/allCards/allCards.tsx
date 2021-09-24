@@ -7,8 +7,11 @@ import coworking from '../../Img/home/coworkin.svg'
 
 const AllCards = () => {
     return (
-        <div>
-            <Container style={{marginTop: '60px', marginBottom: '60px'}}>
+        // <div style = {{backgroundColor: '#f6f8fb'}} >
+        <div style = {{backgroundColor: '#f6f8fb'}}>
+            {/* <div style = {{marginLeft: '60px', marginRight: '60px'}}> */}
+            {/* <div style={{marginTop: '60px', marginBottom: '60px'}}> */}
+            <Container style={{paddingTop: '60px', paddingBottom: '60px'}}>
                 <Row>
                     <Col>
                         <Cards title='Sala De Presentacion' text='las mejoras salas de reuniones' img={meetingRoom.src} color= 'pink' />
@@ -21,6 +24,7 @@ const AllCards = () => {
                     </Col>
                 </Row>
             </Container>
+            {/* </div> */}
         </div>
     )
 }
