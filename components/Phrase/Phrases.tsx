@@ -9,24 +9,28 @@ interface PhraseProps {
     wordImp?: string
     title?: string
     img?: string
+    backgroundColor ?: string
 }
 
 const Phrase: FC<PhraseProps> = (props) => {
     return (
-        <div >
+        <div>
             <Row >
-                <Col xs = {6} className = {style.List} >
-                    <h1> {style.title}</h1>
+                <Col xs={6} className={style.List}>
+                    <div >
+                        <Container>
 
-                    <List size="lg">
-                        <List.Item>Clone or download repository from GitHub</List.Item>
-                        <List.Item>Install dependencies with yarn</List.Item>
-                        <List.Item>To start development server run npm start command</List.Item>
-                        <List.Item>Run tests to make sure your changes do not break the build</List.Item>
-                        <List.Item>Submit a pull request once you are done</List.Item>
-                    </List>
+                            <List size="lg" >
+                                <List.Item>Clone or download repository from GitHub</List.Item>
+                                <List.Item>Install dependencies with yarn</List.Item>
+                                <List.Item>To start development server run npm start command</List.Item>
+                                <List.Item>Run tests to make sure your changes do not break the build</List.Item>
+                                <List.Item>Submit a pull request once you are done</List.Item>
+                            </List>
+                        </Container>
+                    </div>
                 </Col>
-                <Col xs = {6} >
+                <Col xs={6} >
                     <img src={props.img} alt="" />
                 </Col>
             </Row>
