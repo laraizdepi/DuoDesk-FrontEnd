@@ -6,8 +6,7 @@ const AllPhrases = () => {
     return (
         <div>
             <Phrase title='Relaciones' img={Leader.src} wordImp='re' />
-            <Phrase title='Explora  ' img={science.src} wordImp='ex' />
-            <Phrase />
+            <Phrase title='Explora' img={science.src} wordImp='ex' />
         </div>
     )
 }

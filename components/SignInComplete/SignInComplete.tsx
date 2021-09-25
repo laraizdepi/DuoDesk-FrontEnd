@@ -6,6 +6,7 @@ import { FcGoogle } from "react-icons/fc"
 import { SiFacebook } from "react-icons/si"
 import { FaTwitter } from "react-icons/fa"
 import { RiTwitterLine } from "react-icons/ri"
+import {TiVendorMicrosoft} from 'react-icons/ti'
 
 import SignIn from '../Authenticacion/SignIn';
 // import SignIn from '../Authenticacion/SignIn';
@@ -124,6 +125,33 @@ const SignInComplete: FC<DataProps> = (props) => {
 
                 }}
               >Sign in with twitter
+              </Button>
+            </Col>
+            <Col xs={12} >
+              {/* Button microsoft */}
+              <Button
+                component="a"
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://microsoft.com"
+                leftIcon={<TiVendorMicrosoft />}
+                styles={{
+                  root: {
+                    backgroundColor: '#2f2f2f',
+                    border: 0,
+                    height: 42,
+                    paddingLeft: 20,
+                    paddingRight: 20,
+                    marginBottom: 10,
+                    color: 'white'
+                  },
+
+                  leftIcon: {
+                    marginRight: 15,
+                  },
+
+                }}
+              >Sign in with microsoft
               </Button>
             </Col>
           </Row>
