@@ -41,7 +41,8 @@ const SearchImput = () => {
                     variant="unstyled"
                     id="SearchDates"
                     size="lg"
-                        inputFormat="DD-MM-YY" />
+                    
+                    inputFormat="DD-MM" />
 
                 </Col>
                 {/* Button for how many people */}

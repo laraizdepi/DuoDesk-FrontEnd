@@ -10,11 +10,11 @@ export default class _Document extends Document {
       originalRenderPage({
         // eslint-disable-next-line react/display-name
         enhanceApp: (App) => (props) =>
-          (
-            <SsrProvider registry={registry}>
-              <App {...props} />
-            </SsrProvider>
-          ),
+        (
+          <SsrProvider registry={registry}>
+            <App {...props} />
+          </SsrProvider>
+        ),
       });
 
     const initialProps = await Document.getInitialProps(ctx);
@@ -35,7 +35,18 @@ export default class _Document extends Document {
       <Html>
         <Head>
           <link rel="icon" href="link to favicon" />
+
+          {/* font title */}
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" />
+          <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@700&display=swap" rel="stylesheet" />
+
+          {/* font text */}
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" />
+          <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet" />
         </Head>
+
         <body>
           <Main />
           <NextScript />

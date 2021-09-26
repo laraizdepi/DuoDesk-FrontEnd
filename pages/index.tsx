@@ -1,17 +1,16 @@
 import HeaderHome from '../components/Header/HeaderHome'
 import AllCards from '../components/allCards/allCards'
-import SignIn from '../components/SignIn/SignIn'
-import Cards from '../components/Cards/Cards'
-import { Container } from 'react-bootstrap';
-
-import Link from 'next/link'
+import Phrase from '../components/Phrase/Phrases';
+import AllPhrases from '../components/AllPhrases/AllPhrases'
+import Head from 'next/head'
 
 export default function Home() {
    return (
       <div>
          <HeaderHome />
          <AllCards/>
-         <SignIn/>
+         <AllPhrases/>
+         
       </div>
    );
 }

@@ -5,6 +5,7 @@ const errorReducers = (state: any = null, action: any) => {
     if(action.type === "GENERAL_ERROR"){
         return `Èrror: ${action.error}`
     }
+    return state
 }
 
 export default errorReducers

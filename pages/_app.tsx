@@ -12,6 +12,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Provider } from 'react-redux';
 import store from '../Redux';
 
+{/* <style>
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@700&display=swap');
+</style> */}
 export default function App(props: AppProps) {
 	const { Component, pageProps } = props;
 

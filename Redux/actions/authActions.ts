@@ -11,14 +11,14 @@ import { getUserData, logOutService } from "../../services/authentication"
      * 2) Local Authentication: The user sends the email and the password, and
      * it's authenticated.
      */
-export const loginUser = () => {
+export const loginUser = (init: boolean = false) => {
     return async (dispatch:any) => {
         try{
-            const data = await getUserData()
-            if(data){
+            const request = await getUserData()
+            if(request){
                 dispatch({
-                    type: "LOGIN",
-                    data
+                    type: init ? "INIT" : "LOGIN",
+                    data: request.data
                 })
             }
             else{
@@ -41,6 +41,7 @@ export const logoutUser = () => {
     return async (dispatch: any) => {
         try{
             const state = await logOutService()
+            console.log(state)
             if(state){
                 dispatch({
                     type: 'LOGOUT'
