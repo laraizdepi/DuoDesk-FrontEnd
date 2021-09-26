@@ -9,6 +9,7 @@ import {
 } from '@mantine/core';
 import { NotificationsProvider } from '@mantine/notifications';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'rsuite/dist/rsuite.min.css'
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Dosis:wght@700&display=swap');
 </style>

@@ -16,7 +16,12 @@ const AllPhrases = () => {
             <div className={style.ImgLeft} style={{ backgroundColor: '#edf1f8' }} >
                 <Row>
                     <Col xs={5} className={style.Text} >
-                        <Phrase title='Encuentra tu proximo, ' wordImp='cofundador' color='#12b886' />
+                        <Phrase 
+                        title='Encuentra tu proximo' 
+                        wordImp=' cofundador' 
+                        color='#12b886' 
+                        subtitle= 'lo importante de las relaciones '
+                        />
                     </Col>
                     {/* Image  */}
                     <Col xs={7} className={style.Image} >
@@ -36,7 +41,12 @@ const AllPhrases = () => {
                             height={750} />
                     </Col>
                     <Col xs={5} className={style.Text}>
-                        <Phrase title='Trabaja donde quieras, ' wordImp=' explora' color="#e64980" />
+                        <Phrase 
+                        title='Trabaja donde quieras' 
+                        wordImp='explora' 
+                        color="#e64980"
+                        subtitle= 'lo importante de la libertad'
+                        />
                     </Col>
                 </Row>
             </div>
@@ -46,7 +56,12 @@ const AllPhrases = () => {
             <div className={style.ImgLeft} style={{ backgroundColor: '#edf1f8' }} >
                 <Row>
                     <Col xs={5} className={style.Text}>
-                        <Phrase title='Mas economico, ' wordImp='no contratos' color='#4c6ef5' />
+                        <Phrase 
+                        title=' Mas economico' 
+                        wordImp='no contratos' 
+                        color='#4c6ef5'
+                        subtitle= 'lo importante de la libertad'
+                         />
                     </Col>
                     {/* Image  */}
                     <Col xs={7} className={style.Image}>
