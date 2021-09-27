@@ -11,6 +11,7 @@ interface PhraseProps {
     backgroundColor?: string
     color: string
     component?: React.ReactNode
+    subtitle?: string
 }
 
 const Phrase: FC<PhraseProps> = (props) => {
@@ -18,15 +19,22 @@ const Phrase: FC<PhraseProps> = (props) => {
     const colorD = props.color
     return (
         <div className={style.List}>
-            <div style = {{marginTop : 250}} >
-                <h1 className={style.Title}>
-                    {props.title} 
-                    <span className={style.WordImp} style={{ color: colorD }} >
+            <div style={{ marginTop: 250 }} >
+                <div>
+                    <h2 className={style.Title}>
+                        {props.title}&nbsp;<strong
+                            style={{ color: colorD }}
+                        >
                         {props.wordImp}
-                    </span>
-                </h1>
-                <Container>
+                        </strong>
+                    </h2>
+                    <h2 className={style.Subtitle} style={{ fontSize: '1.5rem'}} >
+                        {props.subtitle}
+                    </h2>
+                </div>
+                <Container className={style.ListInfo} >
                     <List size="lg" styles={{
+                        root: { color: 'red', fontFamily: 'Roboto', fontSize: '1.125rem' },
                         itemWrapper: { color: 'black' },
                         item: { color: props.color },
                     }}>
@@ -37,7 +45,7 @@ const Phrase: FC<PhraseProps> = (props) => {
                         <List.Item>Submit a pull request once you are done</List.Item>
                     </List>
                 </Container>
-                {props.component}
+
             </div>
         </div>
     )
