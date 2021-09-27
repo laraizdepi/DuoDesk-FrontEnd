@@ -1,8 +1,10 @@
 import React, { useState, FC } from 'react';
+import { useDispatch } from 'react-redux';
 import { useForm } from '@mantine/hooks';
 import { EnvelopeClosedIcon, LockClosedIcon } from '@modulz/radix-icons';
 import { TextInput, PasswordInput, Group, Checkbox, Button, Paper, LoadingOverlay } from '@mantine/core';
-import { signUp } from '../../services/authentication';
+import { logIn, signUp } from '../../services/authentication';
+import { loginUser } from '../../Redux/actions/authActions';
 
 interface AuthForm {
 	initial: "login" | "signup"
@@ -24,9 +26,16 @@ const AuthForm: FC<AuthForm> = (props) => {
 
 
 	if (formType === "login") {
+		const dispatch = useDispatch()
+		const submitHandler = async() => {
+			const request = await logIn(form.values.email, form.values.password)
+			if(request){
+				dispatch(loginUser())
+			}
+		}
 		return (
 			<Paper style={{ position: 'relative' }}>
-				<form onSubmit={form.onSubmit((values) => console.log(values))}>
+				<form onSubmit={form.onSubmit(submitHandler)}>
 					<LoadingOverlay visible={loading} />
 					<TextInput
 						required
@@ -66,9 +75,11 @@ const AuthForm: FC<AuthForm> = (props) => {
 		)
 	}
 	else {
-		const submitHandler = async(values: any) => {
+		const submitHandler = async() => {
 			const request = await signUp(form.values.email, form.values.password, form.values.firstName, form.values.lastName)
-			console.log(request)
+			if(request === true){
+				setFormType('login')
+			}
 		}
 
 		return (

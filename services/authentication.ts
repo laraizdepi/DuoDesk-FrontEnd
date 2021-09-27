@@ -29,15 +29,20 @@ export const signUp = async(email: string, password: string, firstName: string, 
             firstName,
             lastName
         }
-        const response = await axios.post('http://localhost:5000/auth/signup', data, {
-            withCredentials: true,
-            headers: {
-              'Access-Control-Allow-Origin' : '*',
-              'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-              crossorigin: true
-              }
-        })
-        // const response = await axios.get('http://localhost:5000/auth/signup')
+        const response = await axios.post('http://localhost:5000/auth/signup', data)
+        return response.data
+    }
+    catch(error){
+        console.log(error)
+    }
+}
+
+export const logIn = async(email: string, password: string) => {
+    try{
+        const data = {
+            email, password
+        }
+        const response = await axios.post('http://localhost:5000/auth/login', data)
         return response.data
     }
     catch(error){

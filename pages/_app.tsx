@@ -9,17 +9,9 @@ import {
 } from '@mantine/core';
 import { NotificationsProvider } from '@mantine/notifications';
 import 'bootstrap/dist/css/bootstrap.min.css';
-<<<<<<< HEAD
 import { Provider } from 'react-redux';
 import store from '../Redux';
 
-{/* <style>
-=======
-import 'rsuite/dist/rsuite.min.css'
-<style>
->>>>>>> 63c8be5e1095e315f8483ba970623067d0e4f1bb
-@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@700&display=swap');
-</style> */}
 export default function App(props: AppProps) {
 	const { Component, pageProps } = props;
 
