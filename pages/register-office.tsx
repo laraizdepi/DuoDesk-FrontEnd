@@ -3,7 +3,6 @@ import React from "react";
 import RegisterSteps from '../components/RegisterOffice/RegisterSteps'
 import { Container } from "react-bootstrap";
 import Head from "next/head";
-import NewOfficeMap from "../components/Maps/newOfficeMap";
 
 const RegisterOffice = () => {
     return (
@@ -15,7 +14,6 @@ const RegisterOffice = () => {
             <NavbarBoot />
             <Container>
                 <RegisterSteps />
-                <NewOfficeMap />
             </Container>
         </div>
     )
