@@ -42,7 +42,7 @@ export const logIn = async(email: string, password: string) => {
         const data = {
             email, password
         }
-        const response = await axios.post('http://localhost:5000/auth/login', data)
+        const response = await axios.post('http://localhost:5000/auth/login', data, {withCredentials: true})
         return response.data
     }
     catch(error){
