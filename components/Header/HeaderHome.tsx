@@ -1,12 +1,11 @@
-import NavbarBoot from '../navbar/Navbar'
+import NavbarBoot from '../NavBar/Navbar'
 import { Col, Container, Row } from 'react-bootstrap';
 import { TextInfo } from '../TextInfo/TextInfo';
 import { Image } from '@mantine/core';
 import headerImage  from '../../Img/home/headerTeamWork.svg'
-import SearchImput from "../SearchImput/SearchImput"
+import SearchImput from "../SearchInput/SearchInput"
 import wave from "../../Img/home/wave.svg"
 import styles from "./Header.module.sass"
-
 
 const HeaderHome = () => {
     return (
