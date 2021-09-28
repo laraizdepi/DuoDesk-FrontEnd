@@ -1,36 +1,36 @@
-import React, { FC, useEffect } from 'react'
-import { RadioGroup,  } from '@mantine/core'
+import React, { FC, useState, useEffect, useImperativeHandle } from 'react'
+import { Input } from '@mantine/core'
+import { GrMapLocation } from 'react-icons/gr'
 
 import Script from 'next/script'
 import Styles from './newOfficeMap.module.scss'
 
-const NewOfficeMap: FC = () => {
+const NewOfficeMap: FC<{ref: any}> = React.forwardRef((props, ref) => {
+    const [ direction, setDirection ] = useState<any>()
+
     useEffect(() => {
         const map = new google.maps.Map(
             document.getElementById("map") as HTMLElement,
             {
                 center: { lat: 40.749933, lng: -73.98633 },
                 zoom: 13,
-                mapTypeControl: false,
+                mapTypeControl: true,
             }
         )
 
-        const card = document.getElementById(Styles.pacCard) as HTMLElement
+        const card = document.getElementById(Styles.pacCard)
         const input = document.getElementById(Styles.pacInput) as HTMLInputElement
-        const biasInputElement = document.getElementById("use-location-bias") as HTMLInputElement
-        const strictBoundsInputElement = document.getElementById("use-strict-bounds") as HTMLInputElement
         const options = {
             fields: ["ALL"],
             strictBounds: false,
             types: ["geocode", "establishment"],
         }
 
-        map.controls[google.maps.ControlPosition.TOP_LEFT].push(card)
+        map.controls[google.maps.ControlPosition.TOP_CENTER].push(document.getElementById(Styles.pacCard))
         const autocomplete = new google.maps.places.Autocomplete(input, options)
-        /* Bind the map's bounds (viewport) property to the autocomplete object,
-        so that the autocomplete requests use the current map bounds htmlFor the
-        bounds option in the request. */
+
         autocomplete.bindTo("bounds", map)
+        
         const infowindow: any = new google.maps.InfoWindow()
         const infowindowContent: any = document.getElementById(Styles.infowindowContent) as HTMLElement
         infowindow.setContent(infowindowContent)
@@ -58,6 +58,7 @@ const NewOfficeMap: FC = () => {
             }
 
             console.log(place)
+            setDirection(place)
             marker.setPosition(place.geometry.location)
             marker.setVisible(true)
 
@@ -65,55 +66,13 @@ const NewOfficeMap: FC = () => {
             infowindowContent.children["place-address"].textContent = place.htmlFormatted_address
             infowindow.open(map, marker)
         })
-
-        // Sets a listener on a radio button to change the filter type on Places
-        // Autocomplete.
-        function setupClickListener(id: any, types: any) {
-            const radioButton = document.getElementById(id) as HTMLInputElement
-
-            radioButton.addEventListener("click", () => {
-                autocomplete.setTypes(types)
-                input.value = ""
-            })
-        }
-
-        setupClickListener("changetype-all", [])
-        setupClickListener("changetype-address", ["address"])
-        setupClickListener("changetype-establishment", ["establishment"])
-        setupClickListener("changetype-geocode", ["geocode"])
-        setupClickListener("changetype-cities", ["(cities)"])
-        setupClickListener("changetype-regions", ["(regions)"])
-
-        biasInputElement.addEventListener("change", () => {
-            if (biasInputElement.checked) {
-                autocomplete.bindTo("bounds", map)
-            } 
-            else {
-                // User wants to turn off location bias, so three things need to happen:
-                // 1. Unbind from map
-                // 2. Reset the bounds to whole world
-                // 3. Uncheck the strict bounds checkbox UI (which also disables strict bounds)
-                autocomplete.unbind("bounds")
-                autocomplete.setBounds({ east: 180, west: -180, north: 90, south: -90 })
-                strictBoundsInputElement.checked = biasInputElement.checked
-            }
-
-            input.value = ""
-        })
-
-        strictBoundsInputElement.addEventListener("change", () => {
-            autocomplete.setOptions({
-                strictBounds: strictBoundsInputElement.checked,
-            })
-
-            if (strictBoundsInputElement.checked) {
-                biasInputElement.checked = strictBoundsInputElement.checked
-                autocomplete.bindTo("bounds", map)
-            }
-
-            input.value = ""
-        })
     }, [])
+
+    useImperativeHandle(ref, () => {
+        return{
+            direction
+        }
+    })
 
     return (
         <div>
@@ -121,31 +80,12 @@ const NewOfficeMap: FC = () => {
             <Script strategy="beforeInteractive" src="https://polyfill.io/v3/polyfill.min.js?features=default" />
             <div className={Styles.pacCard} id="pac-card">
                 <div>
-                    <div id={Styles.title}>Autocomplete search</div>
-                    <div id="type-selector" className={Styles.pacControls}>
-                        <input type="radio" name="type" id="changetype-all" defaultChecked/>
-                        <label htmlFor="changetype-all">All</label>
-                        <input type="radio" name="type" id="changetype-establishment" />
-                        <label htmlFor="changetype-establishment">establishment</label>
-                        <input type="radio" name="type" id="changetype-address" />
-                        <label htmlFor="changetype-address">address</label>
-                        <input type="radio" name="type" id="changetype-geocode" />
-                        <label htmlFor="changetype-geocode">geocode</label>
-                        <input type="radio" name="type" id="changetype-cities" />
-                        <label htmlFor="changetype-cities">(cities)</label>
-                        <input type="radio" name="type" id="changetype-regions" />
-                        <label htmlFor="changetype-regions">(regions)</label>
-                    </div>
+                    <div id={Styles.title}>Dirección de la oficina</div>
                     <br/>
-                    <div id="strict-bounds-selector" className={Styles.pacControls}>
-                        <input type="checkbox" id="use-location-bias" value="" defaultChecked />
-                        <label htmlFor="use-location-bias">Bias to map viewport</label>
-                        <input type="checkbox" id="use-strict-bounds" value="" />
-                        <label htmlFor="use-strict-bounds">Strict bounds</label>
-                    </div>
                 </div>
                 <div id={Styles.pacContainer}>
-                    <input id={Styles.pacInput} type="text" placeholder="Enter a location" />
+                <Input id={Styles.pacInput} icon={<GrMapLocation/>}  placeholder="Introduce la dirección de tu oficina" radius="xl" size="xs" styles={{icon: {marginLeft: '12px'}}}/>
+                    {/* <input id={Styles.pacInput} type="text" placeholder="Enter a location" /> */}
                 </div>
             </div>
             <div id="map" style={{ height: '75vh' }}></div>
@@ -155,6 +95,6 @@ const NewOfficeMap: FC = () => {
             </div>
         </div>
     )
-}
+})
 
 export default NewOfficeMap

@@ -60,9 +60,8 @@
     font-size: 15px;
     font-weight: 300;
     margin-left: 12px;
-    padding: 0 11px 0 13px;
-    text-overflow: ellipsis;
-    width: 400px;
+    padding: 0 11px 0 30px;
+    border-color: #1a1a1a;
 
     &:focus{
         border-color: #4d90fe;
