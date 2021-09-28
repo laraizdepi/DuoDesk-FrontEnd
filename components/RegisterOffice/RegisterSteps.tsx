@@ -39,7 +39,7 @@ const RegisterSteps = () => {
           <Form.ControlLabel>Description</Form.ControlLabel>
           <Form.Control name="textarea"
             accepter={Textarea}
-            rows={4}
+            // rows={4}
           />
         </Form.Group>
 
