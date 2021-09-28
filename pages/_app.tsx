@@ -10,6 +10,9 @@ import {
 import { NotificationsProvider } from '@mantine/notifications';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'rsuite/dist/rsuite.min.css'
+import 'primereact/resources/themes/saga-blue/theme.css'
+import 'primereact/resources/primereact.min.css'
+import 'primeicons/primeicons.css'
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Dosis:wght@700&display=swap');
 </style>

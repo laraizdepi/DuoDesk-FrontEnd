@@ -5452,6 +5452,11 @@
   "resolved" "https://registry.npmjs.org/pretty-hrtime/-/pretty-hrtime-1.0.3.tgz"
   "version" "1.0.3"
 
+"primeicons@^4.1.0":
+  "integrity" "sha512-uEv2pSPk1zQCfaB2VgnUfnUxxlGryYi+5rbdxmZBBt5v9S/pscIQYS5YDLxsQZ7D9jn5c76+Tx5wX/2J1nK6sA=="
+  "resolved" "https://registry.npmjs.org/primeicons/-/primeicons-4.1.0.tgz"
+  "version" "4.1.0"
+
 "primereact@^6.5.1":
   "integrity" "sha512-hue9DKE935re5TjphaaFDgN7552EPrSwezH8ohlWQ+1jeq30MHEMn/h1oc82iXuvROHZpfjYVpnBxifV4Uavsg=="
   "resolved" "https://registry.npmjs.org/primereact/-/primereact-6.5.1.tgz"
