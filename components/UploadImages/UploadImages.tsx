@@ -86,20 +86,19 @@ const UploadImages = () => {
                     ref={fileUploadRef}
                     url="https://primefaces.org/primereact/showcase/upload.php"
                     multiple accept="image/*"
-                    // maxFileSize={10000000}
-                    // onUpload={onTemplateUpload} 
+                    maxFileSize={10000000}
+                    onUpload={onTemplateUpload}     
                     onError={onTemplateClear} 
-                    // onClear={onTemplateClear}
+                    onClear={onTemplateClear}
                     headerTemplate={headerTemplate} 
                     // itemTemplate={itemTemplate} 
-                    // emptyTemplate={emptyTemplate}
-                    // chooseOptions={chooseOptions} 
-                    // uploadOptions={uploadOptions} 
-                    // cancelOptions={cancelOptions}
+                    emptyTemplate={emptyTemplate}
+                    chooseOptions={chooseOptions} 
+                    uploadOptions={uploadOptions} 
+                    cancelOptions={cancelOptions}
                 />
             </div>
         </div>
     )
 }
-
 export default UploadImages
