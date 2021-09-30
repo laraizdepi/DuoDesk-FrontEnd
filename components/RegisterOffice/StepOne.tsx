@@ -6,7 +6,7 @@ import yup from 'yup'
 
 import AvailableHours from './AvailableHours';
 import NewOfficeMap from '../Maps/NewOfficeMap';
-import { Box, TextField } from '@mui/material';
+// import { Box, TextField } from '@mui/material';
 
 
 const StepOne = () => {
@@ -56,24 +56,6 @@ const StepOne = () => {
             </Grid>
         </div>
     )
-    // return (
-    //     <Field id='name' name='name' placeholder='Your Name'>
-    //         {({ field, form, meta }: any) => (
-    //             <Group>
-    //                 <TextInput
-    //                     value={field.value}
-    //                     onChange={(e) =>form.setFieldValue(field.name, e.target.value)}
-    //                     placeholder='Carlos Sanchez'
-    //                 />
-    //             </Group>
-    //         )}
-    //     </Field>
-    // )
 }
 
-<<<<<<< HEAD
-export default StepOne
-
-=======
 export default connect(StepOne)
->>>>>>> 528620e9500b19ca8ce64546011f98da3303a81a
