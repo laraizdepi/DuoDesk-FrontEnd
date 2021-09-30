@@ -3,12 +3,14 @@ import React, { useEffect, useState } from 'react';
 import { loginUser, logoutUser } from '../../Redux/actions/authActions';
 import { Grid, Col, Avatar, Button, Menu, Group } from '@mantine/core';
 import { Menubar } from 'primereact/menubar';
+import { useRouter } from 'next/dist/client/router';
 
 import AuthModal from '../Authenticacion/AuthModal';
 import { NextLink } from '../NextLink/NextLink';
 
 const NavbarBoot = () => {
 	const dispatch = useDispatch()
+	const router = useRouter()
 
 	useEffect(() => {
 		dispatch(loginUser(true))
@@ -27,8 +29,8 @@ const NavbarBoot = () => {
 	const start = <img alt="logo" src='https://primefaces.org/primereact/showcase/showcase/images/logo.png' height="40" className="p-mr-2"></img>;
 	const end = user.logged ? (
 		<Group>
-			<Button component={NextLink} href="/register-office" variant="gradient" gradient={{ from: 'indigo', to: 'pink' }}>
-				Registra tu oficina
+			<Button variant="gradient" gradient={{ from: 'indigo', to: 'pink' }}>
+				<a href="/register-office">Registra tu oficina</a>
 			</Button>
 			<Menu control={<Avatar src={user.user.image} color="indigo" radius="xl" size="md" />}>
 				<Menu.Label>Cuenta</Menu.Label>
