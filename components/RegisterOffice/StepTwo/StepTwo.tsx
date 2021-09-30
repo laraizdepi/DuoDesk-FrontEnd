@@ -9,7 +9,6 @@ const StepTwo = () => {
                 <Col xs = {12} md = {6}>
                     <PreviewTwo/>
                 </Col>
-
                 <Col xs = {12} md = {6}>
                     <AddSpace/>
                 </Col>

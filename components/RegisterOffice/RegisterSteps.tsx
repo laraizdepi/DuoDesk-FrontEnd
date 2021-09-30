@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Field, Form, Formik, FormikConfig, FormikValues } from 'formik';
 import { mixed, number, object } from 'yup';
+import { Calendar } from 'primereact/calendar';
 
 import StepOne from './StepOne';
 import { Box, Button, Card, CardContent, CircularProgress, Grid, Step, StepLabel, Stepper } from '@material-ui/core';
@@ -104,6 +105,20 @@ const RegisterSteps = () => {
                 >
                     <FormikStep label="Información básica">
                         <StepOne />
+                    </FormikStep>
+                    <FormikStep label="Registra tus espacios">
+                        <Field id='firstName'
+                            name={`open`} placeholder='Your Name'>
+                            {({ field, form, meta }: any) => (
+                                <Calendar
+                                    id="horaApertura"
+                                    value={field.value || undefined}
+                                    onChange={(event) => form.setFieldValue(field.name, event.target.value)}
+                                    timeOnly
+                                    hourFormat="12">
+                                </Calendar>
+                            )}
+                        </Field>
                     </FormikStep>
                 </FormikStepper>
             </CardContent>

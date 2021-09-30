@@ -56,19 +56,6 @@ const StepOne = () => {
             </Grid>
         </div>
     )
-    // return (
-    //     <Field id='name' name='name' placeholder='Your Name'>
-    //         {({ field, form, meta }: any) => (
-    //             <Group>
-    //                 <TextInput
-    //                     value={field.value}
-    //                     onChange={(e) =>form.setFieldValue(field.name, e.target.value)}
-    //                     placeholder='Carlos Sanchez'
-    //                 />
-    //             </Group>
-    //         )}
-    //     </Field>
-    // )
 }
 
 export default connect(StepOne)
