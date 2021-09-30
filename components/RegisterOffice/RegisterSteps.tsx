@@ -124,4 +124,5 @@ const RegisterSteps = () => {
             </CardContent>
         </Card>)
 }
+
 export default RegisterSteps

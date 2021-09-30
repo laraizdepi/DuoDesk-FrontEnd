@@ -58,4 +58,9 @@ const StepOne = () => {
     )
 }
 
+<<<<<<< HEAD
+export default StepOne
+
+=======
 export default connect(StepOne)
+>>>>>>> 528620e9500b19ca8ce64546011f98da3303a81a
