@@ -10,16 +10,21 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.4.1",
+    "@emotion/styled": "^11.3.0",
     "@mantine/core": "^2.5.1",
     "@mantine/dates": "^2.5.1",
     "@mantine/hooks": "^2.5.1",
     "@mantine/notifications": "^2.5.1",
     "@mantine/prism": "^2.5.1",
     "@mantine/rte": "^2.5.1",
+    "@mui/material": "^5.0.1",
     "@react-google-maps/api": "^2.4.0",
     "axios": "^0.21.4",
     "bootstrap": "^5.1.0",
     "dayjs": "^1.10.7",
+    "formik": "^2.2.9",
+    "formik-material-ui": "^4.0.0-alpha.1",
     "google-map-react": "^2.1.10",
     "next": "^11.1.2",
     "primeicons": "^4.1.0",
@@ -34,7 +39,8 @@
     "redux": "^4.1.1",
     "redux-thunk": "^2.3.0",
     "rsuite": "^5.0.0",
-    "sass": "^1.42.0"
+    "sass": "^1.42.0",
+    "yup": "^0.32.9"
   },
   "devDependencies": {
     "@mantine/eslint-config": "2.5.1",

@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { useState } from 'react';
 import { Modal, Group, Button } from '@mantine/core';
-import { Col, Row } from 'react-bootstrap'
+import { Col, Grid } from '@mantine/core'
 // icons
 import { FcGoogle } from "react-icons/fc"
 import { SiFacebook } from "react-icons/si"
@@ -25,8 +25,8 @@ const AuthModal: FC<DataProps> = (props) => {
 			<Modal opened={opened} onClose={() => setOpened(false)} size={600}>
 				<AuthForm initial={props.form}/>
 				<div style={{ textAlign: 'center', marginBottom: '30px' }}>
-					<Row>
-						<Col xs={12}>
+					<Grid justify="center">
+						<Col span={12} md={6}>
 							<Button 
 								className={style.ButtonGoogle}
 								component="a"
@@ -51,7 +51,9 @@ const AuthModal: FC<DataProps> = (props) => {
 								Sign in with google
 							</Button>
 						</Col>
-						<Col xs={12} >
+					</Grid>
+					<Grid justify="center">
+						<Col span={12} md={6}>
 							<Button
 								component="a"
 								rel="noopener noreferrer"
@@ -76,7 +78,9 @@ const AuthModal: FC<DataProps> = (props) => {
 							>Sign in with Facebook
 							</Button>
 						</Col>
-						<Col xs={12} >
+					</Grid>
+					<Grid justify="center">
+						<Col span={12} md={6}>
 							{/* Button microsoft */}
 							<Button
 								component="a"
@@ -101,7 +105,7 @@ const AuthModal: FC<DataProps> = (props) => {
 							>Sign in with microsoft
 							</Button>
 						</Col>
-					</Row>
+					</Grid>
 				</div>
 			</Modal>
 			<Group position="center">

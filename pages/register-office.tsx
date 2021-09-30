@@ -1,12 +1,11 @@
 import NavbarBoot from '../components/NavBar/Navbar'
-import React from "react";
+import React, { useEffect } from "react";
 import RegisterSteps from '../components/RegisterOffice/RegisterSteps'
 import { Container } from "react-bootstrap";
 import Head from "next/head";
 
 const RegisterOffice = () => {
     return (
-
         <div>
             <Head>
                 <title>New Office</title>

@@ -1,28 +1,26 @@
 import React, { FC, useState, useImperativeHandle, useEffect } from "react"
 import { Calendar } from 'primereact/calendar';
 import { Grid, Col, Switch } from '@mantine/core'
+import { Field } from "formik";
 
 interface HoursProps {
     title: string,
-    disable: boolean,
-    ref: any
+    disable?: boolean,
 }
 
 const AvailableHours: FC<HoursProps> = React.forwardRef((props, ref: any) => {
-    const [dateI, setDateI] = useState<Date | Date[] | undefined>(undefined);
-    const [dateF, setDateF] = useState<Date | Date[] | undefined>(undefined);
-    const [active, setActive] = useState<boolean>(true)
+    const [active, setActive] = useState<boolean>(props.disable || false)
 
-    const handleDisable = (event: any) => {
-        setActive(event.currentTarget.checked)
+    const handleDisable = () => {
+        setActive(!active)
     }
 
-    useImperativeHandle(ref, () => {
-        return{
-            initialDate: dateI,
-            finishDate: dateF
-        }
-    })
+    const slugTitle = props.title.toString().toLowerCase()
+        .replace(/\s+/g, '-')
+        .replace(/[^\w\-]+/g, '')
+        .replace(/\-\-+/g, '-')
+        .replace(/^-+/, '')
+        .replace(/-+$/, '')
 
     return (
         <div>
@@ -32,7 +30,7 @@ const AvailableHours: FC<HoursProps> = React.forwardRef((props, ref: any) => {
                 </Col>
                 {props.disable ?
                     <Col span={6}>
-                        <Switch id={`switch-${props.title}`} checked={active} onChange={handleDisable} label={active? `Disponible ${props.title}`: `No disponible ${props.title}`}/>
+                        <Switch id={`switch-${slugTitle}`} checked={!active} onChange={handleDisable} label={!active? `No disponible ${props.title}`: `Disponible ${props.title}`}/>
                     </Col>
                 :   
                    null
@@ -41,11 +39,34 @@ const AvailableHours: FC<HoursProps> = React.forwardRef((props, ref: any) => {
             <Grid id="available-hours">
                 <Col span={12} md={6}>
                     <label htmlFor="horaApertura">Hora de apertura: &nbsp;</label>
-                    <Calendar id="horaApertura" disabled={!active} value={dateI} onChange={(e) => setDateI(e.value)} timeOnly hourFormat="12" />                
+                    <Field id='firstName' 
+                    name={`open-${slugTitle}`} placeholder='Your Name'>
+                        {({ field, form, meta }: any) => (
+                            <Calendar 
+                                id="horaApertura" 
+                                disabled={active} 
+                                value={field.value || undefined} 
+                                onChange={(event) => form.setFieldValue(field.name, event.target.value)} 
+                                timeOnly 
+                                hourFormat="12">
+                            </Calendar>
+                        )}
+                    </Field>
                 </Col>
                 <Col span={12} md={6}>
                     <label htmlFor="horaCierre">Hora de cierre:</label>                        
-                    <Calendar id="horaCierre" disabled={!active} value={dateF} onChange={(e) => setDateF(e.value)} timeOnly hourFormat="12" />                
+                    <Field id='firstName' 
+                    name={`close-${slugTitle}`} placeholder='Your Name'>
+                        {({ field, form, meta }: any) => (
+                            <Calendar 
+                                id="horaApertura" 
+                                disabled={active} 
+                                value={field.value} 
+                                onChange={(event) => form.setFieldValue(field.name, event.target.value)} 
+                                timeOnly 
+                                hourFormat="12" />
+                        )}
+                    </Field>
                 </Col>
             </Grid>
         </div>
