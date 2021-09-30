@@ -1,8 +1,6 @@
 import 'primeicons/primeicons.css';
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.css';
-// import 'primeflex/primeflex.css';
-// import '../../index.css';    
 
 import React, { useRef, useState } from 'react';
 import { Toast } from 'primereact/toast';
@@ -32,7 +30,6 @@ const UploadImages = () => {
         setTotalSize(totalSize - file.size);
         callback();
     }
-
 
     const headerTemplate = (options: { className: any; chooseButton: any; uploadButton: any; cancelButton: any; }) => {
         const { className, chooseButton, uploadButton, cancelButton } = options;

@@ -1,9 +1,6 @@
-import style from './stepTwo.module.sass'
-
 const PreviewTwo = () => {
     return (
-        <div className = {style.PreviewTwo}>
-
+        <div>
             <h1>Hello PreviewTwo</h1>
         </div>
     )

@@ -5,8 +5,7 @@ import { Field, connect } from 'formik'
 import yup from 'yup'
 
 import AvailableHours from './AvailableHours';
-import NewOfficeMap from '../Maps/NewOfficeMap';
-import { Box, TextField } from '@mui/material';
+import NewOfficeMap from '../../Maps/NewOfficeMap';
 
 
 const StepOne = () => {
@@ -58,9 +57,5 @@ const StepOne = () => {
     )
 }
 
-<<<<<<< HEAD
 export default StepOne
 
-=======
-export default connect(StepOne)
->>>>>>> 528620e9500b19ca8ce64546011f98da3303a81a
