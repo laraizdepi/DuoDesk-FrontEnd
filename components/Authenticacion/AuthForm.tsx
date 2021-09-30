@@ -2,7 +2,7 @@ import React, { useState, FC } from 'react';
 import { useDispatch } from 'react-redux';
 import { useForm } from '@mantine/hooks';
 import { EnvelopeClosedIcon, LockClosedIcon } from '@modulz/radix-icons';
-import { TextInput, PasswordInput, Group, Checkbox, Button, Paper, LoadingOverlay } from '@mantine/core';
+import { TextInput, PasswordInput, Checkbox, Button, Paper, LoadingOverlay, Grid, Col } from '@mantine/core';
 import { logIn, signUp } from '../../services/authentication';
 import { loginUser } from '../../Redux/actions/authActions';
 
@@ -27,15 +27,15 @@ const AuthForm: FC<AuthForm> = (props) => {
 
 	if (formType === "login") {
 		const dispatch = useDispatch()
-		const submitHandler = async() => {
+		const submitHandler = async () => {
 			const request = await logIn(form.values.email, form.values.password)
-			if(request){
+			if (request) {
 				dispatch(loginUser())
 			}
 		}
 		return (
-			<Paper style={{ position: 'relative' }}>
-				<form onSubmit={form.onSubmit(submitHandler)}>
+			<form onSubmit={form.onSubmit(submitHandler)}>
+				<Paper style={{ position: 'relative' }}>
 					<LoadingOverlay visible={loading} />
 					<TextInput
 						required
@@ -62,29 +62,35 @@ const AuthForm: FC<AuthForm> = (props) => {
 						onFocus={() => form.setFieldError('password', false)}
 						error={form.errors.password && 'Password should contain 1 number, 1 letter and at least 6 characters'}
 					/>
-					<Group direction="column" position="apart" style={{ marginTop: 25 }}>
+				</Paper>
+				<Grid justify="center" style={{ marginTop: 25, textAlign: 'center' }}>
+					<Col span={12} md={6}>
 						<Button variant="link" color="teal" onClick={() => setFormType('signup')} size="sm">
 							¿No Tienes Una Cuenta? Registrate"
 						</Button>
-						<Button color="teal" type="submit">
+					</Col>
+				</Grid>
+				<Grid justify="center" style={{ textAlign: 'center' }}>
+					<Col span={12} md={6}>
+						<Button color="teal" type="submit" size="sm">
 							Iniciar sesión
 						</Button>
-					</Group>
-				</form>
-			</Paper>
+					</Col>
+				</Grid>
+			</form>
 		)
 	}
 	else {
-		const submitHandler = async() => {
+		const submitHandler = async () => {
 			const request = await signUp(form.values.email, form.values.password, form.values.firstName, form.values.lastName)
-			if(request === true){
+			if (request === true) {
 				setFormType('login')
 			}
 		}
 
 		return (
-			<Paper style={{ position: 'relative' }}>
-				<form onSubmit={form.onSubmit(submitHandler)}>
+			<form onSubmit={form.onSubmit(submitHandler)}>
+				<Paper style={{ position: 'relative' }}>
 					<LoadingOverlay visible={loading} />
 					<div style={{ display: 'flex', marginBottom: 15 }}>
 						<TextInput
@@ -143,22 +149,28 @@ const AuthForm: FC<AuthForm> = (props) => {
 
 					<Checkbox
 						style={{ marginTop: 20 }}
-						label="I agree to sell my soul and privacy to this corporation"
+						label="Al registrarme, acepto los terminos y condiciones"
 						checked={form.values.termsOfService}
 						onChange={(event) => form.setFieldValue('termsOfService', event.currentTarget.checked)}
 						color="pink"
 					/>
 
-					<Group direction="column" position="apart" style={{ marginTop: 25 }}>
-						<Button variant="link" color="teal" onClick={() => setFormType('login')} size="sm">
-							Tienes Una Cuenta? Inicia Sesión
-						</Button>
-						<Button color="teal" type="submit">
-							Registrarse
-						</Button>
-					</Group>
-				</form>
-			</Paper>
+					<Grid justify="center" style={{ marginTop: 25, textAlign: 'center' }}>
+						<Col span={12} md={6}>
+							<Button variant="link" color="teal" onClick={() => setFormType('login')} size="sm">
+								Tienes Una Cuenta? Inicia Sesión
+							</Button>
+						</Col>
+					</Grid>
+					<Grid justify="center" style={{ textAlign: 'center' }}>
+						<Col span={12} md={6}>
+							<Button color="teal" type="submit">
+								Registrarse
+							</Button>
+						</Col>
+					</Grid>
+				</Paper>
+			</form>
 		)
 	}
 }

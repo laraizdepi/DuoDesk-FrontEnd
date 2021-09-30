@@ -1,9 +1,11 @@
-import { Navbar, Container, Nav } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { loginUser, logoutUser } from '../../Redux/actions/authActions';
-import { Avatar, Menu } from '@mantine/core';
+import { Grid, Col, Avatar, Button, Menu, Group } from '@mantine/core';
+import { Menubar } from 'primereact/menubar';
+
 import AuthModal from '../Authenticacion/AuthModal';
+import { NextLink } from '../NextLink/NextLink';
 
 const NavbarBoot = () => {
 	const dispatch = useDispatch()
@@ -12,45 +14,45 @@ const NavbarBoot = () => {
 		dispatch(loginUser(true))
 	}, [])
 
-	const user = useSelector((state: any) => { 
-		return state.authentication 
-			? state.authentication 
+	const user = useSelector((state: any) => {
+		return state.authentication
+			? state.authentication
 			: { logged: false }
-		}
+	}
 	)
 
 	const logOutHandler = () => {
 		dispatch(logoutUser())
 	}
+	const start = <img alt="logo" src='https://primefaces.org/primereact/showcase/showcase/images/logo.png' height="40" className="p-mr-2"></img>;
+	const end = user.logged ? (
+		<Group>
+			<Button component={NextLink} href="/register-office" variant="gradient" gradient={{ from: 'indigo', to: 'pink' }}>
+				Registra tu oficina
+			</Button>
+			<Menu control={<Avatar src={user.user.image} color="indigo" radius="xl" size="md" />}>
+				<Menu.Label>Cuenta</Menu.Label>
+				<Menu.Item>Mi cuenta</Menu.Item>
+				<Menu.Item>Oficinas Favoritas</Menu.Item>
+				<Menu.Item onClick={logOutHandler}>Cerrar sessión</Menu.Item>
+			</Menu>
+		</Group>
+	) :
+		(<Grid justify="space-between" gutter="xl">
+			<Col span={6}>
+				<AuthModal color='teal' text='Iniciar sesión' form="login" />
+			</Col>
+			<Col span={6}>
+				<AuthModal color='teal' text='Registro' form="signup" variant="outline" />
+			</Col>
+		</Grid>)
 
 	return (
-		<Navbar collapseOnSelect expand="lg" variant="light" style={{ backgroundColor: 'rgba(0,0,0,0)' }}>
-			<Container>
-				<Navbar.Brand href="#home">DuoDesk</Navbar.Brand >
-				<Navbar.Toggle aria-controls="responsive-navbar-nav" />
-				<Navbar.Collapse id="responsive-navbar-nav">
-					<Nav className="me-auto">
-					</Nav>
-					<Nav className="justify-content-end" style={{ marginRight: '50px' }}>
-						{user.logged ?
-							<div className="d-flex justify-content-around align-items-center">
-								<Avatar src={user.user.image} color="indigo" radius="xl" size="md" />
-								<Menu>
-									<Menu.Label>Cuenta</Menu.Label>
-									<Menu.Item>Mi cuenta</Menu.Item>
-									<Menu.Item>Oficinas Favoritas</Menu.Item>
-									<Menu.Item onClick={logOutHandler}>Cerrar sessión</Menu.Item>
-								</Menu>
-							</div>
-							: <div className="d-flex justify-content-evenly align-items-center">
-								<AuthModal color='teal' text='Iniciar sesión' form="login" variant="outline" />
-								<AuthModal color='teal' text='Registro' form="signup"/>
-							</div>
-						}
-					</Nav>
-				</Navbar.Collapse>
-			</Container>
-		</Navbar>
+		<div>
+			<div className="card">
+				<Menubar model={[]} start={start} end={end} />
+			</div>
+		</div>
 	);
 }
 
