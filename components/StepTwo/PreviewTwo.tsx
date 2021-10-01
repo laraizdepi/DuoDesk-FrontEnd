@@ -9,8 +9,12 @@ import { Button } from "primereact/button";
 import { ProductService } from "./ProductoService";
 import ImagesSlide from "./ImagesSlide";
 import Review from "./Review";
-// import "./CarouselDemo.css";
+import axios from 'axios'
+import { Badge, Text, Divider, Group } from "@mantine/core"
+import Amenidades from "./Amenidades";
 import style from './stepTwo.module.sass'
+import { Container, Row, Col } from 'react-bootstrap'
+
 
 interface PreviewProps {
    ComponentReview?: React.ReactNode
@@ -19,6 +23,10 @@ interface PreviewProps {
 const PreviewTwo: FC<PreviewProps> = (props) => {
    const [products, setProducts] = useState([]);
    const productService = new ProductService();
+   const getData = () => {
+      axios.get("data/office-info.json")
+      .then(data => console.log(data.data.data));
+  }
 
    useEffect(() => {
       productService
@@ -27,36 +35,106 @@ const PreviewTwo: FC<PreviewProps> = (props) => {
    }, []);
 
    const productTemplate = (product: any) => {
+
       return (
-         <div className="productItem">
-            <div className="productItemContent" style = {{backgroundColor: "#edf1f8", padding: '30px'}}>
+         <div>
+            <div style={{ padding: '30px' }}>
                <div>
                   <ImagesSlide />
                </div>
-               
-               <h1 className="p-mb-1">{product.title}</h1>
-               <h5 style={{ marginTop: '10px' }}>
-               {/* descripción*/}
-               {product.description}
-               </h5>
-               <div style={{ marginTop: '10px' }}>
-                  <h5>Cantidad de espacios disponible: {product.quantity}</h5>
-                  <h5>Capacidad de personas: {product.cantidadPersonas}</h5>
-               </div>
-               <div style={{ marginTop: '20px' }}>
-                  <h5 className="p-mt-0 p-mb-3">
-                     Precio por hora:  {JSON.stringify(product.prices.priceHour)}
-                  </h5>
-                  <h5 className="p-mt-0 p-mb-3">
-                     Precio por day: {JSON.stringify(product.prices.priceDay)}
-                  </h5>
-                  <h5 className="p-mt-0 p-mb-3">
-                     Precio por semana: {JSON.stringify(product.prices.priceWeek)}
-                  </h5>
-                  <h5 className="p-mt-0 p-mb-3">
-                     Precio por mes: {JSON.stringify(product.prices.priceMoth)}
-                  </h5>
-                  {/* <Review product = {products}/> */}
+
+               <div>
+                  <div className={style.InfoBasics}>
+                     <div>
+                        <Row style = {{marginBottom : '10px'}}>
+                           <Col xs = {7}>
+                              <p className={style.TitleBasics}>{product.title}</p>
+                           </Col>
+                           <Col xs = {5}>
+                              <Badge
+                                 color="pink"
+                                 variant="filled"
+                                 size="md"
+                                 radius='md'
+                                 className={style.Badge}>
+                                 {product.type}
+                              </Badge>
+                           </Col>
+                        </Row>
+                     </div>
+                     <p>Capacidad: {product.cantidadPersonas} personas</p>
+                     <p>Cantidad: {product.quantity} espacios</p>
+                  </div>
+                  <div className={style.Prices}>
+                     <Divider margins="xs" label="Precios" labelPosition="center" />
+                     <p className={style.PricesTitle}>Precios</p>
+
+                     <Group position="center">
+
+                        <div className={style.PriceUnid} >
+                           <h5>Por Hora</h5>
+                           <p>${(product.prices.priceHour)}</p>
+                        </div>
+
+                        <Divider orientation="vertical" margins="sm" />
+
+                        <div className={style.PriceUnid} >
+                           <h5>Por Dia</h5>
+                           <p>${(product.prices.priceDay)}</p>
+                        </div>
+
+                        <Divider orientation="vertical" margins="sm" />
+
+                        <div className={style.PriceUnid} >
+                           <h5>Por Semana</h5>
+                           <p>${(product.prices.priceWeek)}</p>
+                        </div>
+
+                        <Divider orientation="vertical" margins="sm" />
+
+                        <div className={style.PriceUnid} >
+                           <h5>Por Mes</h5>
+                           <p>${(product.prices.priceMoth)}</p>
+                        </div>
+                     </Group>
+                  </div>
+                  {/* <div>
+                     <Divider margins="xs" label="Amenidades" labelPosition="center" />
+                     <p className={style.PricesTitle}>Amenidades</p>
+                     <Badge
+                        color="pink"
+                        variant="filled"
+                        size="md"
+                        radius='md'
+                        className={style.Badge}>
+                        {product.amenidades[0]}
+                     </Badge>
+                     <Badge
+                        color="pink"
+                        variant="filled"
+                        size="md"
+                        radius='md'
+                        className={style.Badge}>
+                        {product.amenidades[1]}
+                     </Badge>
+                     <Badge
+                        color="pink"
+                        variant="filled"
+                        size="md"
+                        radius='md'
+                        className={style.Badge}>
+                        {product.amenidades[2]}
+                     </Badge>
+                     <Badge
+                        color="pink"
+                        variant="filled"
+                        size="md"
+                        radius='md'
+                        className={style.Badge}>
+                        {product.amenidades[3]}
+                     </Badge>
+                  </div> */}
+                  <Amenidades />
                </div>
             </div>
          </div>

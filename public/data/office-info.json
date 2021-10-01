@@ -31,7 +31,8 @@
 		},
 		"type": "Escritorio Personal",
 		"quantity": 5,
-		"cantidadPersonas" : 2
+		"cantidadPersonas" : 2,
+		"amenidades" : ["Ascensor", "Playa", "parqueadero", "mascotas", "Wifi"]
 	  },
 	  {
 		"id": "1001",
@@ -64,7 +65,8 @@
 		},
 		"type": "Oficina Privada",
 		"quantity": 2,
-		"cantidadPersonas" : 4
+		"cantidadPersonas" : 4,
+		"amenidades" : ["Ascensor", "impresora", "parqueadero", "mascotas"]
 
 	  },
 	  {
@@ -98,7 +100,9 @@
 		},
 		"type": "Sala de reuniones",
 		"quantity": 4,
-		"cantidadPersonas" : 5	
+		"cantidadPersonas" : 5	,
+		"amenidades" : ["Cafe", "impresora", "parqueadero", "Wifi"]
+
 	  }
 	]
   }
