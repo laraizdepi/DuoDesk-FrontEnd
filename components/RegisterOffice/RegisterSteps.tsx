@@ -3,6 +3,8 @@ import { Field, Form, Formik, FormikConfig, FormikValues } from 'formik';
 import { mixed, number, object } from 'yup';
 import { Calendar } from 'primereact/calendar';
 
+import PreviewTwo from '../StepTwo/PreviewTwo';
+
 import StepOne from './StepOne';
 import { Box, Button, Card, CardContent, CircularProgress, Grid, Step, StepLabel, Stepper } from '@material-ui/core';
 
@@ -119,6 +121,7 @@ const RegisterSteps = () => {
                                 </Calendar>
                             )}
                         </Field>
+                        <PreviewTwo/>
                     </FormikStep>
                 </FormikStepper>
             </CardContent>
