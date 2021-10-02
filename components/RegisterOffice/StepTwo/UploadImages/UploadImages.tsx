@@ -13,7 +13,7 @@ import { Field } from 'formik';
 
 const UploadImages = () => {
     const [totalSize, setTotalSize] = useState(0);
-    const fileUploadRef = useRef(null);
+    const fileUploadRef = useRef<any>();
 
     const onTemplateClear = () => {
         setTotalSize(0);
@@ -89,9 +89,11 @@ const UploadImages = () => {
                             ref={fileUploadRef}
                             multiple accept="image/*"
                             maxFileSize={10000000}
-                            onUpload={(event: any) => {
+                            customUpload
+                            uploadHandler={(event: any) => {
                                 console.log(event.files)
                                 form.setFieldValue(field.name, event.files)
+                                fileUploadRef.current.clear()
                             }}
                             onError={onTemplateClear}
                             onClear={onTemplateClear}
