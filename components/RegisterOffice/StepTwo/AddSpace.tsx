@@ -6,7 +6,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import { BsFillStarFill } from 'react-icons/bs'
 
-import UploadImages from './UploadImages/UploadImages';
+import UploadImages from './UploadImages';
 
 const AddSpace: FC = () => {
     const amenities = [
