@@ -1,28 +1,43 @@
-import React, { useState, FC } from "react";
+import React, { FC, useEffect } from "react";
+import { Badge, Center, Divider, Group, Title } from "@mantine/core"
 import { Carousel } from "primereact/carousel";
-import ImagesSlide from "./ImagesSlide";
-import { Badge, Divider, Group } from "@mantine/core"
-import Amenidades from "./Amenidades";
-import style from './stepTwo.module.sass'
 import { Row, Col } from 'react-bootstrap'
 
+import Amenidades from "./Amenidades";
+import ImagesSlide from "./ImagesSlide";
 
-const PreviewTwo: FC = () => {
-	const [products, setProducts] = useState([]);
+import style from './stepTwo.module.sass'
 
-	const productTemplate = (product: any) => {
+interface PreviewProps{
+	spaces: any[]
+}
+
+const Preview: FC<PreviewProps> = (props) => {
+	if(props.spaces.length === 0){
+		return(
+			<Center style={{height: '100%'}}>
+				<Title order={2}>Empieza a añadir tus espacios</Title>
+			</Center>
+		)
+	}
+
+	useEffect(() => {
+		console.log(props.spaces)
+	})
+
+	const spaceTemplate = (space: any) => {
 		return (
 			<div>
 				<div style={{ padding: '30px' }}>
 					<div>
-						<ImagesSlide images={product.images} />
+						<ImagesSlide images={space.spaceImages} />
 					</div>
 					<div>
 						<div className={style.InfoBasics}>
 							<div>
 								<Row style={{ marginBottom: '10px' }}>
 									<Col xs={7}>
-										<p className={style.TitleBasics}>{product.title}</p>
+										<p className={style.TitleBasics}>{space.nameSpace}</p>
 									</Col>
 									<Col xs={5}>
 										<Badge
@@ -30,50 +45,47 @@ const PreviewTwo: FC = () => {
 											variant="filled"
 											size="md"
 											radius='md'
-											className={style.Badge}>
-											{product.type}
+											className={style.Badge}
+										>
+											{space.typeSpace}
 										</Badge>
 									</Col>
 								</Row>
 							</div>
-							<p>Capacidad: {product.cantidadPersonas} personas</p>
-							<p>Cantidad: {product.quantity} espacios</p>
+							<p>Capacidad: {space.capacitySpace} personas</p>
+							<p>Cantidad: {space.availableSpace} espacios</p>
 						</div>
 						<div className={style.Prices}>
 							<Divider margins="xs" label="Precios" labelPosition="center" />
 							<p className={style.PricesTitle}>Precios</p>
 
 							<Group position="center">
-
 								<div className={style.PriceUnid} >
 									<h5>Por Hora</h5>
-									<p>${(product.prices.priceHour)}</p>
+									<p>${(space.hourPrice)}</p>
 								</div>
 
 								<Divider orientation="vertical" margins="sm" />
-
 								<div className={style.PriceUnid} >
 									<h5>Por Dia</h5>
-									<p>${(product.prices.priceDay)}</p>
+									<p>${(space.dayPrice)}</p>
 								</div>
 
 								<Divider orientation="vertical" margins="sm" />
-
 								<div className={style.PriceUnid} >
 									<h5>Por Semana</h5>
-									<p>${(product.prices.priceWeek)}</p>
+									<p>${(space.weekPrice)}</p>
 								</div>
 
 								<Divider orientation="vertical" margins="sm" />
-
 								<div className={style.PriceUnid} >
 									<h5>Por Mes</h5>
-									<p>${(product.prices.priceMoth)}</p>
+									<p>${(space.monthPrice)}</p>
 								</div>
 							</Group>
 						</div>
 						<div style={{ marginTop: "20px" }}>
-							<Amenidades AmenidadesL={product.amenidades} />
+							<Amenidades AmenidadesL={space.nameAmenities} />
 						</div>
 					</div>
 				</div>
@@ -82,19 +94,19 @@ const PreviewTwo: FC = () => {
 	};
 
 	return (
-		<div className={style.carouselDemo}>
+		<div>
 			<div className="card">
 				<Carousel
-					value={products}
+					value={props.spaces}
 					numVisible={1}
 					numScroll={1}
-					itemTemplate={productTemplate}
-					circular
+					itemTemplate={spaceTemplate}
+					circular={props.spaces.length > 1 ? true : false}
 					autoplayInterval={15000}
 				/>
 			</div>
 		</div>
 	);
-};
+}
 
-export default PreviewTwo
+export default Preview

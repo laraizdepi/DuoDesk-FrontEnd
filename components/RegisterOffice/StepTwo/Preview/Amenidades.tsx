@@ -11,7 +11,6 @@ const Amenidades: FC<AmenidadesProps> = (props) => {
     return (
         <div>
             {allAmenidades.map((amenidad: any) => {
-                console.log(amenidad);
                 return (
                     <Badge
                         color="pink"

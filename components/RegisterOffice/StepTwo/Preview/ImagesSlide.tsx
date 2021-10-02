@@ -2,16 +2,17 @@ import React, { FC } from "react";
 import { Carousel } from "primereact/carousel";
 
 interface ImageProps {
-	images?: string[]
+	images: any[]
 }
 
 const ImagesSlide: FC<ImageProps> = (props) => {
-	const ImagesProp = props.images
+	const images = props.images
 
 	const productTemplate = (image: any) => {
+		console.log(images)
 		return (
 			<div>
-				<img src={image.src} style={{ maxWidth: '100%' }} />
+				<img src={image.objectURL} style={{ maxWidth: '100%' }} />
 			</div>
 		);
 	};
@@ -19,7 +20,7 @@ const ImagesSlide: FC<ImageProps> = (props) => {
 	return (
 		<div className="card">
 			<Carousel
-				value={ImagesProp}
+				value={images}
 				numVisible={1}
 				numScroll={1}
 				itemTemplate={productTemplate}

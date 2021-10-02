@@ -1,14 +1,21 @@
 import React, { FC } from 'react';
-import { Col, Grid, TextInput, NumberInput, Title, Divider, Button, Center } from '@mantine/core';
+import { Col, Grid, TextInput, NumberInput, Title, Divider, Button, Center, Select } from '@mantine/core';
 import { Field, useFormikContext } from 'formik';
 import Chip from '@mui/material/Chip';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import { BsFillStarFill } from 'react-icons/bs'
+import { MdErrorOutline } from 'react-icons/md'
+import { useNotifications } from '@mantine/notifications';
 
 import UploadImages from './UploadImages';
 
-const AddSpace: FC = () => {
+interface AddSpaceProps{
+    spaces: any[],
+    setSpaces: Function
+}
+
+const AddSpace: FC<AddSpaceProps> = (props, ref) => {
     const amenities = [
         "Protocolos de Bioseguridad",
         "Parqueadero para carros",
@@ -32,10 +39,20 @@ const AddSpace: FC = () => {
         "Espacio de Yoga"
     ]
 
-    const { values } = useFormikContext()
-
-    const handleNewSpace = () => {
+    const { values }: any = useFormikContext()
+    const notifications = useNotifications()
+    const handleNewSpace = (values: any) => {
+        if(!values.spaceImages || values.spaceImages.length < 1){
+            notifications.showNotification({
+                title: 'Error', 
+                message: `Introduce una o más imagenes para cada espacio. 
+                Sí ya las has agregado en el formulario, no olvides oprimir en "Guardar imagenes"`,
+                color: 'pink', icon: <MdErrorOutline/>
+            })
+            return
+        }
         console.log(values)
+        props.setSpaces([...props.spaces, values])
     }
 
     return (
@@ -62,9 +79,14 @@ const AddSpace: FC = () => {
                 <Col span={12} md={6}>
                     <Field name="typeSpace">
                         {({ field, form, meta }: any) => (
-                            <TextInput
+                            <Select
+                                data={
+                                    ["Oficina privada", "Escritorio personal", "Sala de conferencias", "Espacio abierto"]
+                                }
+                                searchable
+                                nothingFound="Escoge una de nuestras categorias permitidas, por favor"
                                 value={field.value}
-                                onChange={(event) => form.setFieldValue(field.name, event.target.value)}
+                                onChange={(event) => form.setFieldValue(field.name, event.valueOf())}
                                 onBlur={(event) => form.setFieldValue(field.name, event.target.value)}
                                 onLoad={(event) => form.setFieldValue(field.name, '')}
                                 placeholder="Tipo de tu espacio"
@@ -233,7 +255,7 @@ const AddSpace: FC = () => {
                 </Col>
             </Grid>
             <Center>
-                <Button onClick={handleNewSpace} color="teal">Añadir espacio</Button>
+                <Button onClick={() => {handleNewSpace(values)}} color="teal">Añadir espacio</Button>
             </Center>
         </div>
     )
