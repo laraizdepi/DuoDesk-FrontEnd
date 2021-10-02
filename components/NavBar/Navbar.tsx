@@ -40,6 +40,7 @@ const NavbarBoot = () => {
 			</Menu>
 		</Group>
 	) :
+	
 		(<Grid justify="space-between" gutter="xl" id="auth">
 			<Col span={6}>
 				<AuthModal color='teal' text='Iniciar sesión' form="login" />
