@@ -10,7 +10,8 @@ import { ProductService } from "./ProductoService";
 import style from './stepTwo.module.sass'
 
 interface ImageProps {
-  id ?: number
+  id ?: number,
+  images : string[]
 }
 
 const ImagesSlide:FC<ImageProps> = (props) =>{

@@ -14,6 +14,7 @@ import { Badge, Text, Divider, Group } from "@mantine/core"
 import Amenidades from "./Amenidades";
 import style from './stepTwo.module.sass'
 import { Container, Row, Col } from 'react-bootstrap'
+import ImagesAll from './ImagesAll'
 
 
 interface PreviewProps {
@@ -98,43 +99,11 @@ const PreviewTwo: FC<PreviewProps> = (props) => {
                         </div>
                      </Group>
                   </div>
-                  {/* <div>
-                     <Divider margins="xs" label="Amenidades" labelPosition="center" />
-                     <p className={style.PricesTitle}>Amenidades</p>
-                     <Badge
-                        color="pink"
-                        variant="filled"
-                        size="md"
-                        radius='md'
-                        className={style.Badge}>
-                        {product.amenidades[0]}
-                     </Badge>
-                     <Badge
-                        color="pink"
-                        variant="filled"
-                        size="md"
-                        radius='md'
-                        className={style.Badge}>
-                        {product.amenidades[1]}
-                     </Badge>
-                     <Badge
-                        color="pink"
-                        variant="filled"
-                        size="md"
-                        radius='md'
-                        className={style.Badge}>
-                        {product.amenidades[2]}
-                     </Badge>
-                     <Badge
-                        color="pink"
-                        variant="filled"
-                        size="md"
-                        radius='md'
-                        className={style.Badge}>
-                        {product.amenidades[3]}
-                     </Badge>
-                  </div> */}
-                  <Amenidades />
+
+                  <ImagesAll images ={product.images}/>
+
+
+                  <Amenidades id = {product.id} AmenidadesL = {product.amenidades}/>
                </div>
             </div>
          </div>

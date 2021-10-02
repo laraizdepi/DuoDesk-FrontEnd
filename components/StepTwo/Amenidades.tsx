@@ -5,35 +5,28 @@ import style from "./stepTwo.module.sass"
 import axios from 'axios'
 
 interface AmenidadesProps {
-    id?: string,
-    color?: string
+    color?: string,
+    AmenidadesL?: string[] | []
 }
-// const Amenidades: FC<AmenidadesProps> = (props) => {
-const Amenidades = () => {
-    const [products, setProducts] = useState([]);
-    // console.log(getProductsSmall()); 
-
-    const getData = () => {
-        axios.get("data/office-info.json")
-            // .then(data => console.log(data.data.data))
-            .then(data => setProducts(data.data.data));
-    }
-    // getData()
-    useEffect(getData, [])
+const Amenidades: FC<AmenidadesProps> = (props) => {
+    const allAmenidades = props.AmenidadesL
     return (
-        products.map((product: any) => {
-            return (
-                <Badge
-                    color="pink"
-                    variant="filled"
-                    size="md"
-                    radius='md'
-                    className={style.Badge}>
-                    {product.amenidades[0]}
-                    {/* <h1>***</h1> */}
-                    {/* <h1>Hello World</h1> */}
-                </Badge>
-            )
-        }))
+        <div>
+            {allAmenidades.map((amenidad: any) => {
+                console.log(amenidad);
+                return (
+                    <Badge
+                        color="pink"
+                        variant="filled"
+                        size="md"
+                        radius='md'
+                        className={style.Badge}>
+                        {amenidad}
+                    </Badge>
+                )
+            }
+            )}
+        </div>
+    )
 }
 export default Amenidades
