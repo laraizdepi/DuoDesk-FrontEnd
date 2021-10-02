@@ -1,49 +1,37 @@
 import React, { FC, useState } from 'react';
-import { Col, Grid, Card, TextInput, NumberInput, Title, Divider, Textarea, Button, Text, Center, Group, Badge, ActionIcon, Modal } from '@mantine/core';
+import { Col, Grid, Card, TextInput, NumberInput, Title, Divider, Textarea, Button, Text, Center, Group, Badge, ActionIcon, Modal, MultiSelect, InputWrapper, Input } from '@mantine/core';
 import { Field } from 'formik';
-import { DataScroller } from 'primereact/datascroller';
+import Chip from '@mui/material/Chip';
+import Autocomplete from '@mui/material/Autocomplete';
+import TextField from '@mui/material/TextField';
+import { BsFillStarFill } from 'react-icons/bs'
 
 import UploadImages from './UploadImages/UploadImages';
 import { TiDelete, TiEdit } from 'react-icons/ti';
 
-const itemTemplate: FC<{name: string, description: string}> = (props) => {
-    return(
-        <div>
-            <Card>
-                <Card.Section>
-                    <Group position="apart">
-                        <Text>{props.name}</Text>
-                        <Badge color="red">
-                            <ActionIcon color="red">
-                                <TiDelete/>
-                            </ActionIcon>
-                        </Badge>
-                    </Group>
-                </Card.Section>
-                <Card.Section style={{overflow: 'hidden', textOverflow: 'ellipsis'}}>
-                    <Group position="apart">
-                        <Text style={{width: '50%' ,overflow: 'hidden', textOverflow: 'ellipsis'}}>{props.description}</Text>
-                        <Badge>
-                            <ActionIcon>
-                                <TiEdit/>
-                            </ActionIcon>
-                        </Badge>
-                    </Group>
-                </Card.Section>
-            </Card>
-        </div>
-    )
-}
-
 const AddSpace = () => {
-    const [amenities, setAmenities] = useState<{ name: string, description: string }[]>([{
-        name:"Hello",
-        description:"Amenidad 1"
-    }])
-
-    const addAmenity = (name: string, description: string) => {
-        setAmenities([...amenities, {name, description}])
-    }
+    const amenities = [
+        "Protocolos de Bioseguridad",
+        "Parqueadero para carros",
+        "Parqueadero para motocicletas",
+        "Parqueadero para bicicletas",
+        "Conectividad a internet",
+        "Cabinas telefonicas",
+        "Impresora",
+        "Espacio para mascotas",
+        "Zona de recreación",
+        "Espacio para maternidad",
+        "Gimnasio",
+        "Espacio de meditación",
+        "Espacios al aire libre",
+        "Servicio de cafetería",
+        "Cocina",
+        "Casillero personal",
+        "Fotocopiadora",
+        "Libreria",
+        "Bar/Venta de alcohol disponible",
+        "Espacio de Yoga"
+    ]
 
     return (
         <div>
@@ -122,7 +110,9 @@ const AddSpace = () => {
                                 defaultValue={10000}
                                 step={1000}
                                 value={field.value}
-                                onChange={(event) => form.setFieldValue(field.name, event.valueOf())}
+                                onChange={(event) => {
+                                    console.log(form)
+                                    form.setFieldValue(field.name, event.valueOf())}}
                                 placeholder="Precio por hora"
                                 label="Precio por hora"
                                 aria-label="My textarea" radius="md" size="md"
@@ -166,62 +156,69 @@ const AddSpace = () => {
                         )}
                     </Field>
                 </Col>
-            </Grid>
-            <Divider margins="xs" label="Amenidades" labelPosition="center" />
-            <Grid>
-                <Col span={12} md={6}>
-                    <Field name="nameAmenities">
+                <Col span={12}>
+                    <Field name="monthPrice">
                         {({ field, form, meta }: any) => (
-                            <TextInput
+                            <NumberInput
+                                defaultValue={10000}
+                                step={1000}
                                 value={field.value}
-                                onChange={(event) => form.setFieldValue(field.name, event.target.value)}
-                                placeholder="Nombre de cada amenidad"
-                                label="Nombre de cada amenidad"
+                                onChange={(event) => form.setFieldValue(field.name, event.valueOf())}
+                                placeholder="Precio por mes"
+                                label="Precio por mes"
                                 aria-label="My textarea" radius="md" size="md"
                                 id="officeDescription"
+                                min={4000}
                             />
                         )}
                     </Field>
-                    <Field name="descriptionAmenities">
-                        {({ field, form, meta }: any) => (
-                            <div>
-                                <Textarea
-                                    value={field.value}
-                                    onChange={(event) => form.setFieldValue(field.name, event.target.value)}
-                                    placeholder="Descripción de la amenidad"
-                                    label="Descripción de la amenidad"
-                                    aria-label="My textarea" radius="md" size="md"
-                                    id="officeDescription"
-                                    rows={3}
-                                    maxRows={3}
-                                />
-                                <br />
-                                <Button>Añadir</Button>
-                            </div>
-                        )}
-                    </Field>
-                </Col>
-                <Col span={12} md={6}>
-                    {amenities.length !== 0 ? (
-                        <DataScroller
-                            value={amenities}
-                            itemTemplate={itemTemplate}
-                            rows={5} inline />
-                    )
-                        :
-                        (
-                            <Center style={{ height: '100%' }}>
-                                <Title order={3}>Introduce amenidades!</Title>
-                            </Center>
-                        )}
                 </Col>
             </Grid>
+            <Divider margins="xs" label="Amenidades" labelPosition="center" />
+            <Field name="nameAmenities">
+                {({ field, form, meta }: any) => (
+                    <Autocomplete
+                        multiple
+                        id="tags-filled"
+                        options={amenities}
+                        defaultValue={[]}
+                        freeSolo
+                        value={field.value}
+                        onChange={(event: any, newValue: any[] | null) => {
+                            console.log(field.value)
+                        }}
+                        onInputChange={(event, newInputValue) => {
+                            form.setFieldValue(field.name, newInputValue)
+                            console.log(field.value)
+                        }}
+                        renderTags={(value: readonly string[], getTagProps) =>
+                            value.map((option: string, index: number) => (
+                                <Chip variant="filled" icon={<BsFillStarFill/>}  color="primary" label={option} {...getTagProps({ index })} />
+                            ))
+                        }
+                        renderInput={(params) => {
+                            console.log(params)
+                            return(
+                                <TextField
+                                    {...params}
+                                    variant="standard"
+                                    label="Amenidades"
+                                    placeholder="Amenidades"
+                                />
+                        )}}
+                    />
+
+                )}
+            </Field>
             <Divider margins="xs" label="Imagenes" labelPosition="center" />
             <Grid>
                 <Col span={12}>
                     <UploadImages />
                 </Col>
             </Grid>
+            <Center>
+                <Button color="teal">Añadir espacio</Button>
+            </Center>
         </div>
     )
 }

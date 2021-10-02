@@ -90,12 +90,7 @@ const RegisterSteps = () => {
             <CardContent>
                 <FormikStepper
                     initialValues={{
-                        firstName: '',
-                        lastName: '',
-                        millionaire: false,
-                        money: 0,
-                        description: '',
-                        title: ''
+                        
                     }}
                     onSubmit={async (values) => {
                         await delay(3000);

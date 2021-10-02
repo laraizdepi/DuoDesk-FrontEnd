@@ -6,9 +6,11 @@ import React, { useRef, useState } from 'react';
 import { Toast } from 'primereact/toast';
 import { FileUpload } from 'primereact/fileupload';
 import { ProgressBar } from 'primereact/progressbar';
-import { Button } from 'primereact/button';
+import { Button } from '@mantine/core';
 import { Tooltip } from 'primereact/tooltip';
 import { Tag } from 'primereact/tag';
+import Image from 'next/image'
+import { Center, Col, Grid, Group, Progress, Text } from '@mantine/core';
 
 const UploadImages = () => {
     const [totalSize, setTotalSize] = useState(0);
@@ -37,46 +39,58 @@ const UploadImages = () => {
         return (
             <div className={className} style={{ backgroundColor: 'transparent', display: 'flex', alignItems: 'center' }}>
                 {chooseButton}
-                {uploadButton}
-                {cancelButton}
             </div>
         );
     }
 
-    const itemTemplate = (file: { name: {} | null | undefined; objectURL: string | undefined; }, props: { formatSize: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined; onRemove: any; }) => {
+    const itemTemplate = (file: { name: {} | null | undefined; objectURL: string; }, props: { formatSize: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined; onRemove: any; }) => {
         return (
-            <div className="p-d-flex p-ai-center">
-                <div className="p-d-flex p-ai-center" style={{ width: '75%' }}>
-                    {/* Preview Of Image */}
-                    <img role="presentation" src={file.objectURL} width={300} />
-                    <span >
-                        {file.name}
-                        <small>{new Date().toLocaleDateString()}</small>
-                    </span>
-                </div>
-                <Button type="button" icon="pi pi-times" className="p-button-outlined p-button-rounded p-button-danger p-ml-auto" onClick={() => onTemplateRemove(file, props.onRemove)} />
-            </div>
+            <Grid justify="space-between" align="center">
+                <Col span={8}>
+                    <Group direction="row">
+                        <Col span={6}>
+                            <Image src={file.objectURL} width="100" height="100" />
+                        </Col>
+                        <Col span={6}>
+                            <Text style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{file.name}</Text>
+                        </Col>
+                    </Group>
+                </Col>
+                <Col span={4}>
+                    <Button
+                        type="button"
+                        color="pink"
+                        onClick={() => onTemplateRemove(file, props.onRemove)}>
+                        Eliminar
+                    </Button>
+                </Col>
+            </Grid>
         )
     }
 
     const emptyTemplate = () => {
         return (
-            <div>
-                <span style={{ 'fontSize': '1.3em' }} >Arrastra y Suelta tus images </span>
-            </div>
+            <Center>
+                <Text>Arrastra y suelta tus imagenes</Text>
+            </Center>
         )
     }
 
-    const chooseOptions = { icon: 'pi pi-fw pi-images', iconOnly: true, className: 'custom-choose-btn p-button-rounded p-button-outlined' };
-    const uploadOptions = { icon: 'pi pi-fw pi-cloud-upload', iconOnly: true, className: 'custom-upload-btn p-button-success p-button-rounded p-button-outlined' };
-    const cancelOptions = { icon: 'pi pi-fw pi-times', iconOnly: true, className: 'custom-cancel-btn p-button-danger p-button-rounded p-button-outlined' };
+    const progressBarTemplate = (value: any) => {
+        return (
+            <Progress value={value} />
+        )
+    }
+
+    const chooseOptions = { icon: 'pi pi-fw pi-images', label: "Escoger archivos", iconOnly: false, className: 'custom-choose-btn p-button-rounded p-button-success p-button', style: { backgroundColor: '#4C6EF5', margin: 'auto' } };
+    const [image, setImage] = useState('')
 
     return (
         <div>
             {/* <Toast ref={toast}></Toast> */}
-            <Tooltip target=".custom-choose-btn" content="Elige" position="bottom" /> 
-            <Tooltip target=".custom-upload-btn" content="Sube" position="bottom" />
-            <Tooltip target=".custom-cancel-btn" content="Eliminar" position="bottom" />
+            <Tooltip target=".custom-choose-btn" content="Elegir archivo(s)" position="bottom" />
+            <Tooltip target=".custom-upload-btn" content="Confirmar archivos" position="bottom" />
+            <Tooltip target=".custom-cancel-btn" content="Resetear" position="bottom" />
 
             <div className="card">
                 <FileUpload
@@ -84,17 +98,21 @@ const UploadImages = () => {
                     url="https://primefaces.org/primereact/showcase/upload.php"
                     multiple accept="image/*"
                     maxFileSize={10000000}
-                    onUpload={onTemplateUpload}     
-                    onError={onTemplateClear} 
+                    onUpload={(event: any) => {
+                        console.log(event.files)
+                        setImage(event.files[0].objectURL as string)
+                    }}
+                    onError={onTemplateClear}
                     onClear={onTemplateClear}
-                    headerTemplate={headerTemplate} 
-                    // itemTemplate={itemTemplate} 
+                    headerTemplate={headerTemplate}
+                    itemTemplate={itemTemplate}
                     emptyTemplate={emptyTemplate}
-                    chooseOptions={chooseOptions} 
-                    uploadOptions={uploadOptions} 
-                    cancelOptions={cancelOptions}
+                    chooseOptions={chooseOptions}
+                    progressBarTemplate={progressBarTemplate}
+                    withCredentials
                 />
             </div>
+            <img src={image} />
         </div>
     )
 }
