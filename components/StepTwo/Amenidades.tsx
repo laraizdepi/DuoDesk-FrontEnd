@@ -6,7 +6,7 @@ import axios from 'axios'
 
 interface AmenidadesProps {
     color?: string,
-    AmenidadesL?: string[] | []
+    AmenidadesL : string[] 
 }
 const Amenidades: FC<AmenidadesProps> = (props) => {
     const allAmenidades = props.AmenidadesL

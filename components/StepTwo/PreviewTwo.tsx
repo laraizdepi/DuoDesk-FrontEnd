@@ -14,7 +14,7 @@ import { Badge, Text, Divider, Group } from "@mantine/core"
 import Amenidades from "./Amenidades";
 import style from './stepTwo.module.sass'
 import { Container, Row, Col } from 'react-bootstrap'
-import ImagesAll from './ImagesAll'
+
 
 
 interface PreviewProps {
@@ -26,8 +26,8 @@ const PreviewTwo: FC<PreviewProps> = (props) => {
    const productService = new ProductService();
    const getData = () => {
       axios.get("data/office-info.json")
-      .then(data => console.log(data.data.data));
-  }
+         .then(data => console.log(data.data.data));
+   }
 
    useEffect(() => {
       productService
@@ -36,22 +36,20 @@ const PreviewTwo: FC<PreviewProps> = (props) => {
    }, []);
 
    const productTemplate = (product: any) => {
-
       return (
          <div>
             <div style={{ padding: '30px' }}>
                <div>
-                  <ImagesSlide />
+                  <ImagesSlide images={product.images} />
                </div>
-
                <div>
                   <div className={style.InfoBasics}>
                      <div>
-                        <Row style = {{marginBottom : '10px'}}>
-                           <Col xs = {7}>
+                        <Row style={{ marginBottom: '10px' }}>
+                           <Col xs={7}>
                               <p className={style.TitleBasics}>{product.title}</p>
                            </Col>
-                           <Col xs = {5}>
+                           <Col xs={5}>
                               <Badge
                                  color="pink"
                                  variant="filled"
@@ -100,10 +98,11 @@ const PreviewTwo: FC<PreviewProps> = (props) => {
                      </Group>
                   </div>
 
-                  <ImagesAll images ={product.images}/>
+                  {/* <ImagesAll images ={product.images}/> */}
 
-
-                  <Amenidades id = {product.id} AmenidadesL = {product.amenidades}/>
+                  <div style = {{marginTop : "20px"}}>
+                     <Amenidades AmenidadesL={product.amenidades} />
+                  </div>
                </div>
             </div>
          </div>
@@ -125,7 +124,7 @@ const PreviewTwo: FC<PreviewProps> = (props) => {
                itemTemplate={productTemplate}
                // header={<h1>{product.type}</h1>}
                circular
-               autoplayInterval={10000}
+               autoplayInterval={15000}
 
             />
          </div>

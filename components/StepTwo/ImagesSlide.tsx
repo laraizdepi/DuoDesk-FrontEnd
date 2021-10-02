@@ -10,47 +10,38 @@ import { ProductService } from "./ProductoService";
 import style from './stepTwo.module.sass'
 
 interface ImageProps {
-  id ?: number,
-  images : string[]
+  images?: string[]
 }
 
-const ImagesSlide:FC<ImageProps> = (props) =>{
-    const [products, setProducts] = useState([]);
-    const productService = new ProductService();
-  
-    useEffect(() => {
-      productService
-        .getProductsSmall()
-        .then((data) => setProducts(data.slice(0, 3)));
-    }, []);
-  
-    const productTemplate = (product:any) => {
-      return (
-          <div>
-              <img
-                src={product.image}
-                alt={product.title}
-                className= {style.ImageSlide}
-              />
-        </div>
-      );
-    };
-    
+const ImagesSlide: FC<ImageProps> = (props) => {
+  const ImagesProp = props.images
+  console.log('images', ImagesProp);
+
+
+  const productTemplate = (image: any) => {
+    console.log(`imageSrc = ${image.src}`);
+
     return (
-        <div className="card">
-          <Carousel
-            value={products}
-            numVisible={1}
-            numScroll={1}
-            //   responsiveOptions={responsiveOptions}
-            itemTemplate={productTemplate}
-            circular
-            autoplayInterval={3000}
-          />
-        </div>
-      
+      <div>
+        <img src={image.src} style={{ maxWidth: '100%' }} />
+      </div>
     );
   };
+
+  return (
+    <div className="card">
+      <Carousel
+        value={ImagesProp}
+        numVisible={1}
+        numScroll={1}
+        itemTemplate={productTemplate}
+        circular
+        autoplayInterval={3000}
+      />
+    </div>
+
+  );
+};
 
 export default ImagesSlide
 
