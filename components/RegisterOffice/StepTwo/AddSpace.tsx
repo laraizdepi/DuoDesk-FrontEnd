@@ -1,15 +1,14 @@
-import React, { FC, useState } from 'react';
-import { Col, Grid, Card, TextInput, NumberInput, Title, Divider, Textarea, Button, Text, Center, Group, Badge, ActionIcon, Modal, MultiSelect, InputWrapper, Input } from '@mantine/core';
-import { Field } from 'formik';
+import React, { FC } from 'react';
+import { Col, Grid, TextInput, NumberInput, Title, Divider, Button, Center } from '@mantine/core';
+import { Field, useFormikContext } from 'formik';
 import Chip from '@mui/material/Chip';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import { BsFillStarFill } from 'react-icons/bs'
 
 import UploadImages from './UploadImages/UploadImages';
-import { TiDelete, TiEdit } from 'react-icons/ti';
 
-const AddSpace = () => {
+const AddSpace: FC = () => {
     const amenities = [
         "Protocolos de Bioseguridad",
         "Parqueadero para carros",
@@ -33,6 +32,12 @@ const AddSpace = () => {
         "Espacio de Yoga"
     ]
 
+    const { values } = useFormikContext()
+
+    const handleNewSpace = () => {
+        console.log(values)
+    }
+
     return (
         <div>
             <Title order={1}>Registra tus espacios</Title>
@@ -44,6 +49,8 @@ const AddSpace = () => {
                             <TextInput
                                 value={field.value}
                                 onChange={(event) => form.setFieldValue(field.name, event.target.value)}
+                                onBlur={(event) => form.setFieldValue(field.name, event.target.value)}
+                                onLoad={(event) => form.setFieldValue(field.name, '')}
                                 placeholder="Nombre de tu espacio"
                                 label="Nombre de tu espacio"
                                 aria-label="My textarea" radius="md" size="md"
@@ -58,6 +65,8 @@ const AddSpace = () => {
                             <TextInput
                                 value={field.value}
                                 onChange={(event) => form.setFieldValue(field.name, event.target.value)}
+                                onBlur={(event) => form.setFieldValue(field.name, event.target.value)}
+                                onLoad={(event) => form.setFieldValue(field.name, '')}
                                 placeholder="Tipo de tu espacio"
                                 label="Tipo de tu espacio"
                                 aria-label="My textarea" radius="md" size="md"
@@ -75,6 +84,8 @@ const AddSpace = () => {
                                 defaultValue={1}
                                 value={field.value}
                                 onChange={(event) => form.setFieldValue(field.name, event.valueOf())}
+                                onBlur={(event) => form.setFieldValue(field.name, event.target.value)}
+                                onLoad={(event) => form.setFieldValue(field.name, 1)}
                                 placeholder="Capacidad de tu espacio"
                                 label="Capacidad de tu espacio"
                                 aria-label="My textarea" radius="md" size="md"
@@ -91,6 +102,8 @@ const AddSpace = () => {
                                 defaultValue={1}
                                 value={field.value}
                                 onChange={(event) => form.setFieldValue(field.name, event.valueOf())}
+                                onBlur={(event) => form.setFieldValue(field.name, event.target.value)}
+                                onLoad={(event) => form.setFieldValue(field.name, 1)}
                                 placeholder="Cupos disponibles actualmente"
                                 label="Cupos disponibles actualmente"
                                 aria-label="My textarea" radius="md" size="md"
@@ -110,14 +123,14 @@ const AddSpace = () => {
                                 defaultValue={10000}
                                 step={1000}
                                 value={field.value}
-                                onChange={(event) => {
-                                    console.log(form)
-                                    form.setFieldValue(field.name, event.valueOf())}}
+                                onChange={(event) => form.setFieldValue(field.name, event.valueOf())}
+                                onBlur={(event) => form.setFieldValue(field.name, event.target.value)}
+                                onLoad={(event) => form.setFieldValue(field.name, 10000)}
                                 placeholder="Precio por hora"
                                 label="Precio por hora"
                                 aria-label="My textarea" radius="md" size="md"
                                 id="officeDescription"
-                                min={4000}
+                                min={3000}
                             />
                         )}
                     </Field>
@@ -126,15 +139,17 @@ const AddSpace = () => {
                     <Field name="dayPrice">
                         {({ field, form, meta }: any) => (
                             <NumberInput
-                                defaultValue={10000}
-                                step={1000}
+                                defaultValue={50000}
+                                step={10000}
                                 value={field.value}
                                 onChange={(event) => form.setFieldValue(field.name, event.valueOf())}
+                                onBlur={(event) => form.setFieldValue(field.name, event.target.value)}
+                                onLoad={(event) => form.setFieldValue(field.name, 10000)}
                                 placeholder="Precio por día"
                                 label="Precio por día"
                                 aria-label="My textarea" radius="md" size="md"
                                 id="officeDescription"
-                                min={4000}
+                                min={10000}
                             />
                         )}
                     </Field>
@@ -143,15 +158,17 @@ const AddSpace = () => {
                     <Field name="weekPrice">
                         {({ field, form, meta }: any) => (
                             <NumberInput
-                                defaultValue={10000}
+                                defaultValue={400000}
                                 step={1000}
                                 value={field.value}
                                 onChange={(event) => form.setFieldValue(field.name, event.valueOf())}
+                                onBlur={(event) => form.setFieldValue(field.name, event.target.value)}
+                                onLoad={(event) => form.setFieldValue(field.name, 10000)}
                                 placeholder="Precio por semana"
                                 label="Precio por semana"
                                 aria-label="My textarea" radius="md" size="md"
                                 id="officeDescription"
-                                min={4000}
+                                min={50000}
                             />
                         )}
                     </Field>
@@ -160,15 +177,17 @@ const AddSpace = () => {
                     <Field name="monthPrice">
                         {({ field, form, meta }: any) => (
                             <NumberInput
-                                defaultValue={10000}
+                                defaultValue={1000000}
                                 step={1000}
                                 value={field.value}
                                 onChange={(event) => form.setFieldValue(field.name, event.valueOf())}
+                                onBlur={(event) => form.setFieldValue(field.name, event.target.value)}
+                                onLoad={(event) => form.setFieldValue(field.name, 10000)}
                                 placeholder="Precio por mes"
                                 label="Precio por mes"
                                 aria-label="My textarea" radius="md" size="md"
                                 id="officeDescription"
-                                min={4000}
+                                min={200000}
                             />
                         )}
                     </Field>
@@ -184,28 +203,25 @@ const AddSpace = () => {
                         defaultValue={[]}
                         freeSolo
                         value={field.value}
-                        onChange={(event: any, newValue: any[] | null) => {
-                            console.log(field.value)
-                        }}
-                        onInputChange={(event, newInputValue) => {
+                        onChange={(event, newInputValue) => {
                             form.setFieldValue(field.name, newInputValue)
-                            console.log(field.value)
                         }}
+                        onLoad={(event) => form.setFieldValue(field.name, [])}
                         renderTags={(value: readonly string[], getTagProps) =>
                             value.map((option: string, index: number) => (
-                                <Chip variant="filled" icon={<BsFillStarFill/>}  color="primary" label={option} {...getTagProps({ index })} />
+                                <Chip variant="filled" icon={<BsFillStarFill />} color="primary" label={option} {...getTagProps({ index })} />
                             ))
                         }
                         renderInput={(params) => {
-                            console.log(params)
-                            return(
+                            return (
                                 <TextField
                                     {...params}
                                     variant="standard"
                                     label="Amenidades"
                                     placeholder="Amenidades"
                                 />
-                        )}}
+                            )
+                        }}
                     />
 
                 )}
@@ -217,7 +233,7 @@ const AddSpace = () => {
                 </Col>
             </Grid>
             <Center>
-                <Button color="teal">Añadir espacio</Button>
+                <Button onClick={handleNewSpace} color="teal">Añadir espacio</Button>
             </Center>
         </div>
     )

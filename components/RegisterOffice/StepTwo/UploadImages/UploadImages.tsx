@@ -6,25 +6,15 @@ import React, { useRef, useState } from 'react';
 import { Toast } from 'primereact/toast';
 import { FileUpload } from 'primereact/fileupload';
 import { ProgressBar } from 'primereact/progressbar';
-import { Button } from '@mantine/core';
-import { Tooltip } from 'primereact/tooltip';
-import { Tag } from 'primereact/tag';
+import { Center, Col, Grid, Group, Progress, Text, Button } from '@mantine/core';
 import Image from 'next/image'
-import { Center, Col, Grid, Group, Progress, Text } from '@mantine/core';
+import { Tooltip } from 'primereact/tooltip';
+import { Field } from 'formik';
 
 const UploadImages = () => {
     const [totalSize, setTotalSize] = useState(0);
-    const toast = useRef(null);
     const fileUploadRef = useRef(null);
 
-    const onTemplateUpload = (e: { files: any[]; }) => {
-        let _totalSize = 0;
-        e.files.forEach((file: { size: any; }) => {
-            _totalSize += (file.size || 0);
-        });
-
-        setTotalSize(_totalSize);
-    }
     const onTemplateClear = () => {
         setTotalSize(0);
     }
@@ -35,10 +25,10 @@ const UploadImages = () => {
 
     const headerTemplate = (options: { className: any; chooseButton: any; uploadButton: any; cancelButton: any; }) => {
         const { className, chooseButton, uploadButton, cancelButton } = options;
-
         return (
             <div className={className} style={{ backgroundColor: 'transparent', display: 'flex', alignItems: 'center' }}>
                 {chooseButton}
+                {uploadButton}
             </div>
         );
     }
@@ -83,7 +73,7 @@ const UploadImages = () => {
     }
 
     const chooseOptions = { icon: 'pi pi-fw pi-images', label: "Escoger archivos", iconOnly: false, className: 'custom-choose-btn p-button-rounded p-button-success p-button', style: { backgroundColor: '#4C6EF5', margin: 'auto' } };
-    const [image, setImage] = useState('')
+    const uploadOptions = { icon: 'pi pi-fw pi-cloud-upload', label: "Guardar imagenes" ,iconOnly: false, className: 'custom-upload-btn p-button-success p-button-rounded p-button-outlined', style: {backgroundColor: '#12b886', margin: 'auto', color:'#fff'} };
 
     return (
         <div>
@@ -93,26 +83,28 @@ const UploadImages = () => {
             <Tooltip target=".custom-cancel-btn" content="Resetear" position="bottom" />
 
             <div className="card">
-                <FileUpload
-                    ref={fileUploadRef}
-                    url="https://primefaces.org/primereact/showcase/upload.php"
-                    multiple accept="image/*"
-                    maxFileSize={10000000}
-                    onUpload={(event: any) => {
-                        console.log(event.files)
-                        setImage(event.files[0].objectURL as string)
-                    }}
-                    onError={onTemplateClear}
-                    onClear={onTemplateClear}
-                    headerTemplate={headerTemplate}
-                    itemTemplate={itemTemplate}
-                    emptyTemplate={emptyTemplate}
-                    chooseOptions={chooseOptions}
-                    progressBarTemplate={progressBarTemplate}
-                    withCredentials
-                />
+                <Field name="spaceImages">
+                    {({ field, form, meta }: any) => (
+                        <FileUpload
+                            ref={fileUploadRef}
+                            multiple accept="image/*"
+                            maxFileSize={10000000}
+                            onUpload={(event: any) => {
+                                console.log(event.files)
+                                form.setFieldValue(field.name, event.files)
+                            }}
+                            onError={onTemplateClear}
+                            onClear={onTemplateClear}
+                            headerTemplate={headerTemplate}
+                            itemTemplate={itemTemplate}
+                            emptyTemplate={emptyTemplate}
+                            chooseOptions={chooseOptions}
+                            uploadOptions={uploadOptions}
+                            progressBarTemplate={progressBarTemplate}
+                        />
+                    )}
+                </Field>
             </div>
-            <img src={image} />
         </div>
     )
 }
