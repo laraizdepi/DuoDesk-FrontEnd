@@ -1,13 +1,7 @@
-import "primeicons/primeicons.css";
-import "primereact/resources/themes/saga-blue/theme.css";
-import "primereact/resources/primereact.css";
 
 
 import React, { useState, useEffect, FC } from "react";
 import { Carousel } from "primereact/carousel";
-import { Button } from "primereact/button";
-import { ProductService } from "./ProductoService";
-import style from './stepTwo.module.sass'
 
 interface ImageProps {
   images?: string[]
