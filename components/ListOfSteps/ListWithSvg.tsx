@@ -8,7 +8,8 @@ const ListWithSvg = () => {
                 <ListOfSteps />
             </Row>
             <Row>
-                <img src={science.src} alt="" />
+
+                {/* <img src={science.src} alt="" /> */}
 
             </Row>
         </Container>
