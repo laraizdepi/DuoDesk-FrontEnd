@@ -78,37 +78,40 @@ const NavbarBoot = () => {
 	if (user.logged) {
 		return (
 			<div>
-				<Navbar bg="dark" variant="dark">
-					<Container>
-						<Navbar.Brand href="http://localhost:3000/">
-							<img
-								alt=""
-								src='https://primefaces.org/primereact/showcase/showcase/images/logo.png'
-								width="30"
-								height="30"
-								className="d-inline-block align-top"
-							/>{' '}
-							React Bootstrap
-						</Navbar.Brand>
-						<Group>
-							<Button variant="gradient" gradient={{ from: 'indigo', to: 'pink' }}>
-								<a href="/register-office">Registra tu oficina</a>
-							</Button>
-							<Menu control={<Avatar src={user.user.image} color="indigo" radius="xl" size="md" />}>
-								<Menu.Label>Cuenta</Menu.Label>
-								<Menu.Item>Mi cuenta</Menu.Item>
-								<Menu.Item>Oficinas Favoritas</Menu.Item>
-								<Menu.Item onClick={logOutHandler}>Cerrar sessión</Menu.Item>
-							</Menu>
-						</Group>
-					</Container>
+				<Navbar bg="light" sticky="top" expand="lg">
+
+						<Container>
+							<Navbar.Brand href="http://localhost:3000/">
+								<Navbar.Toggle aria-controls="responsive-navbar-nav" />
+								<img
+									alt=""
+									src='https://primefaces.org/primereact/showcase/showcase/images/logo.png'
+									width="30"
+									height="30"
+									className="d-inline-block align-top"
+								/>{' '}
+								DuoDesk
+								<Navbar.Toggle aria-controls="responsive-navbar-nav" />
+							</Navbar.Brand>
+							<Group>
+								<Button color="pink" radius="lg" size="md" >
+									<a href="/register-office" style={{ textDecoration: 'none', color: 'white' }} >Registra tu oficina</a>
+								</Button>
+								<Menu control={<Avatar src={user.user.image} color="indigo" radius="xl" size="md" />}>
+									<Menu.Label>Cuenta</Menu.Label>
+									<Menu.Item>Mi cuenta</Menu.Item>
+									<Menu.Item>Oficinas Favoritas</Menu.Item>
+									<Menu.Item onClick={logOutHandler}>Cerrar sessión</Menu.Item>
+								</Menu>
+							</Group>
+						</Container>
 				</Navbar>
 			</div>
 		)
 	} else {
 		return (
 			<div>
-				<Navbar bg="dark" variant="dark">
+				<Navbar bg="light">
 					<Container>
 						<Navbar.Brand href="http://localhost:3000/">
 							<img
@@ -118,11 +121,11 @@ const NavbarBoot = () => {
 								height="30"
 								className="d-inline-block align-top"
 							/>{' '}
-							React Bootstrap
+							DuoDesk
 						</Navbar.Brand>
 						<Navbar.Collapse className="justify-content-end">
-							<Button variant="gradient" gradient={{ from: 'indigo', to: 'pink' }}>
-								<a href="/register-office">Registra tu oficina</a>
+							<Button color="pink" radius="lg" size="md">
+								<a href="/register-office" style={{ textDecoration: 'none', color: 'white' }} >Registra tu oficina</a>
 							</Button>
 							<AuthModal color='teal' text='Iniciar sesión' form="login" />
 							<AuthModal color='teal' text='Registro' form="signup" variant="outline" />
