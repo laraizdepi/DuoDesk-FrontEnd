@@ -1,23 +1,24 @@
+import React, { useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap'
-import PreviewTwo from './PreviewTwo'
+import { ScrollPanel } from 'primereact/scrollpanel';
 import AddSpace from './AddSpace'
-import style from "./stepTwo.module.sass"
-
+import Preview from './Preview/Preview';
 
 const StepTwo = () => {
-    return (
-        <div className = {style.StepTwo}>
-            <Container>
-                <Row>
-                    <Col xs={12} md={6}>
-                        <PreviewTwo />
-                    </Col>
+    const [spaces, setSpaces] = useState<any[]>([])
 
-                    <Col xs={12} md={6}>
-                        <AddSpace />
-                    </Col>
-                </Row>
-            </Container>
+    return (
+        <div>
+            <Row>
+                <Col xs={12} md={6}>
+                    <Preview spaces={spaces} />
+                </Col>
+                <Col xs={12} md={6}>
+                    <ScrollPanel style={{width: '100%', height: '853px'}}>
+                        <AddSpace spaces={spaces} setSpaces={setSpaces}/>
+                    </ScrollPanel>
+                </Col>
+            </Row>
         </div>
     )
 }

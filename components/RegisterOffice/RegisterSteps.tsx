@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
-import { Field, Form, Formik, FormikConfig, FormikValues } from 'formik';
-import { mixed, number, object } from 'yup';
-import { Calendar } from 'primereact/calendar';
+import { Form, Formik, FormikConfig, FormikValues } from 'formik';
 
-import PreviewTwo from '../StepTwo/PreviewTwo';
-
-import StepOne from './StepOne';
-import { Box, Button, Card, CardContent, CircularProgress, Grid, Step, StepLabel, Stepper } from '@material-ui/core';
+import StepOne from './StepOne/StepOne';
+import { Button, Card, CardContent, CircularProgress, Grid, Step, StepLabel, Stepper } from '@material-ui/core';
+import StepTwo from './StepTwo/StepTwo';
 
 interface FormikStepProps extends Pick<FormikConfig<FormikValues>, 'children' | 'validationSchema'> {
   label: string;
@@ -93,12 +90,7 @@ const RegisterSteps = () => {
             <CardContent>
                 <FormikStepper
                     initialValues={{
-                        firstName: '',
-                        lastName: '',
-                        millionaire: false,
-                        money: 0,
-                        description: '',
-                        title: ''
+                        
                     }}
                     onSubmit={async (values) => {
                         await delay(3000);
@@ -109,19 +101,7 @@ const RegisterSteps = () => {
                         <StepOne />
                     </FormikStep>
                     <FormikStep label="Registra tus espacios">
-                        <Field id='firstName'
-                            name={`open`} placeholder='Your Name'>
-                            {({ field, form, meta }: any) => (
-                                <Calendar
-                                    id="horaApertura"
-                                    value={field.value || undefined}
-                                    onChange={(event) => form.setFieldValue(field.name, event.target.value)}
-                                    timeOnly
-                                    hourFormat="12">
-                                </Calendar>
-                            )}
-                        </Field>
-                        <PreviewTwo/>
+                        <StepTwo />
                     </FormikStep>
                 </FormikStepper>
             </CardContent>
