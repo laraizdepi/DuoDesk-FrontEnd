@@ -10,6 +10,7 @@ import { Center, Col, Grid, Group, Progress, Text, Button } from '@mantine/core'
 import Image from 'next/image'
 import { Tooltip } from 'primereact/tooltip';
 import { Field } from 'formik';
+import axios from 'axios';
 
 const UploadImages = () => {
     const [totalSize, setTotalSize] = useState(0);
@@ -66,12 +67,6 @@ const UploadImages = () => {
         )
     }
 
-    const progressBarTemplate = (value: any) => {
-        return (
-            <Progress value={value} />
-        )
-    }
-
     const chooseOptions = { icon: 'pi pi-fw pi-images', label: "Escoger archivos", iconOnly: false, className: 'custom-choose-btn p-button-rounded p-button-success p-button', style: { backgroundColor: '#4C6EF5', margin: 'auto' } };
     const uploadOptions = { icon: 'pi pi-fw pi-cloud-upload', label: "Guardar imagenes" ,iconOnly: false, className: 'custom-upload-btn p-button-success p-button-rounded p-button-outlined', style: {backgroundColor: '#12b886', margin: 'auto', color:'#fff'} };
 
@@ -90,10 +85,18 @@ const UploadImages = () => {
                             multiple accept="image/*"
                             maxFileSize={10000000}
                             customUpload
-                            uploadHandler={(event: any) => {
+                            uploadHandler={async(event: any) => {
                                 console.log(event.files)
+                                const data = new FormData()
+                                data.append('spaceImages', event.files[0])
+                                data.append('spaceImages', event.files[1])
+                                data.append('spaceImages', event.files[2])
+                                // const req = await axios.post('http://localhost:5000/offices', data)
+                                // console.log(req)
                                 form.setFieldValue(field.name, event.files)
+                                console.log(event.options)
                                 fileUploadRef.current.clear()
+                                
                             }}
                             onError={onTemplateClear}
                             onClear={onTemplateClear}
@@ -102,7 +105,6 @@ const UploadImages = () => {
                             emptyTemplate={emptyTemplate}
                             chooseOptions={chooseOptions}
                             uploadOptions={uploadOptions}
-                            progressBarTemplate={progressBarTemplate}
                         />
                     )}
                 </Field>

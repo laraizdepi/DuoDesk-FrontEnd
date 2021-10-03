@@ -30,7 +30,7 @@ const AvailableHours: FC<HoursProps> = React.forwardRef((props, ref: any) => {
                 </Col>
                 {props.disable ?
                     <Col span={6}>
-                        <Switch id={`switch-${slugTitle}`} checked={!active} onChange={handleDisable} label={!active? `No disponible ${props.title}`: `Disponible ${props.title}`}/>
+                        <Switch id={`switch-${slugTitle}`} checked={!active} onChange={handleDisable} label={!active? `Disponible ${props.title}`: `No disponible ${props.title}`}/>
                     </Col>
                 :   
                    null
