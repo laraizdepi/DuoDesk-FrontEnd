@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import { Carousel } from "primereact/carousel";
+import { Card } from "@mantine/core";
 
 interface ImageProps {
 	images: any[]
@@ -9,7 +10,6 @@ const ImagesSlide: FC<ImageProps> = (props) => {
 	const images = props.images
 
 	const productTemplate = (image: any) => {
-		console.log(images)
 		return (
 			<div>
 				<img src={image.objectURL} style={{ maxWidth: '100%' }} />
@@ -18,7 +18,7 @@ const ImagesSlide: FC<ImageProps> = (props) => {
 	};
 
 	return (
-		<div className="card">
+		<Card withBorder>
 			<Carousel
 				value={images}
 				numVisible={1}
@@ -27,7 +27,7 @@ const ImagesSlide: FC<ImageProps> = (props) => {
 				circular
 				autoplayInterval={3000}
 			/>
-		</div>
+		</Card>
 
 	);
 };
