@@ -10,7 +10,7 @@ import { useNotifications } from '@mantine/notifications';
 
 import UploadImages from './UploadImages';
 
-interface AddSpaceProps{
+interface AddSpaceProps {
     spaces: any[],
     setSpaces: Function
 }
@@ -40,27 +40,27 @@ const AddSpace: FC<AddSpaceProps> = (props, ref) => {
     ]
 
     const comparePrices = (hour: number, day: number, week: number, month: number) => {
-        if(hour <= day){
-            if(day <= week){
-                if(week <= month){
-                    return {error: false, message: null}
+        if (hour <= day) {
+            if (day <= week) {
+                if (week <= month) {
+                    return { error: false, message: null }
                 }
-                else{
-                    return {error: true, message: "El precio por semana es mayor que el precio por mes. Por favor, corrige esto."}
+                else {
+                    return { error: true, message: "El precio por semana es mayor que el precio por mes. Por favor, corrige esto." }
                 }
             }
-            else{
-                return {error: true, message: "El precio por día es mayor que el precio por semana. Por favor, corrige esto."}
+            else {
+                return { error: true, message: "El precio por día es mayor que el precio por semana. Por favor, corrige esto." }
             }
         }
-        else{
-            return {error: true, message: "El precio por hora es mayor que el precio por día. Por favor, corrige esto."}
+        else {
+            return { error: true, message: "El precio por hora es mayor que el precio por día. Por favor, corrige esto." }
         }
     }
 
     const uniqueField = (list: any[], field: string, value: any) => {
-        for(let item of list){
-            if(item[field] === value){
+        for (let item of list) {
+            if (item[field] === value) {
                 return false
             }
         }
@@ -71,67 +71,76 @@ const AddSpace: FC<AddSpaceProps> = (props, ref) => {
     const notifications = useNotifications()
     const { values } = formikContext
     const handleNewSpace = (values: any) => {
-        if(!values.nameSpace){
+        if (!values.nameSpace) {
             notifications.showNotification({
-                title: 'Error', 
+                title: 'Error',
                 message: `Introduce un nombre valido para tu espacio por favor`,
-                color: 'pink', icon: <MdErrorOutline/>
+                color: 'pink', icon: <MdErrorOutline />
             })
             return
         }
-        else if(values.nameSpace.length < 5){
+        else if (values.nameSpace.length < 5) {
             notifications.showNotification({
-                title: 'Error', 
+                title: 'Error',
                 message: `Introduce un nombre valido para tu espacio por favor`,
-                color: 'pink', icon: <MdErrorOutline/>
+                color: 'pink', icon: <MdErrorOutline />
             })
             return
         }
-        else if(!uniqueField(props.spaces, 'nameSpace', values.nameSpace)){
+        else if (!uniqueField(props.spaces, 'nameSpace', values.nameSpace)) {
             notifications.showNotification({
-                title: 'Error', 
+                title: 'Error',
                 message: `Introduce un nombre unico para cada espacio por favor`,
-                color: 'pink', icon: <MdErrorOutline/>
+                color: 'pink', icon: <MdErrorOutline />
             })
             return
         }
-        if(!values.typeSpace){
+        if (!values.typeSpace) {
             notifications.showNotification({
-                title: 'Error', 
+                title: 'Error',
                 message: `Escoge una categoria para tu espacio por favor`,
-                color: 'pink', icon: <MdErrorOutline/>
+                color: 'pink', icon: <MdErrorOutline />
             })
             return
         }
 
         const pricesValidation = comparePrices(values.hourPrice, values.dayPrice, values.weekPrice, values.monthPrice)
-        if(pricesValidation.error){
+        if (pricesValidation.error) {
             notifications.showNotification({
-                title: 'Error', 
+                title: 'Error',
                 message: `${pricesValidation.message}`,
-                color: 'pink', icon: <MdErrorOutline/>
+                color: 'pink', icon: <MdErrorOutline />
             })
             return
         }
-        if(!values.spaceImages || values.spaceImages.length < 1){
+        if (!values.spaceImages || values.spaceImages.length < 1) {
             notifications.showNotification({
-                title: 'Error', 
+                title: 'Error',
                 message: `Introduce una o más imagenes para cada espacio. 
                 Sí ya las has agregado en el formulario, no olvides oprimir en "Guardar imagenes"`,
-                color: 'pink', icon: <MdErrorOutline/>
+                color: 'pink', icon: <MdErrorOutline />
             })
             return
         }
         console.log(values)
         props.setSpaces([...props.spaces, values])
         notifications.showNotification({
-            title: 'Espacio añadido correctamente', 
+            title: 'Espacio añadido correctamente',
             message: `Felicitaciones, tu espacio ha sido añadido exitosamente.
             Sí deseas, puedes seguir añadiendo más o puedes continuar
             el formulario.`,
-            color: 'teal', icon: <MdDoneAll/>
+            color: 'teal', icon: <MdDoneAll />
         })
         formikContext.setFieldValue('spaceImages', [])
+        formikContext.setFieldValue("nameSpace", '')
+        formikContext.setFieldValue("typeSpace", '')
+        formikContext.setFieldValue("capacitySpace", 1)
+        formikContext.setFieldValue("availableSpace", 1)
+        formikContext.setFieldValue("hourPrice", 10000)
+        formikContext.setFieldValue("dayPrice", 50000)
+        formikContext.setFieldValue("weekPrice", 400000)
+        formikContext.setFieldValue("monthPrice", 1000000)
+        formikContext.setFieldValue("nameAmenities", [])
     }
 
     return (
@@ -328,7 +337,7 @@ const AddSpace: FC<AddSpaceProps> = (props, ref) => {
                 </Col>
             </Grid>
             <Center>
-                <Button onClick={() => {handleNewSpace(values)}} color="teal">Añadir espacio</Button>
+                <Button onClick={() => { handleNewSpace(values) }} color="teal">Añadir espacio</Button>
             </Center>
         </div>
     )

@@ -4,10 +4,12 @@ import { GrMapLocation } from 'react-icons/gr'
 
 import Script from 'next/script'
 import Styles from './newOfficeMap.module.scss'
-import { Field } from 'formik'
+import { Field, useFormikContext } from 'formik'
 
 const NewOfficeMap: FC = () => {
     const [direction, setDirection] = useState<any>()
+
+    const formikContext = useFormikContext()
 
     useEffect(() => {
         const map = new google.maps.Map(
@@ -69,6 +71,10 @@ const NewOfficeMap: FC = () => {
         })
     }, [])
 
+    useEffect(() => {
+        formikContext.setFieldValue('location', direction)
+    }, [direction])
+
     return (
         <div>
             <Script async strategy="beforeInteractive" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANYOIziGbeDJiUhK10ZsgOv60IT2Et3tQ&libraries=places" />
@@ -79,7 +85,7 @@ const NewOfficeMap: FC = () => {
                     <br />
                 </div>
                 <div id={Styles.pacContainer}>
-                    <Field id='firstName' name='direction' placeholder='Your Name'>
+                    <Field name='direction'>
                         {({ field, form, meta }: any) => (
                             <Input 
                                 value={field.value}

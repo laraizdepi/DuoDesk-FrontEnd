@@ -16,7 +16,7 @@ const StepOne = () => {
             </div>
             <Grid id="step-one" columns={24}>
                 <Col span={24} md={11}>
-                    <Field id='firstName' name='title' placeholder='Your Name'>
+                    <Field name='title'>
                         {({ field, form, meta }: any) => (
                             <TextInput
                                 value={field.value}
@@ -29,7 +29,7 @@ const StepOne = () => {
                             />
                         )}
                     </Field>
-                    <Field id='firstName' name='description' placeholder='Your Name'>
+                    <Field name='description'>
                         {({ field, form, meta }: any) => (
                             <Textarea
                                 value={field.value}

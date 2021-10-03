@@ -8,10 +8,12 @@ import { useFormikContext } from 'formik';
 const StepTwo = () => {
     const [spaces, setSpaces] = useState<any[]>([])
 
-    const formikContext = useFormikContext()
+    const formikContext: any = useFormikContext()
 
     useEffect(() => {
         formikContext.setFieldValue('spaces', spaces)
+        console.log(formikContext.values.spaces)
+        console.log(formikContext.values)
     }, [spaces])
 
     return (

@@ -39,14 +39,14 @@ const AvailableHours: FC<HoursProps> = React.forwardRef((props, ref: any) => {
             <Grid id="available-hours">
                 <Col span={12} md={6}>
                     <label htmlFor="horaApertura">Hora de apertura: &nbsp;</label>
-                    <Field id='firstName' 
-                    name={`open-${slugTitle}`} placeholder='Your Name'>
+                    <Field name={`open-${slugTitle}`}>
                         {({ field, form, meta }: any) => (
                             <Calendar 
                                 id="horaApertura" 
                                 disabled={active} 
                                 value={field.value || undefined} 
-                                onChange={(event) => form.setFieldValue(field.name, event.target.value)} 
+                                onChange={(event) => form.setFieldValue(field.name, 
+                                    active ? null : event.target.value)} 
                                 timeOnly 
                                 hourFormat="12">
                             </Calendar>
@@ -55,14 +55,14 @@ const AvailableHours: FC<HoursProps> = React.forwardRef((props, ref: any) => {
                 </Col>
                 <Col span={12} md={6}>
                     <label htmlFor="horaCierre">Hora de cierre:</label>                        
-                    <Field id='firstName' 
-                    name={`close-${slugTitle}`} placeholder='Your Name'>
+                    <Field name={`close-${slugTitle}`}>
                         {({ field, form, meta }: any) => (
                             <Calendar 
                                 id="horaApertura" 
                                 disabled={active} 
                                 value={field.value} 
-                                onChange={(event) => form.setFieldValue(field.name, event.target.value)} 
+                                onChange={(event) => form.setFieldValue(field.name, 
+                                    active ? null : event.target.value)} 
                                 timeOnly 
                                 hourFormat="12" />
                         )}

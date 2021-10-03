@@ -1,14 +1,19 @@
-import React, { FC, useState } from 'react'
-import { Field } from 'formik'
+import React, { FC, useEffect, useState } from 'react'
+import { Field, useFormikContext } from 'formik'
 import { DatePicker } from '@mantine/dates'
-import { ActionIcon, Button, Card, Center, Col, Divider, Grid, Group, TextInput, Title, Text, List, ThemeIcon, Highlight } from '@mantine/core'
+import { ActionIcon, Button, Card, Center, Col, Divider, Grid, Group, TextInput, Title, Text, List, ThemeIcon, Highlight, NumberInput } from '@mantine/core'
 import { FiDelete } from 'react-icons/fi'
 import { IoCheckmarkDoneCircleOutline } from 'react-icons/io5'
 
 
 const AddContacts: FC<{ length: number, changeLength: Function }> = (props) => {
     let fields = Array.from(Array(props.length || 0).keys())
-    console.log(fields)
+    const formikContext = useFormikContext()
+
+    useEffect(() => {
+        formikContext.setFieldValue('numberNotifications', fields.length)
+    }, [fields])
+
     return (
         <div>
             {fields.map((element) => (
@@ -29,15 +34,16 @@ const AddContacts: FC<{ length: number, changeLength: Function }> = (props) => {
                         <Field name={`notificationPhoneMain${element}`}>
                             {({ field, form, meta }: any) => (
                                 <Grid align="end">
-                                    <Col span={10}>
+                                    <Col span={11}>
                                         <TextInput
-                                            type="tel"
+                                            type="number"
+                                            icon={<div>+57|</div>}
                                             value={field.value}
                                             onChange={event => form.setFieldValue(field.name, event.target.value)}
                                             placeholder={`Telefono para notificaciones ${element + 1}`}
                                             label={`Telefono para notificaciones ${element + 1}`} />
                                     </Col>
-                                    <Col span={2}>
+                                    <Col span={1}>
                                         <ActionIcon onClick={() => {
                                             console.log(fields.length - 1)
                                             props.changeLength(fields.length - 1)
@@ -70,8 +76,8 @@ const StepThree: FC = () => {
                                 value={field.value}
                                 onChange={event => form.setFieldValue(field.name, event?.toString())}
                                 placeholder="Escoge desde cuando tu espacio estará disponible"
-                                label="Escoge desde cuando tu espacio estará disponible" 
-                                excludeDate={(date) => new Date(date).getTime() < new Date(Date.now()).getTime()}/>
+                                label="Escoge desde cuando tu espacio estará disponible"
+                                excludeDate={(date) => new Date(date).getTime() <= new Date(Date.now()).getTime()} />
                         )}
                     </Field>
                 </Col>
@@ -84,7 +90,7 @@ const StepThree: FC = () => {
                             <TextInput
                                 type="email"
                                 value={field.value}
-                                onChange={event => form.setFieldValue(field.name,)}
+                                onChange={event => form.setFieldValue(field.name, event.target.value)}
                                 placeholder="Email Oficial"
                                 label="Email Oficial" />
                         )}
@@ -94,10 +100,11 @@ const StepThree: FC = () => {
                     <Field name="officialPhone">
                         {({ field, form, meta }: any) => (
                             <TextInput
-                                type="tel"
+                                type="number"
+                                icon={<div>+57|</div>}
+                                placeholder="31234567890"
                                 value={field.value}
-                                onChange={event => form.setFieldValue(field.name, event?.toString())}
-                                placeholder="Telefono Oficial"
+                                onChange={event => form.setFieldValue(field.name, event.target.value)}
                                 label="Telefono Oficial" />
                         )}
                     </Field>
@@ -121,7 +128,8 @@ const StepThree: FC = () => {
                     <Field name="notificationPhoneMain">
                         {({ field, form, meta }: any) => (
                             <TextInput
-                                type="tel"
+                                type="number"
+                                icon={<div>+57|</div>}
                                 value={field.value}
                                 onChange={event => form.setFieldValue(field.name, event.target.value)}
                                 placeholder="Telefono para notificaciones principal"
@@ -137,13 +145,13 @@ const StepThree: FC = () => {
             <Divider margins="xs" label="¿Como funciona nuestra plataforma?" labelPosition="center" />
             <Center>
                 <Card withBorder radius="md" style={{ width: '75%' }} padding="xl">
-                    <Card.Section style={{marginTop: '1rem'}}>
+                    <Card.Section style={{ marginTop: '1rem' }}>
                         <Center>
                             <Title>¿Como funciona nuestra plataforma?</Title>
                         </Center>
                     </Card.Section>
                     <Divider margins="md" />
-                    <Card.Section style={{margin: '1rem'}}>
+                    <Card.Section style={{ margin: '1rem' }}>
                         <Text>En DuoDesk, lo más importante son nuestros usuarios.
                             Eso te incluye a ti, quién busca ayudar a otros a conseguir un
                             espacio más comodo para trabajar. Por eso queremos explicarte como
@@ -151,12 +159,12 @@ const StepThree: FC = () => {
                             se trabajan los precios en la plataforma. Ahora, queremos enseñarte como será el resto.
                         </Text>
                     </Card.Section>
-                    <Card.Section style={{padding: '1rem'}}>
+                    <Card.Section style={{ padding: '1rem' }}>
                         <Grid grow id="whatToDo">
                             <Col span={12} md={6}>
-                            <Highlight highlightColor="teal" highlight="DuoHost" component={Title}>
-                                    ¿Qué hace un DuoHost?
-                                </Highlight>
+                                <Title style={{ marginBottom: '1rem' }}>
+                                    ¿Qué hace un <span style={{ textDecoration: 'underline #12b886' }}>DuoHost</span>?
+                                </Title>
                                 <List size="sm" spacing="md" icon={
                                     <ThemeIcon color="teal" radius="xl">
                                         <IoCheckmarkDoneCircleOutline />
@@ -170,9 +178,9 @@ const StepThree: FC = () => {
                                 </List>
                             </Col>
                             <Col span={12} md={6}>
-                                <Highlight highlightColor="indigo" highlight="DuoUser" component={Title}>
-                                    ¿Qué hace un DuoUser?
-                                </Highlight>
+                                <Title style={{ marginBottom: '1rem' }}>
+                                    ¿Qué hace un <span style={{ textDecoration: 'underline #4C6EF5' }}>DuoUser</span>?
+                                </Title>
                                 <List size="sm" spacing="md" icon={
                                     <ThemeIcon color="indigo" radius="xl">
                                         <IoCheckmarkDoneCircleOutline />
