@@ -41,7 +41,7 @@ const FormikStepper = ({ children, ...props }: FormikConfig<FormikValues>) => {
 			}}
 		>
 			{({ isSubmitting }) => (
-				<Form autoComplete="on">
+				<Form autoComplete="on" >
 					<Stepper alternativeLabel activeStep={step}>
 						{childrenArray.map((child, index) => (
 							<Step key={child.props.label} completed={step > index || completed}>
@@ -84,6 +84,13 @@ const FormikStepper = ({ children, ...props }: FormikConfig<FormikValues>) => {
 }
 
 const RegisterSteps = () => {
+	const toSlug = (text: string) => {return text.toString().toLowerCase()
+        .replace(/\s+/g, '')
+        .replace(/[^\w\-]^.+/g, '')
+        .replace(/\-\-+/g, '')
+        .replace(/^-+/, '')
+        .replace(/-+$/, '')
+	}
 	return (
 		<Card>
 			<CardContent>
@@ -105,38 +112,50 @@ const RegisterSteps = () => {
 						monthPrice: 1000000,
 						nameAmenities: [],
 					}}
-					onSubmit={async (values) => {
-						// const data = new FormData()
-						// data.append('title', values.title)
-						// data.append('description', values.description)
-						// data.append('weekSchedule', values["open-de-lunes-a-viernes"])
-						// data.append('weekSchedule', values["close-de-lunes-a-viernes"])
-						// if(values['open-sabado']){
-						// 	if(values['close-sabado']){
-						// 		data.append('saturdaySchedule', values['open-sabado'])
-						// 		data.append('saturdaySchedule', values['close-sabado'])
-						// 	}
-						// }
-						// if(values['open-domingo']){
-						// 	if(values['close-domingo']){
-						// 		data.append('sundaySchedule', values['open-domingo'])
-						// 		data.append('sundaySchedule', values['close-domingo'])
-						// 	}
-						// }
-						// data.append('location', JSON.stringify(values.location))
+					onSubmit={async (values, actions) => {
+						console.log(values.spaces)
+						const data = new FormData()
+						data.append('title', values.title)
+						data.append('description', values.description)
+						data.append('weekSchedule', values["open-de-lunes-a-viernes"])
+						data.append('weekSchedule', values["close-de-lunes-a-viernes"])
+						if(values['open-sabado']){
+							if(values['close-sabado']){
+								data.append('saturdaySchedule', values['open-sabado'])
+								data.append('saturdaySchedule', values['close-sabado'])
+							}
+						}
+						if(values['open-domingo']){
+							if(values['close-domingo']){
+								data.append('sundaySchedule', values['open-domingo'])
+								data.append('sundaySchedule', values['close-domingo'])
+							}
+						}
+						data.append('location', JSON.stringify(values.location))
 						// data.append('spaces', JSON.stringify(values.spaces))
-						// data.append('notifications', values.notificationEmailMain)
-						// data.append('notifications', values.notificationPhoneMain)
-						// data.append('official', values.officialEmail)
-						// data.append('official', values.officialPhone)
-						// data.append('openDate', values.openDate)
-						// if(values.numberNotifications){
-						// 	for(let i = 0; i<=Number(values.numberNotifications); i++){
-						// 		data.append('notifications', values[`notificationEmail${i}`])
-						// 		data.append('notifications', values[`notificationPhoneMain${i}`])		
-						// 	}
-						// }
-						// await axios.post('http://localhost:5000/offices', data, {withCredentials: true})
+						for(let space of values.spaces){
+							space.imagesUrls = []
+							for(let image of space.spaceImages){
+								const url = `${toSlug(values.title)}-${toSlug(space.nameSpace)}-${toSlug(image.name)}`
+								data.append(url, image, image.name)
+								space.imagesUrls.push(url)
+							}
+							delete space.spaceImages
+							data.append('spaces', JSON.stringify(space))
+						}
+						data.append('notifications', values.notificationEmailMain)
+						data.append('notifications', values.notificationPhoneMain)
+						data.append('official', values.officialEmail)
+						data.append('official', values.officialPhone)
+						data.append('openDate', values.openDate)
+						if(values.numberNotifications){
+							for(let i = 0; i<=Number(values.numberNotifications); i++){
+								data.append('notifications', values[`notificationEmail${i}`])
+								data.append('notifications', values[`notificationPhoneMain${i}`])		
+							}
+						}
+						await axios.post('http://localhost:5000/offices', data, {withCredentials: true})
+						actions.setSubmitting(false)
 					}}
 				>
 					<FormikStep label="Información básica">

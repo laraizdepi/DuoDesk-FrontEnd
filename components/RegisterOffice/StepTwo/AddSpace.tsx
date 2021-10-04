@@ -122,8 +122,19 @@ const AddSpace: FC<AddSpaceProps> = (props, ref) => {
             })
             return
         }
-        console.log(values)
-        props.setSpaces([...props.spaces, values])
+        const newSpace = {
+            nameSpace: values.nameSpace,
+            typeSpace: values.typeSpace,
+            capacitySpace: values.capacitySpace,
+            availableSpace: values.availableSpace,
+            hourPrice: values.hourPrice,
+            dayPrice: values.dayPrice,
+            weekPrice: values.weekPrice,
+            monthPrice: values.monthPrice,
+            nameAmenities: values.nameAmenities,
+            spaceImages: values.spaceImages,
+        }
+        props.setSpaces([...props.spaces, newSpace])
         notifications.showNotification({
             title: 'Espacio añadido correctamente',
             message: `Felicitaciones, tu espacio ha sido añadido exitosamente.
@@ -131,7 +142,6 @@ const AddSpace: FC<AddSpaceProps> = (props, ref) => {
             el formulario.`,
             color: 'teal', icon: <MdDoneAll />
         })
-        formikContext.setFieldValue('spaceImages', [])
         formikContext.setFieldValue("nameSpace", '')
         formikContext.setFieldValue("typeSpace", '')
         formikContext.setFieldValue("capacitySpace", 1)
@@ -141,6 +151,7 @@ const AddSpace: FC<AddSpaceProps> = (props, ref) => {
         formikContext.setFieldValue("weekPrice", 400000)
         formikContext.setFieldValue("monthPrice", 1000000)
         formikContext.setFieldValue("nameAmenities", [])
+        formikContext.setFieldValue('spaceImages', [])
     }
 
     return (

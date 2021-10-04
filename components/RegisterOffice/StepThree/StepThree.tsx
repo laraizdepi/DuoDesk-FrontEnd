@@ -11,7 +11,9 @@ const AddContacts: FC<{ length: number, changeLength: Function }> = (props) => {
     const formikContext = useFormikContext()
 
     useEffect(() => {
-        formikContext.setFieldValue('numberNotifications', fields.length)
+        if(fields && fields.length > 0){
+            formikContext.setFieldValue('numberNotifications', fields.length)
+        }
     }, [fields])
 
     return (

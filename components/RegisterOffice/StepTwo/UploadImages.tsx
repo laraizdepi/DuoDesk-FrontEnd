@@ -87,14 +87,7 @@ const UploadImages = () => {
                             customUpload
                             uploadHandler={async(event: any) => {
                                 console.log(event.files)
-                                const data = new FormData()
-                                data.append('spaceImages', event.files[0])
-                                data.append('spaceImages', event.files[1])
-                                data.append('spaceImages', event.files[2])
-                                // const req = await axios.post('http://localhost:5000/offices', data)
-                                // console.log(req)
                                 form.setFieldValue(field.name, event.files)
-                                console.log(event.options)
                                 fileUploadRef.current.clear()
                                 
                             }}
