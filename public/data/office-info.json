@@ -32,6 +32,7 @@
 			"type": "Escritorio Personal",
 			"quantity": 5,
 			"cantidadPersonas": 2,
+			"direction" : "Avenida 39 ## 92-78",
 			"amenidades": [
 				"Ascensor",
 				"Playa",
@@ -72,6 +73,7 @@
 			"type": "Oficina Privada",
 			"quantity": 2,
 			"cantidadPersonas": 4,
+			"direction" : "calle 152 ## 92-32",
 			"amenidades": [
 				"Ascensor",
 				"impresora",
@@ -111,6 +113,7 @@
 			"type": "Sala de reuniones",
 			"quantity": 4,
 			"cantidadPersonas": 5,
+			"direction" : "Ac. 53 ## 23-32",
 			"amenidades": [
 				"Cafe",
 				"impresora",

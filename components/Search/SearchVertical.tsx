@@ -1,19 +1,18 @@
 import { Container, Row, Col } from 'react-bootstrap'
 import * as React from 'react';
 import { useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import { Badge, Center, Divider, Group, Title, Text, Button } from "@mantine/core"
+import {Divider, Group, Title, Text} from "@mantine/core"
 import style from './Search.module.sass'
 import { CardActionArea } from '@mui/material';
 import { AiOutlineHeart } from 'react-icons/ai'
 import { AiTwotoneHeart } from 'react-icons/ai'
 import { useState } from 'react';
 import ImagesSlide from './ImagesSlide';
+import CardChange from './CardChange'
 const SearchVertical = () => {
   const theme = useTheme();
   const [liked, setliked] = useState(false)
@@ -54,13 +53,6 @@ const SearchVertical = () => {
       <Card sx={{ maxWidth: 350 }}>
         <CardActionArea>
           <ImagesSlide images={Images} />
-
-          {/* <CardMedia
-            component="img"
-            height="230"
-            image="https://www.coworker.com/mag/wp-content/uploads/2019/12/Potential-Feature-Image-2.png"
-            alt="green iguana"
-          /> */}
           <CardContent>
             <div>
               <Row>
@@ -126,6 +118,10 @@ const SearchVertical = () => {
       {/* <div>
             <ImagesSlide/>
       </div> */}
+      <div>
+        <CardChange/>
+
+      </div>
     </div>
   );
 
