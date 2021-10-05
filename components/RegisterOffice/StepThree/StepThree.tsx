@@ -8,18 +8,11 @@ import { IoCheckmarkDoneCircleOutline } from 'react-icons/io5'
 
 const AddContacts: FC<{ length: number, changeLength: Function }> = (props) => {
     let fields = Array.from(Array(props.length || 0).keys())
-    const formikContext = useFormikContext()
-
-    useEffect(() => {
-        if(fields && fields.length > 0){
-            formikContext.setFieldValue('numberNotifications', fields.length)
-        }
-    }, [fields])
 
     return (
         <div>
             {fields.map((element) => (
-                <Grid>
+                <Grid key={element}>
                     <Col span={12} md={6}>
                         <Field name={`notificationEmail${element}`}>
                             {({ field, form, meta }: any) => (
@@ -67,6 +60,12 @@ const AddContacts: FC<{ length: number, changeLength: Function }> = (props) => {
 
 const StepThree: FC = () => {
     const [dataNumber, setDataNumber] = useState<number>(0)
+
+    const formikContext = useFormikContext()
+
+    useEffect(() => {
+        formikContext.setFieldValue('numberNotifications', dataNumber)
+    }, [dataNumber])
 
     return (
         <div>
@@ -133,7 +132,7 @@ const StepThree: FC = () => {
                                 type="number"
                                 icon={<div>+57|</div>}
                                 value={field.value}
-                                onChange={event => form.setFieldValue(field.name, event.target.value)}
+                                onChange={event => {form.setFieldValue(field.name, event.target.value)}}
                                 placeholder="Telefono para notificaciones principal"
                                 label="Telefono para notificaciones principal" />
                         )}
