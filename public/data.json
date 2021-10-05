@@ -1,0 +1,252 @@
+{
+    "title":"Oficina 1",
+    "description":"sem integer vitae justo eget magna fermentum iaculis eu non diam phasellus vestibulum lorem sed risus ultricies tristique nulla aliquet enim tortor at auctor urna nunc id cursus metus aliquam eleifend mi in nulla posuere sollicitudin aliquam ultrices sagittis orci a scelerisque purus semper eget duis at tellus at urna condimentum mattis pellentesque id nibh tortor id aliquet lectus proin nibh nisl condimentum id venenatis a condimentum vitae sapien pellentesque habitant morbi tristique senectus et",
+    "weekSchedule":[
+        "Mon Oct 04 2021 00:33:39 GMT-0500 (Colombia Standard Time)",
+        "Mon Oct 04 2021 12:32:40 GMT-0500 (Colombia Standard Time)"
+    ],
+    "location":{
+        "address_components":[
+            {
+                "long_name":"# 92-32",
+                "short_name":"# 92-32",
+                "types":[
+                    "street_number"
+                ]
+            },
+            {
+                "long_name":"Avenida Calle 26",
+                "short_name":"Ac. 26",
+                "types":[
+                    "route"
+                ]
+            },
+            {
+                "long_name":"Bogotá",
+                "short_name":"Bogotá",
+                "types":[
+                    "locality",
+                    "political"
+                ]
+            },
+            {
+                "long_name":"Cundinamarca",
+                "short_name":"Cundinamarca",
+                "types":[
+                    "administrative_area_level_1",
+                    "political"
+                ]
+            },
+            {
+                "long_name":"Colombia",
+                "short_name":"CO",
+                "types":[
+                    "country",
+                    "political"
+                ]
+            },
+            {
+                "long_name":"110911",
+                "short_name":"110911",
+                "types":[
+                    "postal_code"
+                ]
+            }
+        ],
+        "adr_address":"<span class=\"street-address\">Avenida Calle 26 ## 92-32</span>, <span class=\"locality\">Bogotá</span>, <span class=\"region\">Cundinamarca</span>, <span class=\"postal-code\">110911</span>, <span class=\"country-name\">Colombia</span>",
+        "business_status":"OPERATIONAL",
+        "formatted_address":"Ac. 26 ## 92-32, Bogotá, Cundinamarca, Colombia",
+        "formatted_phone_number":"(1) 5087567",
+        "geometry":{
+            "location":{
+                "lat":4.6831765,
+                "lng":-74.1201095
+            },
+            "viewport":{
+                "south":4.681637319708497,
+                "west":-74.1212948802915,
+                "north":4.684335280291502,
+                "east":-74.1185969197085
+            }
+        },
+        "icon":"https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/generic_business-71.png",
+        "icon_background_color":"#7B9EB0",
+        "icon_mask_base_uri":"https://maps.gstatic.com/mapfiles/place_api/icons/v2/generic_pinlet",
+        "international_phone_number":"+57 1 5087567",
+        "name":"WeWork",
+        "photos":[
+            {
+                "height":1192,
+                "html_attributions":[
+                    "<a href=\"https://maps.google.com/maps/contrib/115444054422435467393\">WeWork Espacios de Oficinas Amobladas &amp; Coworking</a>"
+                ],
+                "width":2119
+            },
+            {
+                "height":2000,
+                "html_attributions":[
+                    "<a href=\"https://maps.google.com/maps/contrib/115444054422435467393\">WeWork Espacios de Oficinas Amobladas &amp; Coworking</a>"
+                ],
+                "width":3000
+            },
+            {
+                "height":4208,
+                "html_attributions":[
+                    "<a href=\"https://maps.google.com/maps/contrib/104187092959108967347\">Robert Stivens Galindo</a>"
+                ],
+                "width":3120
+            },
+            {
+                "height":1200,
+                "html_attributions":[
+                    "<a href=\"https://maps.google.com/maps/contrib/102310091572007638922\">Nicolay Fernando Ramirez Rodriguez</a>"
+                ],
+                "width":1600
+            },
+            {
+                "height":3024,
+                "html_attributions":[
+                    "<a href=\"https://maps.google.com/maps/contrib/112154294760194088613\">Carlos Martinez</a>"
+                ],
+                "width":4032
+            },
+            {
+                "height":2000,
+                "html_attributions":[
+                    "<a href=\"https://maps.google.com/maps/contrib/115444054422435467393\">WeWork Espacios de Oficinas Amobladas &amp; Coworking</a>"
+                ],
+                "width":3000
+            },
+            {
+                "height":3120,
+                "html_attributions":[
+                    "<a href=\"https://maps.google.com/maps/contrib/111753152888480474723\">JOSE MARIA PRIETO MESA</a>"
+                ],
+                "width":4160
+            },
+            {
+                "height":2000,
+                "html_attributions":[
+                    "<a href=\"https://maps.google.com/maps/contrib/115444054422435467393\">WeWork Espacios de Oficinas Amobladas &amp; Coworking</a>"
+                ],
+                "width":3078
+            },
+            {
+                "height":2000,
+                "html_attributions":[
+                    "<a href=\"https://maps.google.com/maps/contrib/115444054422435467393\">WeWork Espacios de Oficinas Amobladas &amp; Coworking</a>"
+                ],
+                "width":3000
+            },
+            {
+                "height":2560,
+                "html_attributions":[
+                    "<a href=\"https://maps.google.com/maps/contrib/102313998079510664681\">Mavic Ronderos</a>"
+                ],
+                "width":1184
+            }
+        ],
+        "place_id":"ChIJAe1ML2abP44RRO-7wlKuIHw",
+        "plus_code":{
+            "global_code":"67P7MVMH+7X"
+        },
+        "rating":4.8,
+        "reference":"ChIJAe1ML2abP44RRO-7wlKuIHw",
+        "reviews":[
+            {
+                "author_name":"Jesus Zagarra",
+                "author_url":"https://www.google.com/maps/contrib/117330040846676002409/reviews",
+                "language":"en",
+                "profile_photo_url":"https://lh3.googleusercontent.com/a/AATXAJzfI43DSXYERs0y_RPWUd96gg3PLHr3yQBvUyM7=s128-c0x00000000-cc-rp-mo",
+                "rating":5,
+                "relative_time_description":"a year ago",
+                "text":"Really secure, although, you need access from your parent company before accessing we work facilities on connecta. Plenty of space and offices, they assign a specific room for you or your team. Secure access and visitors are allowed (you need the complete name and approval of the person who will represent you before getting into wework facilities). Around the area you'll find lots of places to have something to eat, or have a treat or drinks at a fair price. Some places are somewhat expensive, but all around there are plenty of options to choose from.",
+                "time":1595372013
+            },
+            {
+                "author_name":"Juan García",
+                "author_url":"https://www.google.com/maps/contrib/111285279164954706834/reviews",
+                "language":"en",
+                "profile_photo_url":"https://lh3.googleusercontent.com/a-/AOh14GgdWCvNjpDKdQyWzxRVN6bLo4tfnIB4xD6Uv-BnjwY=s128-c0x00000000-cc-rp-mo",
+                "rating":5,
+                "relative_time_description":"a year ago",
+                "text":"An excellent place for making businesses with good brands and ecosystem that is why is called \"Connecta Business Ecosystem\" and WeWork help entepreneurs to growth...",
+                "time":1601813822
+            },
+            {
+                "author_name":"Carla Sánchez",
+                "author_url":"https://www.google.com/maps/contrib/107202642191034206557/reviews",
+                "language":"en",
+                "profile_photo_url":"https://lh3.googleusercontent.com/a-/AOh14GhUiwQk_Roz7xHKQUFlnRR51CUC8FMBpDRSy1Y9ng=s128-c0x00000000-cc-rp-mo",
+                "rating":5,
+                "relative_time_description":"6 months ago",
+                "text":"Best place to Work.",
+                "time":1616948644
+            },
+            {
+                "author_name":"Kevin Sean Vercelli Bradley",
+                "author_url":"https://www.google.com/maps/contrib/111066833399558513202/reviews",
+                "language":"en",
+                "profile_photo_url":"https://lh3.googleusercontent.com/a-/AOh14GjIi_6QddGSQRwdpUNiGkL-d5Jkuh3ozFln5yaguQ=s128-c0x00000000-cc-rp-mo",
+                "rating":5,
+                "relative_time_description":"11 months ago",
+                "text":"Amazon place to work. It is wonderful",
+                "time":1604679665
+            },
+            {
+                "author_name":"juan david quijano",
+                "author_url":"https://www.google.com/maps/contrib/108730078750966099023/reviews",
+                "language":"en",
+                "profile_photo_url":"https://lh3.googleusercontent.com/a-/AOh14GhyRmT7D0VJNOQ8TJlpX7fr_rEED6nVLVLimkztCQI=s128-c0x00000000-cc-rp-mo-ba4",
+                "rating":5,
+                "relative_time_description":"6 months ago",
+                "text":"Nice infrastructure and staff",
+                "time":1616448191
+            }
+        ],
+        "types":[
+            "real_estate_agency",
+            "point_of_interest",
+            "establishment"
+        ],
+        "url":"https://maps.google.com/?cid=8944340530435452740",
+        "user_ratings_total":147,
+        "utc_offset":-300,
+        "vicinity":"Avenida Calle 26 ## 92-32",
+        "website":"https://www.wework.com/es-LA/buildings/calle-26-92-32--bogota?utm_source=Google&utm_campaign=Organic&utm_medium=Listings",
+        "html_attributions":[
+            
+        ],
+        "utc_offset_minutes":-300
+    },
+    "spaces":{
+        "nameSpace":"DuoDesk",
+        "typeSpace":"Oficina privada",
+        "capacitySpace":1,
+        "availableSpace":1,
+        "hourPrice":10000,
+        "dayPrice":50000,
+        "weekPrice":400000,
+        "monthPrice":1000000,
+        "nameAmenities":[
+            "Gimnasio",
+            "Impresora",
+            "Parqueadero para motocicletas"
+        ],
+        "imagesUrls":[
+            "oficina1-duodesk-abc-123.jpg",
+            "oficina1-duodesk-abc-124.jpg",
+            "oficina1-duodesk-autumn_in_kanas_by_wang_jinyu.jpg",
+            "oficina1-duodesk-cristina-gottardi-wndpwtidut0-unsplash.jpg"
+        ]
+    },
+    "notifications":[
+        "juansecab2013@hotmail.com",
+        "3133539142"
+    ],
+    "official":[
+        "juansecab2013@hotmail.com",
+        "3133539142"
+    ],
+    "openDate":"Tue Oct 05 2021 00:00:00 GMT-0500 (Colombia Standard Time)"
+}
