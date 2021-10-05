@@ -7,6 +7,7 @@ import TextField from '@mui/material/TextField';
 import { BsFillStarFill } from 'react-icons/bs'
 import { MdErrorOutline, MdDoneAll } from 'react-icons/md'
 import { useNotifications } from '@mantine/notifications';
+import { MultiSelect } from 'primereact/multiselect';
 
 import UploadImages from './UploadImages';
 
@@ -17,27 +18,87 @@ interface AddSpaceProps {
 
 const AddSpace: FC<AddSpaceProps> = (props, ref) => {
     const amenities = [
-        "Protocolos de Bioseguridad",
-        "Parqueadero para carros",
-        "Parqueadero para motocicletas",
-        "Parqueadero para bicicletas",
-        "Conectividad a internet",
-        "Cabinas telefonicas",
-        "Impresora",
-        "Espacio para mascotas",
-        "Zona de recreación",
-        "Espacio para maternidad",
-        "Gimnasio",
-        "Espacio de meditación",
-        "Espacios al aire libre",
-        "Servicio de cafetería",
-        "Cocina",
-        "Casillero personal",
-        "Fotocopiadora",
-        "Libreria",
-        "Bar/Venta de alcohol disponible",
-        "Espacio de Yoga"
+        'Acceso a internet',
+        'Protocolos de Bioseguridad',
+        'Parqueadero para carros',
+        'Parqueadero para motocicletas',
+        'Parqueadero para bicicletas',
+        'Parqueadero para carros gratis',
+        'Parqueadero para motocicletas gratis',
+        'Parqueadero para bicicletas gratis',
+        'Recepción',
+        'Elevador',
+        'Buena iluminación',
+        'Impresora',
+        'Proyector',
+        'Televisor',
+        'Aire Acondicionado',
+        'Fotocopiadora',
+        'Escaner',
+        'Cargadores',
+        'Bancos de carga',
+        'Refrigerador',
+        'Café Gratis',
+        'Té Gratis',
+        'Snacks Gratis',
+        'Venta de Cafe',
+        'Alchol Permitido',
+        'Restaurante',
+        'Bar/Venta de alcohol disponible',
+        'Cocina',
+        'Servicio de cafetería',
+        'Zona de recreación',
+        'Gimnasio',
+        'Espacio de Yoga',
+        'Espacio de meditación',
+        'Zona arcade',
+        'Juegos de mesa',
+        'Libreria',
+        'Masajes',
+        'Lugar para fumar',
+        'Cabinas telefonicas',
+        'Espacio para mascotas',
+        'Espacio para maternidad',
+        'Espacios al aire libre',
+        'Sala de estar',
+        'Lugares para dormir',
+        'Espacio para llamada',
+        'Espacios/Zonas verdes',
+        'Casillero personal',
+        'Terraza',
+        'Zonas verdes',
+        'Lugares de AirBnB cercanos',
+        'Estacion de transporte cerca',
+        'Vista al mar',
+        'Cerca al Centro Comercial',
+        'Cerca al Aeropuerto',
+        'Cerca al Centro',
+        'Cerca a zonas verdes',
+        'Cerca a restaurantes',
+        'Cerca a estacion de policias',
+        'Servicio de limpieza',
+        'Primeros Auxilios',
+        'Servicio de correo',
+        'Tablero acrilico con marcadores',
+        'Tablero de notas/noticias',
+        'Servicio 24 horas',
+        'Sillas tipo Puff',
+        'Sillas ergonómicas',
+        'Servicio días festivos',
+        'Servicio todos los días',
+        'Permite Mascotas',
+        'Seguridad Privada',
+        'Duchas'
     ]
+
+    const groupedItemTemplate = (item: any) => {
+        return (
+            <div className="p-d-flex p-ai-center country-item">
+                <div>{item.label}</div>
+            </div>
+        );
+    }
+
 
     const comparePrices = (hour: number, day: number, week: number, month: number) => {
         if (hour <= day) {
@@ -182,8 +243,6 @@ const AddSpace: FC<AddSpaceProps> = (props, ref) => {
                                 data={
                                     ["Oficina privada", "Escritorio personal", "Sala de conferencias", "Espacio abierto"]
                                 }
-                                searchable
-                                nothingFound="Escoge una de nuestras categorias permitidas, por favor"
                                 value={field.value}
                                 onChange={(event) => form.setFieldValue(field.name, event.valueOf())}
                                 onBlur={(event) => form.setFieldValue(field.name, event.target.value)}
@@ -316,7 +375,6 @@ const AddSpace: FC<AddSpaceProps> = (props, ref) => {
                         id="tags-filled"
                         options={amenities}
                         defaultValue={[]}
-                        freeSolo
                         value={field.value}
                         onChange={(event, newInputValue) => {
                             form.setFieldValue(field.name, newInputValue)
@@ -327,6 +385,29 @@ const AddSpace: FC<AddSpaceProps> = (props, ref) => {
                                 <Chip variant="filled" icon={<BsFillStarFill />} color="primary" label={option} {...getTagProps({ index })} />
                             ))
                         }
+                        groupBy={(option) => {
+                            if(amenities.indexOf(option) < 11){
+                                return "Clasicas"
+                            }
+                            else if(amenities.indexOf(option) < 18){
+                                return 'Tecnología/Conectividad'
+                            }
+                            else if(amenities.indexOf(option) < 29){
+                                return 'Alimentación'
+                            }
+                            else if(amenities.indexOf(option) < 38){
+                                return 'Diversión/Ocio'
+                            }
+                            else if(amenities.indexOf(option) < 49){
+                                return 'Zonas'
+                            }
+                            else if(amenities.indexOf(option) < 58){
+                                return 'Ubicación'
+                            }
+                            else{
+                                return 'Servicios'
+                            }
+                        }}
                         renderInput={(params) => {
                             return (
                                 <TextField
@@ -338,7 +419,6 @@ const AddSpace: FC<AddSpaceProps> = (props, ref) => {
                             )
                         }}
                     />
-
                 )}
             </Field>
             <Divider margins="xs" label="Imagenes" labelPosition="center" />

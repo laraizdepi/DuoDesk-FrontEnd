@@ -7,6 +7,8 @@ import StepOne from './StepOne/StepOne';
 import StepTwo from './StepTwo/StepTwo';
 import StepThree from './StepThree/StepThree'
 import axios from 'axios';
+import { useNotifications } from '@mantine/notifications';
+import { MdDoneAll, MdErrorOutline } from 'react-icons/md';
 
 interface FormikStepProps extends Pick<FormikConfig<FormikValues>, 'children' | 'validationSchema'> {
 	label: string;
@@ -40,8 +42,8 @@ const FormikStepper = ({ children, ...props }: FormikConfig<FormikValues>) => {
 				}
 			}}
 		>
-			{({ isSubmitting }) => (
-				<Form autoComplete="on" >
+			{(FormikProps) => (
+				<Form>
 					<Stepper alternativeLabel activeStep={step}>
 						{childrenArray.map((child, index) => (
 							<Step key={child.props.label} completed={step > index || completed}>
@@ -52,12 +54,11 @@ const FormikStepper = ({ children, ...props }: FormikConfig<FormikValues>) => {
 
 					{currentChild}
 
-					<Grid container spacing={5} style={{marginTop: '2rem'}}>
+					<Grid container spacing={5} style={{ marginTop: '2rem' }}>
 						{step > 0 ? (
 							<Grid item>
 								<Button
-									disabled={isSubmitting}
-									// variant="white"
+									disabled={FormikProps.isSubmitting}
 									color="indigo"
 									onClick={() => setStep((s) => s - 1)}
 								>
@@ -67,13 +68,13 @@ const FormikStepper = ({ children, ...props }: FormikConfig<FormikValues>) => {
 						) : null}
 						<Grid item>
 							<Button
-								leftIcon={isSubmitting ? <CircularProgress size="1rem" /> : null}
-								disabled={isSubmitting}
+								leftIcon={FormikProps.isSubmitting ? <CircularProgress size="1rem" /> : null}
+								disabled={FormikProps.isSubmitting}
 								// variant="white"
 								color="indigo"
 								type="submit"
 							>
-								{isSubmitting ? 'Enviando' : isLastStep() ? 'Enviar' : 'Siguiente'}
+								{FormikProps.isSubmitting ? 'Enviando' : isLastStep() ? 'Enviar' : 'Siguiente'}
 							</Button>
 						</Grid>
 					</Grid>
@@ -84,12 +85,15 @@ const FormikStepper = ({ children, ...props }: FormikConfig<FormikValues>) => {
 }
 
 const RegisterSteps = () => {
-	const toSlug = (text: string) => {return text.toString().toLowerCase()
-        .replace(/\s+/g, '')
-        .replace(/[^\w\-]^.+/g, '')
-        .replace(/\-\-+/g, '')
-        .replace(/^-+/, '')
-        .replace(/-+$/, '')
+	const notifications = useNotifications()
+
+	const toSlug = (text: string) => {
+		return text.toString().toLowerCase()
+			.replace(/\s+/g, '')
+			.replace(/[^\w\-]^.+/g, '')
+			.replace(/\-\-+/g, '')
+			.replace(/^-+/, '')
+			.replace(/-+$/, '')
 	}
 	return (
 		<Card>
@@ -113,34 +117,77 @@ const RegisterSteps = () => {
 						nameAmenities: [],
 					}}
 					onSubmit={async (values, actions) => {
-						console.log(values.spaces)
+						if(values.description.length < 120 || values.description.length > 550){
+							notifications.showNotification({
+								title: 'Algo ha salido mal',
+								message: `Por favor, introduce una descripción para tu oficina
+								que tenga entre 120 y 550 caracteres.`,
+								color: 'pink', icon: <MdErrorOutline />
+							})
+							return
+						}
+						if(!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(values.officialEmail)){
+							notifications.showNotification({
+								title: 'Algo ha salido mal',
+								message: `Por favor, introduce correo de contacto valido.`,
+								color: 'pink', icon: <MdErrorOutline />
+							})
+							return
+						}
+						if(!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(values.notificationEmailMain)){
+							notifications.showNotification({
+								title: 'Algo ha salido mal',
+								message: `Por favor, introduce correo de notificaciones principal valido.`,
+								color: 'pink', icon: <MdErrorOutline />
+							})
+							return
+						}
+						if(!values.notificationPhoneMain || values.notificationPhoneMain.length !== 10){
+							notifications.showNotification({
+								title: 'Algo ha salido mal',
+								message: `Por favor, introduce un número valido, en el número
+								para notificaciones principal`,
+								color: 'pink', icon: <MdErrorOutline />
+							})
+							return
+						}
+						if(!values.officialPhone || values.officialPhone.length !== 10){
+							notifications.showNotification({
+								title: 'Algo ha salido mal',
+								message: `Por favor, introduce un número valido, en el número
+								de contacto`,
+								color: 'pink', icon: <MdErrorOutline />
+							})
+							return
+						}
 						const data = new FormData()
 						data.append('title', values.title)
 						data.append('description', values.description)
+						data.append('generalAmenities', values.officeAmenities)
 						data.append('weekSchedule', values["open-de-lunes-a-viernes"])
 						data.append('weekSchedule', values["close-de-lunes-a-viernes"])
-						if(values['open-sabado']){
-							if(values['close-sabado']){
+						if (values['open-sabado']) {
+							if (values['close-sabado']) {
 								data.append('saturdaySchedule', values['open-sabado'])
 								data.append('saturdaySchedule', values['close-sabado'])
 							}
 						}
-						if(values['open-domingo']){
-							if(values['close-domingo']){
+						if (values['open-domingo']) {
+							if (values['close-domingo']) {
 								data.append('sundaySchedule', values['open-domingo'])
 								data.append('sundaySchedule', values['close-domingo'])
 							}
 						}
 						data.append('location', JSON.stringify(values.location))
-						// data.append('spaces', JSON.stringify(values.spaces))
-						for(let space of values.spaces){
+						for (let space of values.spaces) {
 							space.imagesUrls = []
-							for(let image of space.spaceImages){
+							console.log(space.spaceImages)
+							console.log(space)
+							for (let image of space.spaceImages) {
 								const url = `${toSlug(values.title)}-${toSlug(space.nameSpace)}-${toSlug(image.name)}`
 								data.append(url, image, image.name)
 								space.imagesUrls.push(url)
 							}
-							delete space.spaceImages
 							data.append('spaces', JSON.stringify(space))
 						}
 						data.append('notifications', values.notificationEmailMain)
@@ -148,14 +195,48 @@ const RegisterSteps = () => {
 						data.append('official', values.officialEmail)
 						data.append('official', values.officialPhone)
 						data.append('openDate', values.openDate)
-						if(values.numberNotifications){
-							for(let i = 0; i<=Number(values.numberNotifications); i++){
+						console.log(values.openDate)
+						if(values.numberNotifications !== 0) {
+							for (let i = 0; i < Number(values.numberNotifications); i++) {
+								if(!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(values[`notificationEmail${i}`])){
+									notifications.showNotification({
+										title: 'Algo ha salido mal',
+										message: `Por favor, introduce un correo valido, en el correo
+										para notificaciones número ${i+1}`,
+										color: 'pink', icon: <MdErrorOutline />
+									})
+									return
+								}
 								data.append('notifications', values[`notificationEmail${i}`])
-								data.append('notifications', values[`notificationPhoneMain${i}`])		
+								if(!values[`notificationPhoneMain${i}`] || values[`notificationPhoneMain${i}`].length !== 10){
+									notifications.showNotification({
+										title: 'Algo ha salido mal',
+										message: `Por favor, introduce un número valido, en el número
+										para notificaciones número ${i+1}`,
+										color: 'pink', icon: <MdErrorOutline />
+									})
+									return
+								}
+								data.append('notifications', values[`notificationPhoneMain${i}`])
 							}
 						}
-						await axios.post('http://localhost:5000/offices', data, {withCredentials: true})
-						actions.setSubmitting(false)
+						const response = await axios.post('http://localhost:5000/offices', data, { withCredentials: true })
+						if (response.status === 201) {
+							notifications.showNotification({
+								title: 'Oficina registrada correctamente',
+								message: `Felicitaciones, hemos añadido tu oficina. Ahora,
+								será disponible desde la fecha que has escogido. Sí necesitas modificar
+								información sobre tu oficina, dirigete al Dashboard`,
+								color: 'teal', icon: <MdDoneAll />
+							})
+						}
+						else{
+							notifications.showNotification({
+								title: 'Algo ha salido mal',
+								message: `${response.data}`,
+								color: 'pink', icon: <MdErrorOutline />
+							})
+						}
 					}}
 				>
 					<FormikStep label="Información básica">

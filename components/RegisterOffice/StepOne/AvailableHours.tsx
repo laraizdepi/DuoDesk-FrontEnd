@@ -1,7 +1,11 @@
-import React, { FC, useState, useImperativeHandle, useEffect } from "react"
+import React, { FC, useState } from "react"
 import { Calendar } from 'primereact/calendar';
 import { Grid, Col, Switch } from '@mantine/core'
 import { Field } from "formik";
+import DateAdapter from '@mui/lab/AdapterDayjs'
+import TimePicker from '@mui/lab/TimePicker'
+import LocalizationProvider from '@mui/lab/LocalizationProvider'
+import TextField from '@mui/material/TextField';
 
 interface HoursProps {
     title: string,
@@ -30,41 +34,66 @@ const AvailableHours: FC<HoursProps> = React.forwardRef((props, ref: any) => {
                 </Col>
                 {props.disable ?
                     <Col span={6}>
-                        <Switch id={`switch-${slugTitle}`} checked={!active} onChange={handleDisable} label={!active? `Disponible ${props.title}`: `No disponible ${props.title}`}/>
+                        <Switch id={`switch-${slugTitle}`} checked={!active} onChange={handleDisable} label={!active ? `Disponible ${props.title}` : `No disponible ${props.title}`} />
                     </Col>
-                :   
-                   null
+                    :
+                    null
                 }
             </Grid>
             <Grid id="available-hours">
                 <Col span={12} md={6}>
-                    <label htmlFor="horaApertura">Hora de apertura: &nbsp;</label>
-                    <Field name={`open-${slugTitle}`}>
+                    <Field name={`open-${slugTitle}-time`}>
                         {({ field, form, meta }: any) => (
-                            <Calendar 
-                                id="horaApertura" 
-                                disabled={active} 
-                                value={field.value || undefined} 
-                                onChange={(event) => form.setFieldValue(field.name, 
-                                    active ? null : event.target.value)} 
-                                timeOnly 
-                                hourFormat="12">
-                            </Calendar>
+                            <LocalizationProvider dateAdapter={DateAdapter}>
+                                <TimePicker
+                                    label={`Apertura ${props.title}`}
+                                    disabled={active} 
+                                    value={field.value || undefined}
+                                    onChange={(newValue) => {
+                                        const date = new Date(newValue.$d)
+                                        let hours = String(date.getHours())
+                                        let minutes = String(date.getMinutes())
+                                        if(hours.length < 2){
+                                            hours = `0${hours}`
+                                        }
+                                        if(minutes.length < 2){
+                                            minutes = `0${minutes}`
+                                        }
+                                        const time = `${hours}:${minutes}`
+                                        form.setFieldValue(`open-${slugTitle}`, time)
+                                        form.setFieldValue(field.name, newValue)
+                                    }}
+                                    renderInput={(params) => <TextField {...params} />}
+                                />
+                            </LocalizationProvider>
                         )}
                     </Field>
                 </Col>
                 <Col span={12} md={6}>
-                    <label htmlFor="horaCierre">Hora de cierre:</label>                        
-                    <Field name={`close-${slugTitle}`}>
+                    <Field name={`close-${slugTitle}-time`}>
                         {({ field, form, meta }: any) => (
-                            <Calendar 
-                                id="horaApertura" 
-                                disabled={active} 
-                                value={field.value} 
-                                onChange={(event) => form.setFieldValue(field.name, 
-                                    active ? null : event.target.value)} 
-                                timeOnly 
-                                hourFormat="12" />
+                            <LocalizationProvider dateAdapter={DateAdapter}>
+                                <TimePicker
+                                    label={`Cierre ${props.title}`}
+                                    disabled={active} 
+                                    value={field.value || undefined}
+                                    onChange={(newValue) => {
+                                        const date = new Date(newValue.$d)
+                                        let hours = String(date.getHours())
+                                        let minutes = String(date.getMinutes())
+                                        if(hours.length < 2){
+                                            hours = `0${hours}`
+                                        }
+                                        if(minutes.length < 2){
+                                            minutes = `0${minutes}`
+                                        }
+                                        const time = `${hours}:${minutes}`
+                                        form.setFieldValue(`close-${slugTitle}`, time)
+                                        form.setFieldValue(field.name, newValue)
+                                    }}
+                                    renderInput={(params) => <TextField {...params} />}
+                                />
+                            </LocalizationProvider>
                         )}
                     </Field>
                 </Col>
