@@ -4,6 +4,7 @@ import { Container, Row, Col } from 'react-bootstrap'
 import SearchVertical from '../components/Search/SearchVertical'
 import CardChange from '../components/Search/CardChange'
 import CardSlideBoots from '../components/Search/CardSlideBoots'
+import CardSlideRSuite from '../components/Search/CardSlideRSuite'
 const SearchPage = () => {
     return (
         <div>
@@ -19,7 +20,8 @@ const SearchPage = () => {
                         </Row>
                     </Col>
                     <Col xs = {6}>
-                            <CardSlideBoots/>
+                            {/* <CardSlideBoots/> */}
+                            <CardSlideRSuite/>
                     </Col>
                 </Row>
             </div>

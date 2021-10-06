@@ -13,8 +13,13 @@ import { AiTwotoneHeart } from 'react-icons/ai'
 import { useState } from 'react';
 import ImagesSlide from './ImagesSlide';
 import CardChange from './CardChange'
+
+interface SearchVertical {
+  offices : string[]
+}
+
 const SearchVertical = () => {
-  const theme = useTheme();
+  // const theme = useTheme();
   const [liked, setliked] = useState(false)
 
   const Images = [
