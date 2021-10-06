@@ -131,9 +131,9 @@ const offices = [
 const CardSlideRSuite = () => {
   return (
     <div>
-      <Carousel className="custom-slider" onSelect={function (index: number, event: ChangeEvent<HTMLInputElement>): void {
-        throw new Error('Function not implemented.');
-      } }>
+      <Carousel className="custom-slider" onSelect={(index: number) => {
+        alert(index)
+      }}>
         <img src="https://via.placeholder.com/600x250/8f8e94/FFFFFF?text=1" height="250" />
         <img src="https://via.placeholder.com/600x250/8f8e94/FFFFFF?text=2" height="250" />
         <img src="https://via.placeholder.com/600x250/8f8e94/FFFFFF?text=3" height="250" />
