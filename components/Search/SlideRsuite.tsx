@@ -1,7 +1,24 @@
-import React from 'react';
-import { Carousel } from 'rsuite';
-import SlideRSuite from './SlideRsuite';
+import React, { FC } from "react";
+import { Carousel } from "primereact/carousel";
+import { Card } from "@mantine/core";
+import ImagesSlide from '../Search/ImagesSlide'
+import { Container, Row, Col } from 'react-bootstrap'
+import { useTheme } from '@mui/material/styles';
+import CardContent from '@mui/material/CardContent';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import { Divider, Group, Title, Text } from "@mantine/core"
 import style from './Search.module.sass'
+import { CardActionArea } from '@mui/material';
+import { AiOutlineHeart } from 'react-icons/ai'
+import { AiTwotoneHeart } from 'react-icons/ai'
+import { useState } from 'react';
+
+// const ButtonCorazon =
+//   <IconButton color="primary" aria-label="upload picture" component="span" >
+//     <AiOutlineHeart />
+//   </IconButton>
+
 const offices = [
   {
     "id": "1000",
@@ -128,22 +145,80 @@ const offices = [
     ]
   }
 ]
-const CardSlideRSuite = () => {
-  return (
-    <div>
-      <Carousel autoplay autoplayInterval = {7000}	 className = {style.Carousel}>
-        <div>
-          <SlideRSuite office = {offices[0]} />
-        </div>
-        <div>
-          <SlideRSuite office = {offices[1]}/>
-        </div>
-        <div>
-          <SlideRSuite office = {offices[2]}/>
-        </div>
-      </Carousel>
-    </div>
-  )
 
+interface SlideRProps {
+  office: any[]
 }
-export default CardSlideRSuite
+const SlideRSuite: FC<SlideRProps> = (props) => {
+  const office = props.office
+  return (
+    <Card style={{ maxWidth: 350 }}>
+      <CardActionArea>
+        {/* All Images */}
+        {/* <ImagesSlide images={office.images} /> */}
+        {/* All Images */}
+        <CardContent>
+          <div>
+            <Row>
+              <Col xs={10}>
+                <Typography gutterBottom variant="h5" component="div">
+                  {office.title}
+                  <Typography gutterBottom variant="body2" color="text.secondary">
+                    {office.direction}
+                  </Typography>
+                </Typography>
+              </Col>
+              <Col xs={2}>
+                {/* {ButtonCorazon} */}
+                <IconButton color="primary" aria-label="upload picture" component="span" >
+                  <AiOutlineHeart />
+                </IconButton>
+              </Col>
+            </Row>
+          </div>
+
+          <Typography gutterBottom variant="body2" color="text.secondary">
+            {office.description}
+          </Typography>
+          <div style={{ display: 'flex' }}>
+            <Typography variant="h6" component="div" style={{ margin: 'auto' }}>
+              {office.type}
+            </Typography>
+          </div>
+
+          {/* Prices	 */}
+          <div className={style.TextCard}>
+            <Divider margins="xs" label="Precios" labelPosition="center" />
+            {/* <Title order={3} >Precios</Title> */}
+            <Group position="center" noWrap spacing="xs">
+              <div>
+                <Title order={5}>Hora</Title>
+                <Text>${office.prices.priceHour / 1000}K </Text>
+              </div>
+              <Divider orientation="vertical" margins="xs" />
+              <div>
+                <Title order={5}>Dia</Title>
+                <Text>${office.prices.priceDay / 1000}K</Text>
+              </div>
+
+              <Divider orientation="vertical" margins="xs" />
+              <div>
+                <Title order={6}>Semana</Title>
+                <Text>${office.prices.priceWeek / 1000}K</Text>
+              </div>
+              <Divider orientation="vertical" margins="xs" />
+              <div>
+                <Title order={5}>Mes</Title>
+                <Text>${office.prices.priceMoth / 1000000}M</Text>
+              </div>
+            </Group>
+            <Divider margins="xs" label="Amenidades del espacio" labelPosition="center" />
+            <Group>
+            </Group>
+          </div>
+        </CardContent>
+      </CardActionArea>
+    </Card>
+  )
+}
+export default SlideRSuite
