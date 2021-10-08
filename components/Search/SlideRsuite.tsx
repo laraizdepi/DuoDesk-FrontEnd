@@ -156,7 +156,14 @@ const SlideRSuite: FC<SlideRProps> = (props) => {
       <CardActionArea>
         {/* All Images */}
         {/* <ImagesSlide images={office.images} /> */}
+        
         {/* All Images */}
+        <img 
+          src= {office.images[0].src} 
+          alt="Girl in a jacket" 
+          width="300" 
+          height="200"/>
+
         <CardContent>
           <div>
             <Row>

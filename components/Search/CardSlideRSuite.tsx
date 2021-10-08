@@ -131,7 +131,7 @@ const offices = [
 const CardSlideRSuite = () => {
   return (
     <div>
-      <Carousel autoplay autoplayInterval = {7000}	 className = {style.Carousel}>
+      <Carousel autoplay autoplayInterval = {17000}	 className = {style.Carousel}>
         <div>
           <SlideRSuite office = {offices[0]} />
         </div>
