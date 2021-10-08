@@ -131,15 +131,21 @@ const offices = [
 const CardSlideRSuite = () => {
   return (
     <div>
-      <Carousel autoplay autoplayInterval = {17000}	 className = {style.Carousel}>
-        <div>
+      <Carousel autoplay
+         autoplayInterval = {37000}	 
+         className = {style.Carousel}
+        //  test position and button
+         placement={'bottom'}
+         shape='bar'
+         >
+        <div className = {style.CarouselItem}>
           <SlideRSuite office = {offices[0]} />
+        </div >
+        <div className = {style.CarouselItem}>
+          <SlideRSuite office = {offices[1]} />
         </div>
-        <div>
-          <SlideRSuite office = {offices[1]}/>
-        </div>
-        <div>
-          <SlideRSuite office = {offices[2]}/>
+        <div className = {style.CarouselItem}>
+          <SlideRSuite office = {offices[2]} />
         </div>
       </Carousel>
     </div>

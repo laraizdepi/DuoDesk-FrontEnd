@@ -142,64 +142,67 @@ const ImagesSlide: FC<imagesProps> = (props) => {
   const imagesAll: any = props.images
   // const imagesAll: any = offices[0].images
   // const {images} = props.images
+  let indexN = 0
   return (
+    <div>
+      <Carousel activeIndex={index} onSelect={handleSelect} style={{ maxWidth: 350 , maxHeight: 220 }}>
+        {imagesAll.map((image: any, index: number) => {
+          // console.log(image.src);
+          indexN ++
+          return (
+            <Carousel.Item key = {indexN}>
+              <img
+                className="d-block w-100"
+                src={image.src}
+                alt="First slide"
+                // key = {indexN}
+                // style={{ maxWidth: 350 , maxHeight: 230, minHeight: 230 }}
+              />
+            </Carousel.Item>
+          )
+        }
+        )}
+      </Carousel>
+     </div>
     // <div>
-    //   <Carousel activeIndex={index} onSelect={handleSelect} style={{ maxWidth: 300 , maxHeight: 200, minHeight: 200 }}>
-    //     {imagesAll.map((image: any) => {
-    //       console.log(image.src);
-    //       return (
-    //         <Carousel.Item>
-    //           <img
-    //             className="d-block w-100"
-    //             src={image.src}
-    //             alt="First slide"
-    //             // style={{ maxWidth: 350 , maxHeight: 230, minHeight: 230 }}
-    //           />
-    //         </Carousel.Item>
-    //       )
-    //     }
-    //     )}
+    //   <Carousel>
+    //     <Carousel.Item>
+    //       <img
+    //         className="d-block w-100"
+    //         src="holder.js/800x400?text=First slide&bg=373940"
+    //         alt="First slide"
+    //       />
+    //       <Carousel.Caption>
+    //         <h3>First slide label</h3>
+    //         <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+    //       </Carousel.Caption>
+    //     </Carousel.Item>
+    //     <Carousel.Item>
+    //       <img
+    //         className="d-block w-100"
+    //         src="holder.js/800x400?text=Second slide&bg=282c34"
+    //         alt="Second slide"
+    //       />
+
+    //       <Carousel.Caption>
+    //         <h3>Second slide label</h3>
+    //         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    //       </Carousel.Caption>
+    //     </Carousel.Item>
+    //     <Carousel.Item>
+    //       <img
+    //         className="d-block w-100"
+    //         src="holder.js/800x400?text=Third slide&bg=20232a"
+    //         alt="Third slide"
+    //       />
+
+    //       <Carousel.Caption>
+    //         <h3>Third slide label</h3>
+    //         <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+    //       </Carousel.Caption>
+    //     </Carousel.Item>
     //   </Carousel>
     // </div>
-    <div>
-      <Carousel>
-        <Carousel.Item>
-          <img
-            className="d-block w-100"
-            src="holder.js/800x400?text=First slide&bg=373940"
-            alt="First slide"
-          />
-          <Carousel.Caption>
-            <h3>First slide label</h3>
-            <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-          </Carousel.Caption>
-        </Carousel.Item>
-        <Carousel.Item>
-          <img
-            className="d-block w-100"
-            src="holder.js/800x400?text=Second slide&bg=282c34"
-            alt="Second slide"
-          />
-
-          <Carousel.Caption>
-            <h3>Second slide label</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          </Carousel.Caption>
-        </Carousel.Item>
-        <Carousel.Item>
-          <img
-            className="d-block w-100"
-            src="holder.js/800x400?text=Third slide&bg=20232a"
-            alt="Third slide"
-          />
-
-          <Carousel.Caption>
-            <h3>Third slide label</h3>
-            <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-          </Carousel.Caption>
-        </Carousel.Item>
-      </Carousel>
-    </div>
   )
 }
 

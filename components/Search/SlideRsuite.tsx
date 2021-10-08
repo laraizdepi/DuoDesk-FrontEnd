@@ -152,80 +152,85 @@ interface SlideRProps {
 const SlideRSuite: FC<SlideRProps> = (props) => {
   const office = props.office
   return (
-    <Card style={{ maxWidth: 350 }}>
-      <CardActionArea>
-        {/* All Images */}
-        {/* <ImagesSlide images={office.images} /> */}
-        
-        {/* All Images */}
-        <img 
+    <div style={{ maxWidth: 351, minWidth: 351 }} className = {style.Slide}>
+
+      <ImagesSlide images={office.images} className ={style.ImagesSlide}/>
+      
+      <Card style={{ maxWidth: 350 }}>
+        <CardActionArea>
+          {/* All Images */}
+          {/* <ImagesSlide images={office.images} /> */}
+
+          {/* All Images */}
+          {/* <img 
           src= {office.images[0].src} 
           alt="Girl in a jacket" 
           width="300" 
-          height="200"/>
+        height="200"/> */}
 
-        <CardContent>
-          <div>
-            <Row>
-              <Col xs={10}>
-                <Typography gutterBottom variant="h5" component="div">
-                  {office.title}
-                  <Typography gutterBottom variant="body2" color="text.secondary">
-                    {office.direction}
+          <CardContent>
+            <div>
+              <Row>
+                <Col xs={10}>
+                  <Typography gutterBottom variant="h5" component="div">
+                    {office.title}
+                    <Typography gutterBottom variant="body2" color="text.secondary">
+                      {office.direction}
+                    </Typography>
                   </Typography>
-                </Typography>
-              </Col>
-              <Col xs={2}>
-                {/* {ButtonCorazon} */}
-                <IconButton color="primary" aria-label="upload picture" component="span" >
-                  <AiOutlineHeart />
-                </IconButton>
-              </Col>
-            </Row>
-          </div>
+                </Col>
+                <Col xs={2}>
+                  {/* {ButtonCorazon} */}
+                  <IconButton color="primary" aria-label="upload picture" component="span" >
+                    <AiOutlineHeart />
+                  </IconButton>
+                </Col>
+              </Row>
+            </div>
 
-          <Typography gutterBottom variant="body2" color="text.secondary">
-            {office.description}
-          </Typography>
-          <div style={{ display: 'flex' }}>
-            <Typography variant="h6" component="div" style={{ margin: 'auto' }}>
-              {office.type}
+            <Typography gutterBottom variant="body2" color="text.secondary">
+              {office.description}
             </Typography>
-          </div>
+            <div style={{ display: 'flex' }}>
+              <Typography variant="h6" component="div" style={{ margin: 'auto' }}>
+                {office.type}
+              </Typography>
+            </div>
 
-          {/* Prices	 */}
-          <div className={style.TextCard}>
-            <Divider margins="xs" label="Precios" labelPosition="center" />
-            {/* <Title order={3} >Precios</Title> */}
-            <Group position="center" noWrap spacing="xs">
-              <div>
-                <Title order={5}>Hora</Title>
-                <Text>${office.prices.priceHour / 1000}K </Text>
-              </div>
-              <Divider orientation="vertical" margins="xs" />
-              <div>
-                <Title order={5}>Dia</Title>
-                <Text>${office.prices.priceDay / 1000}K</Text>
-              </div>
+            {/* Prices	 */}
+            <div className={style.TextCard}>
+              <Divider margins="xs" label="Precios" labelPosition="center" />
+              {/* <Title order={3} >Precios</Title> */}
+              <Group position="center" noWrap spacing="xs">
+                <div>
+                  <Title order={5}>Hora</Title>
+                  <Text>${office.prices.priceHour / 1000}K </Text>
+                </div>
+                <Divider orientation="vertical" margins="xs" />
+                <div>
+                  <Title order={5}>Dia</Title>
+                  <Text>${office.prices.priceDay / 1000}K</Text>
+                </div>
 
-              <Divider orientation="vertical" margins="xs" />
-              <div>
-                <Title order={6}>Semana</Title>
-                <Text>${office.prices.priceWeek / 1000}K</Text>
-              </div>
-              <Divider orientation="vertical" margins="xs" />
-              <div>
-                <Title order={5}>Mes</Title>
-                <Text>${office.prices.priceMoth / 1000000}M</Text>
-              </div>
-            </Group>
-            <Divider margins="xs" label="Amenidades del espacio" labelPosition="center" />
-            <Group>
-            </Group>
-          </div>
-        </CardContent>
-      </CardActionArea>
-    </Card>
+                <Divider orientation="vertical" margins="xs" />
+                <div>
+                  <Title order={6}>Semana</Title>
+                  <Text>${office.prices.priceWeek / 1000}K</Text>
+                </div>
+                <Divider orientation="vertical" margins="xs" />
+                <div>
+                  <Title order={5}>Mes</Title>
+                  <Text>${office.prices.priceMoth / 1000000}M</Text>
+                </div>
+              </Group>
+              <Divider margins="xs" label="Amenidades del espacio" labelPosition="center" />
+              <Group>
+              </Group>
+            </div>
+          </CardContent>
+        </CardActionArea>
+      </Card>
+    </div>
   )
 }
 export default SlideRSuite

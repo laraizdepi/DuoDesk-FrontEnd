@@ -13,38 +13,26 @@ const SearchPage = () => {
         padding: theme.spacing(1),
         textAlign: 'center',
         color: theme.palette.text.secondary,
-      }));
+    }));
     return (
         <div>
             <Navbar />
-            <Grid container spacing={2}>
-                <Grid item xs={3}>
-                    {/* <Item>xs=8</Item> */}
+            <Grid
+                container
+                direction="row"
+                justifyContent="flex-center"
+                alignItems="flex-start"
+            >
+                <Grid item xs={3} style = {{marginLeft : '30px'}}>
                     <CardSlideRSuite />
                 </Grid>
                 <Grid item xs={3}>
-                    {/* <Item>xs=8</Item> */}
                     <CardSlideRSuite />
                 </Grid>
-                <Grid item xs={6} style = {{backgroundColor : 'red'}}>
-                    {/* <Item>xs=4</Item> */}
+                <Grid item xs={5} style={{ backgroundColor: 'red' }}>
                     <h1>Hello World</h1>
                 </Grid>
             </Grid>
-
-            {/* <Grid id="my-grid">
-                <Col span={3}>
-                    <CardSlideRSuite />
-                </Col>
-                <Col span={3}>
-                    <CardSlideRSuite />
-                </Col>
-                <Col span={5}>
-                    <div style={{ backgroundColor: 'red' }}>
-                        <h1>Maps</h1>
-                    </div>
-                </Col>
-            </Grid> */}
         </div>
     )
 }
