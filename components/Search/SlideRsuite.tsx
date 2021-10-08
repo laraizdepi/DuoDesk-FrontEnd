@@ -13,7 +13,7 @@ import { CardActionArea } from '@mui/material';
 import { AiOutlineHeart } from 'react-icons/ai'
 import { AiTwotoneHeart } from 'react-icons/ai'
 import { useState } from 'react';
-
+import AmenidadesDisplay from "./AmenidadesDisplay";
 // const ButtonCorazon =
 //   <IconButton color="primary" aria-label="upload picture" component="span" >
 //     <AiOutlineHeart />
@@ -53,6 +53,13 @@ const offices = [
     "quantity": 5,
     "cantidadPersonas": 2,
     "direction": "Avenida 39 ## 92-78",
+    "amenidadesGenerales": [
+      "Cine",
+      "Cerca a Airbnb",
+      "parqueadero",
+      "mascotas",
+      "Wifi"
+    ],
     "amenidades": [
       "Ascensor",
       "Playa",
@@ -94,6 +101,13 @@ const offices = [
     "quantity": 2,
     "cantidadPersonas": 4,
     "direction": "Calle 152 ## 92-32",
+    "amenidadesGenerales": [
+      "Cine",
+      "Cerca a Airbnb",
+      "parqueadero",
+      "mascotas",
+      "Wifi"
+    ],
     "amenidades": [
       "Ascensor",
       "impresora",
@@ -134,6 +148,13 @@ const offices = [
     "quantity": 4,
     "cantidadPersonas": 5,
     "direction": "Ac. 53 ## 23-32",
+    "amenidadesGenerales": [
+      "Cine",
+      "Cerca a Airbnb",
+      "parqueadero",
+      "mascotas",
+      "Wifi"
+    ],
     "amenidades": [
       "Cafe",
       "impresora",
@@ -152,22 +173,12 @@ interface SlideRProps {
 const SlideRSuite: FC<SlideRProps> = (props) => {
   const office = props.office
   return (
-    <div style={{ maxWidth: 351, minWidth: 351 }} className = {style.Slide}>
+    <div style={{ maxWidth: 351, minWidth: 351 }} className={style.Slide} as = {('button')}>
 
-      <ImagesSlide images={office.images} className ={style.ImagesSlide}/>
-      
+      <ImagesSlide images={office.images} className={style.ImagesSlide} />
+
       <Card style={{ maxWidth: 350 }}>
         <CardActionArea>
-          {/* All Images */}
-          {/* <ImagesSlide images={office.images} /> */}
-
-          {/* All Images */}
-          {/* <img 
-          src= {office.images[0].src} 
-          alt="Girl in a jacket" 
-          width="300" 
-        height="200"/> */}
-
           <CardContent>
             <div>
               <Row>
@@ -188,9 +199,17 @@ const SlideRSuite: FC<SlideRProps> = (props) => {
               </Row>
             </div>
 
-            <Typography gutterBottom variant="body2" color="text.secondary">
+            {/* <Typography gutterBottom variant="body2" color="text.secondary">
               {office.description}
-            </Typography>
+            </Typography> */}
+
+            {/* Amenidades */}
+            <Divider margins="xs" label="Amenidades Generales" labelPosition="center" />
+            <div style = {{display : 'flex' }}>
+
+              <AmenidadesDisplay amenidades={office.amenidadesGenerales} />
+            </div>
+
             <div style={{ display: 'flex' }}>
               <Typography variant="h6" component="div" style={{ margin: 'auto' }}>
                 {office.type}
@@ -224,6 +243,8 @@ const SlideRSuite: FC<SlideRProps> = (props) => {
                 </div>
               </Group>
               <Divider margins="xs" label="Amenidades del espacio" labelPosition="center" />
+              <AmenidadesDisplay amenidades={office.amenidades} color='pink' />
+
               <Group>
               </Group>
             </div>

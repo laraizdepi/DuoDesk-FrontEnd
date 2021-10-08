@@ -2,6 +2,8 @@ import React from 'react';
 import { Carousel } from 'rsuite';
 import SlideRSuite from './SlideRsuite';
 import style from './Search.module.sass'
+import { Card } from "@mantine/core";
+
 const offices = [
   {
     "id": "1000",
@@ -36,6 +38,13 @@ const offices = [
     "quantity": 5,
     "cantidadPersonas": 2,
     "direction": "Avenida 39 ## 92-78",
+    "amenidadesGenerales" :[
+      "Cine",
+      "Cerca a Airbnb",
+      "parqueadero",
+      "mascotas",
+      "Wifi"
+    ],
     "amenidades": [
       "Ascensor",
       "Playa",
@@ -77,6 +86,13 @@ const offices = [
     "quantity": 2,
     "cantidadPersonas": 4,
     "direction": "Calle 152 ## 92-32",
+    "amenidadesGenerales" :[
+      "Cine",
+      "Cerca a Airbnb",
+      "parqueadero",
+      "mascotas",
+      "Wifi"
+    ],
     "amenidades": [
       "Ascensor",
       "impresora",
@@ -117,6 +133,13 @@ const offices = [
     "quantity": 4,
     "cantidadPersonas": 5,
     "direction": "Ac. 53 ## 23-32",
+    "amenidadesGenerales" :[
+      "Cine",
+      "Cerca a Airbnb",
+      "parqueadero",
+      "mascotas",
+      "Wifi"
+    ],
     "amenidades": [
       "Cafe",
       "impresora",
@@ -136,7 +159,16 @@ const CardSlideRSuite = () => {
          className = {style.Carousel}
         //  test position and button
          placement={'bottom'}
-         shape='bar'
+         shape='dot'
+        //  as = {('button')}
+         onClick = {()=>console.log('Hello World')}
+        //  {offices.map((office) => {
+        //   return (
+        //     <div className={style.CarouselItem}>
+        //       <SlideRSuite office={office} />
+        //     </div >
+        //   )
+        // })}
          >
         <div className = {style.CarouselItem}>
           <SlideRSuite office = {offices[0]} />
