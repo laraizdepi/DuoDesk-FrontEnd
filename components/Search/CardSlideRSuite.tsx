@@ -38,7 +38,7 @@ const offices = [
     "quantity": 5,
     "cantidadPersonas": 2,
     "direction": "Avenida 39 ## 92-78",
-    "amenidadesGenerales" :[
+    "amenidadesGenerales": [
       "Cine",
       "Cerca a Airbnb",
       "parqueadero",
@@ -86,7 +86,7 @@ const offices = [
     "quantity": 2,
     "cantidadPersonas": 4,
     "direction": "Calle 152 ## 92-32",
-    "amenidadesGenerales" :[
+    "amenidadesGenerales": [
       "Cine",
       "Cerca a Airbnb",
       "parqueadero",
@@ -133,7 +133,7 @@ const offices = [
     "quantity": 4,
     "cantidadPersonas": 5,
     "direction": "Ac. 53 ## 23-32",
-    "amenidadesGenerales" :[
+    "amenidadesGenerales": [
       "Cine",
       "Cerca a Airbnb",
       "parqueadero",
@@ -155,22 +155,22 @@ const CardSlideRSuite = () => {
   return (
     <div>
       <Carousel autoplay
-         autoplayInterval = {37000}	 
-         className = {style.Carousel}
+        autoplayInterval={37000}
+        className={style.Carousel}
         //  test position and button
-         placement={'bottom'}
-         shape='dot'
+        placement={'bottom'}
+        shape='dot'
         //  as = {('button')}
-         onClick = {()=>console.log('Hello World')}
-        //  {offices.map((office) => {
-        //   return (
-        //     <div className={style.CarouselItem}>
-        //       <SlideRSuite office={office} />
-        //     </div >
-        //   )
-        // })}
-         >
-        <div className = {style.CarouselItem}>
+        onClick={() => console.log('Hello World')}
+      >
+        {offices.map((office) => {
+          return (
+            <div className={style.CarouselItem}>
+              <SlideRSuite office={office} />
+            </div >
+          )
+        })}
+        {/* <div className = {style.CarouselItem}>
           <SlideRSuite office = {offices[0]} />
         </div >
         <div className = {style.CarouselItem}>
@@ -178,7 +178,7 @@ const CardSlideRSuite = () => {
         </div>
         <div className = {style.CarouselItem}>
           <SlideRSuite office = {offices[2]} />
-        </div>
+        </div> */}
       </Carousel>
     </div>
   )
