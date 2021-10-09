@@ -13,6 +13,7 @@ import 'rsuite/dist/rsuite.min.css'
 import 'primereact/resources/themes/saga-blue/theme.css'
 import 'primereact/resources/primereact.min.css'
 import 'primeicons/primeicons.css'
+import '../styles/index.css'
 import { Provider } from 'react-redux';
 import store from '../Redux';
 

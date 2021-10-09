@@ -1,3 +1,5 @@
+const colors = require('tailwindcss/colors')
+
 module.exports = {
 	purge: [],
 	darkMode: false, // or 'media' or 'class'
@@ -12,11 +14,17 @@ module.exports = {
 			},
 			indigo: {
 				DEFAULT: '#4C6EF5'
-			}
+			},
+			transparent: 'transparent',
+			current: 'currentColor',
+			black: colors.black,
+			white: colors.white,
+			gray: colors.trueGray,
+			red: colors.rose,
+			yellow: colors.amber,
 		}
 	},
 	variants: {
 		extend: {},
 	},
-	plugins: [],
 }
