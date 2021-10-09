@@ -6,7 +6,7 @@ import Head from 'next/head'
 import AllCardsSecond from '../components/AllCardsSecond/AllCardsSecond'
 import ListWithSvg from '../components/ListOfSteps/ListWithSvg';
 import NavbarBoot from '../components/NavBar/Navbar';
-// // import 'rsuite/styles/index.less';
+import OpinionSlider from '../components/OpinionsHome/OpinionSlider';
 
 export default function Home() {
    return (
@@ -15,6 +15,7 @@ export default function Home() {
          <HeaderHome />
          <HomeCards/>
          <HomePhrases/>
+         <OpinionSlider/>
       </div>
    );
 }

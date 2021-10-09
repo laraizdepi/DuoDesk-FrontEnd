@@ -15,21 +15,21 @@ const AllCards = () => {
                     <Title>Multiples servicios para tu comodidad</Title>
                 </Container>
                 <Row>
-                    <Col>
+                    <Col xs="12" md="4">
                         <Cards
                             title='Sala De Presentacion'
                             text='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sed vulputate odio ut enim blandit volutpat maecenas. Porttitor rhoncus dolor purus non enim praesent elementum facilisis leo.'
                             img={meetingRoom.src}
                             color='pink' />
                     </Col>
-                    <Col>
+                    <Col xs="12" md="4">
                         <Cards
                             title='Oficina Privada Persona'
                             text='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sed vulputate odio ut enim blandit volutpat maecenas. Porttitor rhoncus dolor purus non enim praesent elementum facilisis leo.'
                             img={office.src}
                             color='teal' />
                     </Col>
-                    <Col>
+                    <Col xs="12" md="4">
                         <Cards
                             title='Espacio de coworking'
                             text='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sed vulputate odio ut enim blandit volutpat maecenas. Porttitor rhoncus dolor purus non enim praesent elementum facilisis leo.'

@@ -15,11 +15,11 @@ const HeaderHome = () => {
                         component={Title} order={1}
                         gradient={{ from: 'pink', to: 'indigo', deg: 50 }}
                     >
-                        Find your perfect place to work
+                        Encuentra tu lugar perfecto para trabajar
                     </Text>
                     <Text size="xl" align="left" style={{ marginTop: '1.5rem', marginRight: '5rem' }}>
-                        The time is now for it be okay to be great.
-                        People in this world shun people for being nice
+                    Ahora es el momento de que todo esté bien.
+                    Por eso, te invitamos a rentar oficinas con nosotros
                     </Text>
                     <Group position="left" spacing="xl" withGutter style={{marginTop: '1.5rem'}}>
                         <Button size="lg" radius="xl"
