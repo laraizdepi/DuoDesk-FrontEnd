@@ -67,7 +67,7 @@ const SearchImput = () => {
                     color="dark" 
                     radius="xl"
                     leftIcon = {<BiSearchAlt width={20} height={20}/>}
-                    >
+                    >Search
                     </Button>
                 </Col>
             </Row>
