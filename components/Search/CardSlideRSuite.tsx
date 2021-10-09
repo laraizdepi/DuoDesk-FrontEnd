@@ -153,33 +153,26 @@ const offices = [
 ]
 const CardSlideRSuite = () => {
   return (
-    <div>
-      <Carousel autoplay
-        autoplayInterval={37000}
-        className={style.Carousel}
-        //  test position and button
-        placement={'bottom'}
-        shape='dot'
-        //  as = {('button')}
-        onClick={() => console.log('Hello World')}
-      >
-        {offices.map((office) => {
-          return (
-            <div className={style.CarouselItem}>
-              <SlideRSuite office={office} />
-            </div >
-          )
-        })}
-        {/* <div className = {style.CarouselItem}>
-          <SlideRSuite office = {offices[0]} />
-        </div >
-        <div className = {style.CarouselItem}>
-          <SlideRSuite office = {offices[1]} />
-        </div>
-        <div className = {style.CarouselItem}>
-          <SlideRSuite office = {offices[2]} />
-        </div> */}
-      </Carousel>
+    <div  onClick={() => console.log('you clicked the card')}>
+      <div>
+        <Carousel autoplay
+          autoplayInterval={37000}
+          className={style.Carousel}
+          //  test position and button
+          placement={'bottom'}
+          shape='dot'
+         as = {('div')}
+        // onClick={() => console.log('Hello World')}
+        >
+          {offices.map((office) => {
+            return (
+              <div className={style.CarouselItem}>
+                <SlideRSuite office={office} />
+              </div >
+            )
+          })}
+        </Carousel>
+      </div>
     </div>
   )
 

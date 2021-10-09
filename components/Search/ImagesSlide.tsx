@@ -145,7 +145,7 @@ const ImagesSlide: FC<imagesProps> = (props) => {
   let indexN = 0
   return (
     <div>
-      <Carousel activeIndex={index} onSelect={handleSelect} style={{ maxWidth: 350 , maxHeight: 220 }}>
+      <Carousel activeIndex={index} onSelect={handleSelect} style={{ maxWidth: 350 , maxHeight: 250 }}>
         {imagesAll.map((image: any, index: number) => {
           // console.log(image.src);
           indexN ++
