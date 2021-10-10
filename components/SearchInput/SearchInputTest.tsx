@@ -38,7 +38,7 @@ const SearchImputTest = () => {
         <div className={style.Calendar}>
           <DateRangePicker
             icon={<BsCalendar />}
-            dropdownType="modal"
+            // dropdownType="modal"s
             placeholder="fechas"
             variant="unstyled"
             id="SearchDates"
