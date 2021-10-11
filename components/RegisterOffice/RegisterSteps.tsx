@@ -220,20 +220,28 @@ const RegisterSteps = () => {
 								data.append('notifications', values[`notificationPhoneMain${i}`])
 							}
 						}
-						const response = await axios.post('http://localhost:5000/offices', data, { withCredentials: true })
-						if (response.status === 201) {
-							notifications.showNotification({
-								title: 'Oficina registrada correctamente',
-								message: `Felicitaciones, hemos añadido tu oficina. Ahora,
-								será disponible desde la fecha que has escogido. Sí necesitas modificar
-								información sobre tu oficina, dirigete al Dashboard`,
-								color: 'teal', icon: <MdDoneAll />
-							})
-						}
-						else{
+						try {
+							const response = await axios.post('http://localhost:5000/offices', data, { withCredentials: true })
+							if (response.status === 201) {
+								notifications.showNotification({
+									title: 'Oficina registrada correctamente',
+									message: `Felicitaciones, hemos añadido tu oficina. Ahora,
+									será disponible desde la fecha que has escogido. Sí necesitas modificar
+									información sobre tu oficina, dirigete al Dashboard`,
+									color: 'teal', icon: <MdDoneAll />
+								})
+							}
+							else{
+								notifications.showNotification({
+									title: 'Algo ha salido mal',
+									message: `${response.data}`,
+									color: 'pink', icon: <MdErrorOutline />
+								})
+							}
+						} catch (error) {
 							notifications.showNotification({
 								title: 'Algo ha salido mal',
-								message: `${response.data}`,
+								message: `${error}`,
 								color: 'pink', icon: <MdErrorOutline />
 							})
 						}
