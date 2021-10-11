@@ -1,3 +1,5 @@
+import { result } from "lodash"
+
 interface Offices {
     name: string,
     description: string,
@@ -61,44 +63,42 @@ const typeOffice = (type: string, data: Offices[], callback: (send?: any) => voi
 const extremePrices = (data: Offices[]) => {
     let min = 0
     let max = 0
-    for(let office of data){
-        for(let space of office.spaces){
-            debugger
-            if(space.hourPrice < min){
+    for (let office of data) {
+        for (let space of office.spaces) {
+            if (space.hourPrice < min) {
                 min = space.hourPrice
             }
-            else if(space.hourPrice > max){
+            else if (space.hourPrice > max) {
                 max = space.hourPrice
             }
 
-            if(space.dayPrice < min){
+            if (space.dayPrice < min) {
                 min = space.dayPrice
             }
-            else if(space.dayPrice > max){
+            else if (space.dayPrice > max) {
                 max = space.dayPrice
             }
 
-            if(space.weekPrice < min){
+            if (space.weekPrice < min) {
                 min = space.weekPrice
             }
-            else if(space.weekPrice > max){
+            else if (space.weekPrice > max) {
                 max = space.weekPrice
             }
 
-            if(space.monthPrice < min){
+            if (space.monthPrice < min) {
                 min = space.monthPrice
             }
-            else if(space.monthPrice > max){
+            else if (space.monthPrice > max) {
                 max = space.monthPrice
             }
         }
     }
-    debugger
-    return [ min, max ]
+    return { min, max }
 }
 
-const rangeOfPrices = (data: Offices[], callback: (send?: any) => void, time?: 'hour' | 'day' | 'week' | 'month', prices?: {min?: number, max?: number}) => {
-    if(time){
+const rangeOfPrices = (data: Offices[], callback: (send?: any) => void, time?: 'hour' | 'day' | 'week' | 'month', prices?: { min?: number, max?: number }) => {
+    if (time) {
         const finalData = data.map((element) => {
             element.spaces.sort((space1, space2) => {
                 if (space1[`${time}Price`] < space2[`${time}Price`]) {
@@ -109,14 +109,14 @@ const rangeOfPrices = (data: Offices[], callback: (send?: any) => void, time?: '
             return element
         }).filter((element) => {
             const spaces = element.spaces.filter((space) => {
-                if(prices){
-                    if(prices.min){
-                        if(space[`${time}Price`] < prices.min){
+                if (prices) {
+                    if (prices.min) {
+                        if (space[`${time}Price`] < prices.min) {
                             return false
                         }
                     }
-                    if(prices.max){
-                        if(space[`${time}Price`] > prices.max){
+                    if (prices.max) {
+                        if (space[`${time}Price`] > prices.max) {
                             return false
                         }
                     }
@@ -124,13 +124,13 @@ const rangeOfPrices = (data: Offices[], callback: (send?: any) => void, time?: '
                 }
                 return true
             })
-            if(spaces.length < 1){
+            if (spaces.length < 1) {
                 return false
             }
             return true
         })
         return callback(finalData)
-    }    
+    }
 }
 
 const selectDays = (days: 'week' | 'with saturday' | 'with sunday' | 'all' = 'all', data: Offices[], callback: (send?: any) => void, openHour?: string, closeHour?: string) => {
@@ -173,26 +173,47 @@ const selectDays = (days: 'week' | 'with saturday' | 'with sunday' | 'all' = 'al
     return callback(finalData)
 }
 
-const amenities = (list: string[], data: Offices[], callback: (send?: any) => void) => {
+const amenities = (list: string[], data: Offices[], callback: (send?: any) => void, filterSpaces?: string) => {
     const finalData = data.filter((element) => {
-        for (let item of list) {
-            if (!element.generalAmenities.includes(item)) {
+        if (filterSpaces) {
+            for(let item of list){
                 const result = element.spaces.filter((element) => {
-                    if (element.nameAmenities.includes(item)) {
-                        return true
-                    }
-                    else {
+                    if(element.typeSpace === filterSpaces){
+                        if(element.nameAmenities.includes(item)){
+                            return true
+                        }
                         return false
                     }
+                    return false
                 })
-                if (result.length === 0) {
+                if(result.length === 0){
                     return false
                 }
-                else {
+                else{
                     return true
                 }
             }
-            return true
+        }
+        else {
+            for (let item of list) {
+                if (!element.generalAmenities.includes(item)) {
+                    const result = element.spaces.filter((element) => {
+                        if (element.nameAmenities.includes(item)) {
+                            return true
+                        }
+                        else {
+                            return false
+                        }
+                    })
+                    if (result.length === 0) {
+                        return false
+                    }
+                    else {
+                        return true
+                    }
+                }
+                return true
+            }
         }
     })
     return callback(finalData)

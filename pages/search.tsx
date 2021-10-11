@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { Grid, Col, Card, Text, Select, MultiSelect, Popover, Button, Image, Input, Divider, RangeSlider } from '@mantine/core'
 import axios from 'axios'
 import Head from 'next/head'
@@ -10,6 +10,7 @@ import Filters from '../components/Search/Filters'
 import SearchMap from '../components/Maps/SearchMap';
 import { SelectItem } from '@mantine/core/lib/src/components/Select/types';
 import { value } from 'dom7'
+import { useRouter } from 'next/dist/client/router'
 
 interface Offices {
     name: string,
@@ -120,7 +121,7 @@ const listAmenities: SelectItem[] = [
     { label: "Duchas", value: "Duchas", group: "Servicios" }
 ]
 
-const SearchPage = () => {
+const SearchPage = (props: any) => {
     const [offices, setOffices] = useState<Offices[]>([])
     const [finalOffices, setFinalOffices] = useState<Offices[]>([])
     const [opened, setOpened] = useState<boolean>(false)
@@ -130,10 +131,14 @@ const SearchPage = () => {
     const [rangePrices, setRangePrices] = useState<{ min: number, max: number }>({ min: 0, max: 0 })
     const [days, setDays] = useState<'week' | 'with saturday' | 'with sunday' | 'all'>('all')
 
-    useEffect(() => {
+    useEffect(() => {   
         const getData = async () => {
-            const response = await axios.get('http://localhost:5000/offices')
-            console.log(response)
+            let url = 'http://localhost:5000/offices?'
+            if(props.city){
+                url = `${url}city=${props.city}&`
+            }
+            console.log(url)
+            const response = await axios.get(url)
             setOffices(response.data)
             setFinalOffices(response.data)
         }
@@ -143,7 +148,7 @@ const SearchPage = () => {
     useEffect(() => {
         const extremes = Filters.getMinMax(finalOffices)
         console.log(extremes)
-        setRangePrices({ min: extremes[0], max: extremes[1] })
+        setRangePrices({ min: extremes.min, max: extremes.max })
     }, [offices])
 
     useEffect(() => {
@@ -152,15 +157,20 @@ const SearchPage = () => {
             Filters.byType(type, offices, setFinalOffices)
         }
         if (amenities.length > 0) {
-            Filters.byAmenities(amenities, offices, setFinalOffices)
+            if(type !== 'all' && type !== ""){
+                Filters.byAmenities(amenities, offices, setFinalOffices, type)
+            }
+            else{
+                Filters.byAmenities(amenities, offices, setFinalOffices)
+            }
         }
         if (rangePrices.min > 0 && rangePrices.max && time === 'hour' || time === 'day' || time === 'week' || time === 'month') {
             Filters.byPrices(offices, setFinalOffices, time, rangePrices)
         }
-        if (days) {
-            Filters.byDays(days, offices, setFinalOffices)
-        }
-    }, [type, amenities, time, rangePrices])
+        // if (days) {
+        //     Filters.byDays(days, offices, setFinalOffices)
+        // }
+    }, [type, amenities, time, rangePrices, days])
 
     return (
         <div>
@@ -184,6 +194,7 @@ const SearchPage = () => {
                             </Col>
                             <Col span={3}>
                                 <Select
+                                    id="select-days"
                                     radius="xl"
                                     label="Filtrar por días"
                                     placeholder="Filtrar por días"
@@ -245,6 +256,7 @@ const SearchPage = () => {
                                     data={listAmenities}
                                     onChange={setAmenities}
                                     clearable
+                                    searchable
                                 />
                             </Col>
                         </Grid>
@@ -257,6 +269,10 @@ const SearchPage = () => {
             </Grid>
         </div>
     )
+}
+
+SearchPage.getInitialProps = async ({ query }: any) => {
+    return query
 }
 
 export default SearchPage

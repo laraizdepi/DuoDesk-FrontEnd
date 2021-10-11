@@ -374,11 +374,12 @@ const SearchMap: FC<{ offices: Offices[]}> = (props) => {
 
             console.log(averageY, averageX)
 
-            map.setCenter({
-                lat: averageY / props.offices.length,
-                lng: averageX / props.offices.length
-            })
-
+            if(averageX && averageY){
+                map.setCenter({
+                    lat: averageY / props.offices.length,
+                    lng: averageX / props.offices.length
+                })
+            }
         }
         initMap()
     }, [offices])
