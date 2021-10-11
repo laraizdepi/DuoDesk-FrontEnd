@@ -1,7 +1,10 @@
 import React, { FC, useState } from 'react'
-import { Badge, Card, Col, Divider, Grid, Group, Text, ThemeIcon, Title, Image } from '@mantine/core'
+import { Badge, Card, Divider, Group, Text, Title, Image, Accordion, List, ThemeIcon, Spoiler } from '@mantine/core'
 import { FaRegHeart, FaRegStar } from 'react-icons/fa'
-import { Carousel } from 'react-bootstrap'
+import { AiOutlineHeart, AiOutlineStar } from 'react-icons/ai'
+import { Carousel as BCarousel } from 'react-bootstrap'
+import { Carousel as RCarousel } from 'rsuite';
+import { IconButton, Typography } from '@mui/material'
 
 interface Offices {
     name: string,
@@ -38,8 +41,9 @@ interface Offices {
     openDate: string
 }
 
-const CardSearchBase: FC<{ office: Offices }> = (props) => {
+const CardSearchBase: FC<{ office: Offices}> = (props) => {
     const [space, setSpace] = useState(props.office.spaces[0])
+    const [opened, setOpened] = useState(false)
 
     const generalAmenities = props.office.generalAmenities.sort((amenity1, amenity2) => {
         if (amenity1.length < amenity2.length) {
@@ -53,106 +57,120 @@ const CardSearchBase: FC<{ office: Offices }> = (props) => {
         setSpace(props.office.spaces[event.slideIndex])
     }
 
+    const direction = props.office.address.formatted_address.split(',', 2)
+
     return (
-        <div>
-            <Card withBorder shadow="sm" radius="md">
-                <Grid>
-                    <Col span={12} md={4}>
-                        <Card.Section>
-                            <Carousel as={Card}>
-                                {space.imagesUrls.map((image) => {
-                                    const url = image.split('-', 2)
-                                    const file = image.substring(image.indexOf(url[1]) + url[1].length + 1)
-                                    const src = `http://localhost:5000/uploads/offices/${url[0]}/${url[1]}/${file}`
-                                    return (
-                                        <Carousel.Item key={image}>
-                                            <Image
-                                                width={200}
-                                                height={80}
-                                                src={src}
-                                                fit="contain" />
-                                        </Carousel.Item>
-                                    )
-                                })}
-                            </Carousel>
-                        </Card.Section>
-                    </Col>
-                    <Col span={12} md={8}>
-                        <Card.Section>
-                            <Group position="apart" className="my-2">
-                                <Title order={3}>{props.office.name}</Title>
-                                <ThemeIcon>
-                                    <FaRegHeart />
-                                </ThemeIcon>
-                            </Group>
-                            <Group position="apart">
-                                <Text size="xs">{props.office.address.formatted_address}</Text>
-                                <Text>{props.office.scores?.averageScore || null}<FaRegStar /></Text>
-                            </Group>
-                            <Divider margins="xs" label="Amenidades de la oficina" labelPosition="center" />
-                            <Group>
-                                <Badge>{generalAmenities[0]}</Badge>
-                                <Badge>{generalAmenities[1]}</Badge>
-                                <Badge>{generalAmenities[2]}</Badge>
-                                <Badge>{generalAmenities.length - 3}+</Badge>
-                            </Group>
-                            <Card>
-                                <Card.Section>
-                                    {props.office.spaces.map((element) => {
-                                        const spaceAmenities = element.nameAmenities.sort((amenity1, amenity2) => {
-                                            if (amenity1.length < amenity2.length) {
-                                                return -1
-                                            }
-                                            return 1
-                                        })
-                                        return (
-                                            <Card key={element.nameSpace} withBorder shadow="lg" style={{ margin: '1rem', padding: '2rem 3rem' }}>
-                                                <Card.Section>
-                                                    <Group position="apart">
-                                                        <Title order={4}>{element.nameSpace}</Title>
-                                                        <Badge color="teal">{element.typeSpace}</Badge>
-                                                    </Group>
-                                                </Card.Section>
-                                                <Divider margins="xs" label="Amenidades del espacio" labelPosition="center" />
-                                                <Card.Section>
-                                                    <Group position="left">
-                                                        <Badge style={{ width: '90px' }}>{spaceAmenities[0]}</Badge>
-                                                        <Badge style={{ width: '110px' }}>{spaceAmenities[1]}</Badge>
-                                                        <Badge style={{ width: '110px' }}>{spaceAmenities[2]}</Badge>
-                                                        {spaceAmenities.length - 3 === 0 ? null : <Badge>{spaceAmenities.length - 3}+</Badge>}
-                                                    </Group>
-                                                </Card.Section>
-                                                <Divider margins="xs" label="Precios del espacio" labelPosition="center" />
-                                                <Card.Section>
-                                                    <Group position="apart">
-                                                        <div>
-                                                            <Title order={6}>Por hora</Title>
-                                                            <Text>$3k</Text>
-                                                        </div>
-                                                        <div>
-                                                            <Title order={6}>Por día</Title>
-                                                            <Text>$50k</Text>
-                                                        </div>
-                                                        <div>
-                                                            <Title order={6}>Por mes</Title>
-                                                            <Text>$300k</Text>
-                                                        </div>
-                                                        <div>
-                                                            <Title order={6}>Por semana</Title>
-                                                            <Text>$1.35M</Text>
-                                                        </div>
-                                                    </Group>
-                                                </Card.Section>
-                                            </Card>
-                                        )
-                                    })}
-                                </Card.Section>
-                            </Card>
-                        </Card.Section>
-                    </Col>
-                </Grid>
-            </Card>
-        </div>
+        <Card withBorder shadow="sm" radius="lg" style={{ margin: '1rem', height: '100%' }}>
+            <Group direction="column" position="center">
+                <Card.Section>
+                    <BCarousel as={Card}>
+                        {space.imagesUrls.map((image) => {
+                            const url = image.split('-', 2)
+                            const file = image.substring(image.indexOf(url[1]) + url[1].length + 1)
+                            const src = `http://localhost:5000/uploads/offices/${url[0]}/${url[1]}/${file}`
+                            return (
+                                <BCarousel.Item key={image} interval={3000}>
+                                    <Image
+                                        height="12rem"
+                                        src={src}
+                                        // radius="lg"
+                                        fit="contain" />
+                                </BCarousel.Item>
+                            )
+                        })}
+                    </BCarousel>
+                </Card.Section>
+                <Card.Section>
+                    <Group position="apart" className="my-0">
+                        <Typography gutterBottom variant="body2">
+                            {props.office.name}
+                        </Typography>
+                        <IconButton color="primary" aria-label="upload picture" component="span" >
+                            <AiOutlineHeart />
+                        </IconButton>
+                    </Group>
+                    <Group position="right">
+                        <Text>{props.office.scores?.averageScore ? <div><FaRegStar color="#4C6EF5" />{props.office.scores?.averageScore}</div> : null}</Text>
+                    </Group>
+                    <Divider margins="xs" label="Amenidades de la oficina" labelPosition="center" />
+                    <Group position="apart">
+                        <Badge style={{ fontSize: '9px' }} color="indigo">{generalAmenities[0]}</Badge>
+                        <Badge style={{ fontSize: '9px' }} color="indigo">{generalAmenities[1]}</Badge>
+                        <Badge style={{ fontSize: '9px' }} color="indigo">{generalAmenities[2]}</Badge>
+                        <Badge style={{ fontSize: '9px' }} color="indigo">{generalAmenities.length - 3}+</Badge>
+                    </Group>
+                </Card.Section>
+                <Card.Section>
+                    <RCarousel onSelect={(index: number, event: React.ChangeEvent) => {
+                        setSpace(props.office.spaces[index])
+                    }}
+                        as={Card}
+                        style={{ height: '100%', padding: '1rem' }}
+                    >
+                        {props.office.spaces.map((element) => {
+                            const spaceAmenities = element.nameAmenities.sort((amenity1, amenity2) => {
+                                if (amenity1.length < amenity2.length) {
+                                    return -1
+                                }
+                                return 1
+                            })
+                            return (
+                                <Card key={element.nameSpace} withBorder shadow="lg" radius="xl" style={{ padding: '2rem 3rem' }}>
+                                    <Card.Section>
+                                        <Group position="apart">
+                                            <Title order={5}>{element.nameSpace}</Title>
+                                            <Badge color="teal" style={{ fontSize: '9px' }}>{element.typeSpace}</Badge>
+                                        </Group>
+                                    </Card.Section>
+                                    <Divider margins="xs" label="Precios del espacio" labelPosition="center" />
+                                    <Card.Section style={{ marginBottom: '5px' }}>
+                                        <Group position="apart">
+                                            <div>
+                                                <Title order={6}>Por hora</Title>
+                                                <Text>$3k</Text>
+                                            </div>
+                                            <div>
+                                                <Title order={6}>Por día</Title>
+                                                <Text>$50k</Text>
+                                            </div>
+                                            <div>
+                                                <Title order={6}>Por mes</Title>
+                                                <Text>$300k</Text>
+                                            </div>
+                                            <div>
+                                                <Title order={6}>Por semana</Title>
+                                                <Text>$1.35M</Text>
+                                            </div>
+                                        </Group>
+                                    </Card.Section>
+                                    <Divider margins="xs" label="Amenidades del espacio" labelPosition="center" />
+                                    <Card.Section>
+                                        <Spoiler maxHeight={100} showLabel="Ver todas las amenidades" hideLabel="Ocultar amenidades">
+                                            <List
+                                                style={{padding: '1rem 0'}}
+                                                spacing="xs"
+                                                icon={
+                                                    <ThemeIcon radius="lg" color="indigo">
+                                                        <AiOutlineStar />
+                                                    </ThemeIcon>
+                                                }>
+                                                {element.nameAmenities.map((amenity) => {
+                                                    return (
+                                                        <List.Item key={amenity}>
+                                                            <Text>{amenity}</Text>
+                                                        </List.Item>
+                                                    )
+                                                })}
+                                            </List>
+                                        </Spoiler>
+                                    </Card.Section>
+                                </Card>
+                            )
+                        })}
+                    </RCarousel>
+                </Card.Section>
+            </Group>
+        </Card >
     )
 }
 

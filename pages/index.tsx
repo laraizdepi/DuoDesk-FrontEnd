@@ -11,7 +11,7 @@ import NavbarNew3 from '../components/NavBar/NavbarNew3';
 export default function Home() {
    return (
       <div>
-         <NavbarNew3/>
+         {/* <NavbarNew3/> */}
          <HeaderHome />
          <HomeCards/>
          <HomePhrases/>

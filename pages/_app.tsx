@@ -1,5 +1,6 @@
 import { AppProps } from 'next/app';
 import Head from 'next/head';
+import Script from 'next/script'
 import {
 	MantineProvider,
 	NormalizeCSS,
@@ -13,7 +14,6 @@ import 'rsuite/dist/rsuite.min.css'
 import 'primereact/resources/themes/saga-blue/theme.css'
 import 'primereact/resources/primereact.min.css'
 import 'primeicons/primeicons.css'
-import 'react-animated-slider/build/horizontal.css';
 import '../styles/index.css'
 import { Provider } from 'react-redux';
 import store from '../Redux';
@@ -32,7 +32,6 @@ export default function App(props: AppProps) {
 						<meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
 						<link rel="shortcut icon" href="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" type="image/x-icon" />
 					</Head>
-
 					<MantineProvider
 						theme={{
 							/** Put your mantine theme override here */
@@ -42,6 +41,8 @@ export default function App(props: AppProps) {
 						<NormalizeCSS />
 						<GlobalStyles />
 						<NotificationsProvider>
+							<Script async strategy="beforeInteractive" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANYOIziGbeDJiUhK10ZsgOv60IT2Et3tQ&libraries=places" />
+							<Script async strategy="beforeInteractive" src="https://polyfill.io/v3/polyfill.min.js?features=default" />
 							<Component {...pageProps} />
 						</NotificationsProvider>
 					</MantineProvider>

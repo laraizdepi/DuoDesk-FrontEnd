@@ -77,8 +77,6 @@ const NewOfficeMap: FC = () => {
 
     return (
         <div>
-            <Script async strategy="beforeInteractive" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANYOIziGbeDJiUhK10ZsgOv60IT2Et3tQ&libraries=places" />
-            <Script async strategy="beforeInteractive" src="https://polyfill.io/v3/polyfill.min.js?features=default" />
             <div className={Styles.pacCard} id="pac-card">
                 <div>
                     <div id={Styles.title}>Dirección de la oficina</div>

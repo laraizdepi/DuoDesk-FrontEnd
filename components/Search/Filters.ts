@@ -58,27 +58,82 @@ const typeOffice = (type: string, data: Offices[], callback: (send?: any) => voi
     return callback(finalData)
 }
 
-const rangeOfPrices = (time: 'hour' | 'day' | 'week' | 'month', prices: number[], data: Offices[], callback: (send?: any) => void) => {
-    const finalData = data.map((element) => {
-        element.spaces.sort((space1, space2) => {
-            if (space1[`${time}Price`] < space2[`${time}Price`]) {
-                return -1
+const extremePrices = (data: Offices[]) => {
+    let min = 0
+    let max = 0
+    for(let office of data){
+        for(let space of office.spaces){
+            debugger
+            if(space.hourPrice < min){
+                min = space.hourPrice
             }
-            return 1
+            else if(space.hourPrice > max){
+                max = space.hourPrice
+            }
+
+            if(space.dayPrice < min){
+                min = space.dayPrice
+            }
+            else if(space.dayPrice > max){
+                max = space.dayPrice
+            }
+
+            if(space.weekPrice < min){
+                min = space.weekPrice
+            }
+            else if(space.weekPrice > max){
+                max = space.weekPrice
+            }
+
+            if(space.monthPrice < min){
+                min = space.monthPrice
+            }
+            else if(space.monthPrice > max){
+                max = space.monthPrice
+            }
+        }
+    }
+    debugger
+    return [ min, max ]
+}
+
+const rangeOfPrices = (data: Offices[], callback: (send?: any) => void, time?: 'hour' | 'day' | 'week' | 'month', prices?: {min?: number, max?: number}) => {
+    if(time){
+        const finalData = data.map((element) => {
+            element.spaces.sort((space1, space2) => {
+                if (space1[`${time}Price`] < space2[`${time}Price`]) {
+                    return -1
+                }
+                return 1
+            })
+            return element
+        }).filter((element) => {
+            const spaces = element.spaces.filter((space) => {
+                if(prices){
+                    if(prices.min){
+                        if(space[`${time}Price`] < prices.min){
+                            return false
+                        }
+                    }
+                    if(prices.max){
+                        if(space[`${time}Price`] > prices.max){
+                            return false
+                        }
+                    }
+                    return true
+                }
+                return true
+            })
+            if(spaces.length < 1){
+                return false
+            }
+            return true
         })
-        return element
-    })
-    return callback(finalData)
+        return callback(finalData)
+    }    
 }
 
-enum Days{
-    week = 'week',
-    withSaturday = 'with saturday',
-    withSunday = 'with sunday',
-    all = 'all'
-}
-
-const selectDays = (days: Days = Days.all, data: Offices[], callback: (send?: any) => void, openHour?: string, closeHour?: string) => {
+const selectDays = (days: 'week' | 'with saturday' | 'with sunday' | 'all' = 'all', data: Offices[], callback: (send?: any) => void, openHour?: string, closeHour?: string) => {
     let finalData: Offices[] = data.slice()
     if (days === "week") {
         finalData = data.filter((element) => {
@@ -178,7 +233,8 @@ const filter = {
     byPrices: rangeOfPrices,
     byDays: selectDays,
     byAmenities: amenities,
-    byRange: filterRange
+    byRange: filterRange,
+    getMinMax: extremePrices
 }
 
 export default filter
