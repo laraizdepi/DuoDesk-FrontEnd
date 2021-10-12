@@ -122,162 +122,162 @@ const listAmenities: SelectItem[] = [
 ]
 
 const SearchPage = (props: any) => {
-    const [offices, setOffices] = useState<Offices[]>([])
-    const [finalOffices, setFinalOffices] = useState<Offices[]>([])
-    const [center, setCenter] = useState<{ lat: number, lng: number }>({ lat: -34.397, lng: 150.644 })
-    const [opened, setOpened] = useState<boolean>(false)
-    const [type, setType] = useState<string>('all')
-    const [amenities, setAmenities] = useState<string[]>([])
-    const [time, setTime] = useState<string | undefined>(undefined)
-    const [prices, setPrices] = useState<RangeSliderProps['value']>([0, 0])
-    const [rangePrices, setRangePrices] = useState<[number, number]>([0, 0])
-    const [days, setDays] = useState<string | undefined>(undefined)
+  const [offices, setOffices] = useState<Offices[]>([])
+  const [finalOffices, setFinalOffices] = useState<Offices[]>([])
+  const [center, setCenter] = useState<{ lat: number, lng: number }>({ lat: -34.397, lng: 150.644 })
+  const [opened, setOpened] = useState<boolean>(false)
+  const [type, setType] = useState<string>('all')
+  const [amenities, setAmenities] = useState<string[]>([])
+  const [time, setTime] = useState<string | undefined>(undefined)
+  const [prices, setPrices] = useState<RangeSliderProps['value']>([0, 0])
+  const [rangePrices, setRangePrices] = useState<[number, number]>([0, 0])
+  const [days, setDays] = useState<string | undefined>(undefined)
 
-    useEffect(() => {
-        const getData = async () => {
-            let url = 'http://localhost:5000/offices?'
-            if (props.city) {
-                url = `${url}city=${props.city}&`
-            }
-            console.log(url)
-            const response = await axios.get(url)
-            setOffices(response.data)
-            setFinalOffices(response.data)
-            const extremes = await Filters.getMinMax(finalOffices)
-            setRangePrices([extremes.min, extremes.max])
-        }
-        getData()
-    }, [])
+  useEffect(() => {
+    const getData = async () => {
+      let url = 'http://localhost:5000/offices?'
+      if (props.city) {
+        url = `${url}city=${props.city}&`
+      }
+      console.log(url)
+      const response = await axios.get(url)
+      setOffices(response.data)
+      setFinalOffices(response.data)
+      const extremes = await Filters.getMinMax(finalOffices)
+      setRangePrices([extremes.min, extremes.max])
+    }
+    getData()
+  }, [])
 
-    useEffect(() => {
-        setFinalOffices(offices)
-        if (type !== 'all' && type !== "" && type) {
-            Filters.byType(type, offices, setFinalOffices)
-        }
-        if (amenities.length > 0) {
-            if (type !== 'all' && type !== "") {
-                Filters.byAmenities(amenities, offices, setFinalOffices, type)
-            }
-            else {
-                Filters.byAmenities(amenities, offices, setFinalOffices)
-            }
-        }
-        if (rangePrices && time === 'hour' || time === 'day' || time === 'week' || time === 'month') {
-            Filters.byPrices(offices, setFinalOffices, time, rangePrices)
-        }
-        if (days) {
-            Filters.byDays(days, offices, setFinalOffices)
-        }
-        if (prices && time === 'hour' || time === 'day' || time === "week" || time === 'month'){
-            Filters.byPrices(offices, setFinalOffices, time, prices)
-        }
-        const extremes = Filters.getMinMax(finalOffices)
-        setRangePrices([extremes.min, extremes.max])
-        console.log(finalOffices)
-    }, [type, amenities, time, days])
+  useEffect(() => {
+    setFinalOffices(offices)
+    if (type !== 'all' && type !== "" && type) {
+      Filters.byType(type, offices, setFinalOffices)
+    }
+    if (amenities.length > 0) {
+      if (type !== 'all' && type !== "") {
+        Filters.byAmenities(amenities, offices, setFinalOffices, type)
+      }
+      else {
+        Filters.byAmenities(amenities, offices, setFinalOffices)
+      }
+    }
+    if (rangePrices && time === 'hour' || time === 'day' || time === 'week' || time === 'month') {
+      Filters.byPrices(offices, setFinalOffices, time, rangePrices)
+    }
+    if (days) {
+      Filters.byDays(days, offices, setFinalOffices)
+    }
+    if (prices && time === 'hour' || time === 'day' || time === "week" || time === 'month') {
+      Filters.byPrices(offices, setFinalOffices, time, prices)
+    }
+    const extremes = Filters.getMinMax(finalOffices)
+    setRangePrices([extremes.min, extremes.max])
+    console.log(finalOffices)
+  }, [type, amenities, time, days])
 
-    return (
-        <div>
-            <Head>
-                <title>DuoDesk: Busca una oficina</title>
-            </Head>
-            <Navbar />
-            <Grid id="id-search" style={{ width: '100%', marginTop: '5rem' }}>
-                <Col span={12} md={7}>
-                    <ScrollPanel style={{ width: '100%', height: '90vh' }}>
-                        <Grid id="search-filters" align="end">
-                            <Col span={4}>
-                                <Select
-                                    id="typeSpaces"
-                                    radius="xl"
-                                    placeholder="Filtrar por espacios"
-                                    data={["Oficina privada", "Escritorio personal", "Sala de conferencias", "Espacio abierto"]}
-                                    onChange={setType}
-                                    clearable
-                                />
-                            </Col>
-                            <Col span={4}>
-                                <Select
-                                    id="select-days"
-                                    radius="xl"
-                                    placeholder="Filtrar por días"
-                                    data={[
-                                        { label: 'Todos los días', value: 'all' },
-                                        { label: 'Entre semana', value: 'week' },
-                                        { label: 'Entre semana y Sabado', value: 'with saturday' },
-                                        { label: 'Entre semana y Domingo', value: 'with sunday' },
-                                    ]}
-                                    onChange={setDays}
-                                    clearable
-                                />
-                            </Col>
-                            <Col span={4}>
-                                <Popover
-                                    opened={opened}
-                                    onClose={() => setOpened(false)}
-                                    target={<Button variant="outline" color="gray" radius="xl" onClick={() => setOpened((o) => !o)}>Filtrar por precios</Button>}
-                                    styles={{ body: { width: 260 } }}
-                                    position="bottom"
-                                    withArrow
-                                >
-                                    <div>
-                                        <Divider margins="xs" label="Precios de la oficina" labelPosition="center" />
-                                        <Select style={{ marginBottom: '4rem' }}
-                                            radius="xl"
-                                            placeholder="Tipo de intervalo"
-                                            data={[
-                                                { label: 'Hora', value: 'hour' },
-                                                { label: 'Día', value: 'day' },
-                                                { label: 'Semana', value: 'week' },
-                                                { label: 'Mes', value: 'month' },
-                                            ]}
-                                            onChange={setTime}
-                                            clearable
-                                        />
-                                        <RangeSlider
-                                            color="indigo"
-                                            labelAlwaysOn
-                                            min={rangePrices[0]}
-                                            max={rangePrices[1]}
-                                            step={10000}
-                                            onChange={setPrices}
-                                        />
-                                    </div>
-                                </Popover>
-                            </Col>
-                            <Col span={12}>
-                                <MultiSelect
-                                    radius="xl"
-                                    id="amenities-filters"
-                                    placeholder="Filtrar por amenidades"
-                                    data={listAmenities}
-                                    onChange={setAmenities}
-                                    clearable
-                                    searchable
-                                />
-                            </Col>
-                        </Grid>
-                        <CardsSearch offices={finalOffices} />
-                    </ScrollPanel>
-                </Col>
-                <Col span={12} md={5}>
-                    <SearchMap onlyOffices={finalOffices} city={props.city} />
-                </Col>
+  return (
+    <div>
+      <Head>
+        <title>DuoDesk: Busca una oficina</title>
+      </Head>
+      <Navbar />
+      <Grid id="id-search" style={{ width: '100%', marginTop: '5rem' }}>
+        <Col span={12} md={7}>
+          <ScrollPanel style={{ width: '100%', height: '90vh' }}>
+            <Grid id="search-filters" align="end">
+              <Col span={4}>
+                <Select
+                  id="typeSpaces"
+                  radius="xl"
+                  placeholder="Filtrar por espacios"
+                  data={["Oficina privada", "Escritorio personal", "Sala de conferencias", "Espacio abierto"]}
+                  onChange={setType}
+                  clearable
+                />
+              </Col>
+              <Col span={4}>
+                <Select
+                  id="select-days"
+                  radius="xl"
+                  placeholder="Filtrar por días"
+                  data={[
+                    { label: 'Todos los días', value: 'all' },
+                    { label: 'Entre semana', value: 'week' },
+                    { label: 'Entre semana y Sabado', value: 'with saturday' },
+                    { label: 'Entre semana y Domingo', value: 'with sunday' },
+                  ]}
+                  onChange={setDays}
+                  clearable
+                />
+              </Col>
+              <Col span={4}>
+                <Popover
+                  opened={opened}
+                  onClose={() => setOpened(false)}
+                  target={<Button variant="outline" color="gray" radius="xl" onClick={() => setOpened((o) => !o)}>Filtrar por precios</Button>}
+                  styles={{ body: { width: 260 } }}
+                  position="bottom"
+                  withArrow
+                >
+                  <div>
+                    <Divider margins="xs" label="Precios de la oficina" labelPosition="center" />
+                    <Select style={{ marginBottom: '4rem' }}
+                      radius="xl"
+                      placeholder="Tipo de intervalo"
+                      data={[
+                        { label: 'Hora', value: 'hour' },
+                        { label: 'Día', value: 'day' },
+                        { label: 'Semana', value: 'week' },
+                        { label: 'Mes', value: 'month' },
+                      ]}
+                      onChange={setTime}
+                      clearable
+                    />
+                    <RangeSlider
+                      color="indigo"
+                      labelAlwaysOn
+                      min={rangePrices[0]}
+                      max={rangePrices[1]}
+                      step={10000}
+                      onChange={setPrices}
+                    />
+                  </div>
+                </Popover>
+              </Col>
+              <Col span={12}>
+                <MultiSelect
+                  radius="xl"
+                  id="amenities-filters"
+                  placeholder="Filtrar por amenidades"
+                  data={listAmenities}
+                  onChange={setAmenities}
+                  clearable
+                  searchable
+                />
+              </Col>
             </Grid>
             <CardsSearch offices={finalOffices} />
           </ScrollPanel>
         </Col>
-        <Col span={12} md={4}>
-          <SearchMap offices={finalOffices} />
+        <Col span={12} md={5}>
+          <SearchMap onlyOffices={finalOffices} city={props.city} />
         </Col>
       </Grid>
-    </div>
+      <CardsSearch offices={finalOffices} />
+      {/* </ScrollPanel>
+        </Col >
+  <Col span={12} md={4}>
+    <SearchMap offices={finalOffices} />
+  </Col> */}
+      {/* </Grid > */}
+    </div >
   )
 }
 
 SearchPage.getInitialProps = async ({ query }: any) => {
-    console.log(query)
-    return query
+  console.log(query)
+  return query
 }
 
 export default SearchPage

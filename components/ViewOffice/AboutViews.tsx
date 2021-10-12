@@ -1,8 +1,10 @@
 import { Typography } from "@mui/material"
 import React, { FC } from "react"
-import style from './View.module.sass'
-// import GoLocation from 'react-icons/go'
+import style from './VIew.module.sass'
+import { MdCoffeeMaker } from 'react-icons/md'
 import GrLocation from 'react-icons/gr'
+import { GoLocation } from 'react-icons/go'
+import ListItemIcon from '@mui/material/ListItemIcon';
 interface AboutProps {
   office: any[]
 }
@@ -11,25 +13,22 @@ const AboutViews: FC<AboutProps> = (props) => {
   const office = props.office
   return (
     <div>
-      {/* <h1>{office.name}</h1> */}
-
-      <Typography variant="h3" component="h2">
+      <h1 className={style.titleAbout}>
         {office.name}
-      </Typography>
+      </h1>
 
-      <Typography variant="body1" >
-        {office.description}
-      </Typography>
-      
-      {/* <div>
-        <GrLocation />
-      </div> */}
-      
-      <Typography variant="body1" >
+      <div className = {style.direction}>
+        <GoLocation  color = '#E64980'/>
         {office.address.formatted_address}
-      </Typography>
+      </div>
 
-    </div>
+      {/* <Typography variant="body1" style={{ marginRight: '100px' }}>
+        {office.description}
+      </Typography> */}
+      <div className= {style.description}>
+        <p>{office.description}</p>
+      </div>
+    </div >
 
 
   )

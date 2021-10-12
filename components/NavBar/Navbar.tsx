@@ -66,7 +66,7 @@ const NavBar = () => {
 			<div>
 				<Navbar fixed="top" style={{ backgroundColor: 'white', height: '80px' }}>
 					<Container>
-						<Navbar.Brand href="#home" className={style.Brand}>
+						<Navbar.Brand href="http://localhost:3000/" className={style.Brand}>
 							<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Octicons-mark-github.svg/2048px-Octicons-mark-github.svg.png"
 								width="40"
 								height="40"
