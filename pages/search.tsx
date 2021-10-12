@@ -9,6 +9,7 @@ import CardsSearch from '../components/Search/CardsSearch'
 import Filters from '../components/Search/Filters'
 import SearchMap from '../components/Maps/SearchMap';
 import { SelectItem } from '@mantine/core/lib/src/components/Select/types';
+// import { value } from 'dom7'
 import { useRouter } from 'next/dist/client/router'
 
 interface Offices {
