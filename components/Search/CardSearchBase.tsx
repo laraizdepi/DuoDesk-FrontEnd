@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react'
-import { Badge, Card, Divider, Group, Text, Title, Image, Accordion, List, ThemeIcon, Spoiler } from '@mantine/core'
+import { Badge, Card, Divider, Group, Text, Title, Image, Grid, Col, List, ThemeIcon, Spoiler } from '@mantine/core'
 import { FaRegHeart, FaRegStar } from 'react-icons/fa'
 import { AiOutlineHeart, AiOutlineStar } from 'react-icons/ai'
 import { Carousel as BCarousel } from 'react-bootstrap'
@@ -41,7 +41,7 @@ interface Offices {
     openDate: string
 }
 
-const CardSearchBase: FC<{ office: Offices}> = (props) => {
+const CardSearchBase: FC<{ office: Offices }> = (props) => {
     const [space, setSpace] = useState(props.office.spaces[0])
     const [opened, setOpened] = useState(false)
 
@@ -63,7 +63,7 @@ const CardSearchBase: FC<{ office: Offices}> = (props) => {
         <Card withBorder shadow="sm" radius="lg" style={{ margin: '1rem', height: '100%' }}>
             <Group direction="column" position="center">
                 <Card.Section>
-                    <BCarousel as={Card}>
+                    <BCarousel>
                         {space.imagesUrls.map((image) => {
                             const url = image.split('-', 2)
                             const file = image.substring(image.indexOf(url[1]) + url[1].length + 1)
@@ -93,11 +93,25 @@ const CardSearchBase: FC<{ office: Offices}> = (props) => {
                         <Text>{props.office.scores?.averageScore ? <div><FaRegStar color="#4C6EF5" />{props.office.scores?.averageScore}</div> : null}</Text>
                     </Group>
                     <Divider margins="xs" label="Amenidades de la oficina" labelPosition="center" />
-                    <Group position="apart">
-                        <Badge style={{ fontSize: '9px' }} color="indigo">{generalAmenities[0]}</Badge>
-                        <Badge style={{ fontSize: '9px' }} color="indigo">{generalAmenities[1]}</Badge>
-                        <Badge style={{ fontSize: '9px' }} color="indigo">{generalAmenities[2]}</Badge>
-                        <Badge style={{ fontSize: '9px' }} color="indigo">{generalAmenities.length - 3}+</Badge>
+                    <Group position="left">
+                        <Spoiler maxHeight={90} showLabel="Ver todas las amenidades" hideLabel="Ocultar amenidades">
+                            <List
+                                style={{ padding: '1rem 0' }}
+                                spacing="xs"
+                                icon={
+                                    <ThemeIcon radius="lg" color="indigo">
+                                        <AiOutlineStar />
+                                    </ThemeIcon>
+                                }>
+                                {props.office.generalAmenities.map((amenity) => {
+                                    return (
+                                        <List.Item key={amenity}>
+                                            <Text>{amenity}</Text>
+                                        </List.Item>
+                                    )
+                                })}
+                            </List>
+                        </Spoiler>
                     </Group>
                 </Card.Section>
                 <Card.Section>
@@ -145,9 +159,9 @@ const CardSearchBase: FC<{ office: Offices}> = (props) => {
                                     </Card.Section>
                                     <Divider margins="xs" label="Amenidades del espacio" labelPosition="center" />
                                     <Card.Section>
-                                        <Spoiler maxHeight={100} showLabel="Ver todas las amenidades" hideLabel="Ocultar amenidades">
+                                        <Spoiler maxHeight={90} showLabel="Ver todas las amenidades" hideLabel="Ocultar amenidades">
                                             <List
-                                                style={{padding: '1rem 0'}}
+                                                style={{ padding: '1rem 0' }}
                                                 spacing="xs"
                                                 icon={
                                                     <ThemeIcon radius="lg" color="indigo">
