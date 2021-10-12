@@ -37,36 +37,55 @@ const ViewOffice: FC<TestProps> = (props) => {
   let ImagesIndi = {}
 
   const office = props.office
-  const spaces = office.spaces[0]
-  const images = spaces.imagesUrls
-
-  // console.log('Images');
-  // console.log(images);
-  for (let i = 0; i < office.length; i++) {
-    let spaces = office.spaces[i]
-    let images = spaces.imagesUrls
+  const spaces = office.spaces
+  // const images = spaces.imagesUrls
+  console.log('office', office);
+  
+  console.log('allSpaces', spaces);
 
 
-  }
+  spaces.map((space) => {
+    const images = space.imagesUrls
+    console.log("imagesPerSpace", images);
 
-  images.map((image) => {
-    const url = image.split('-', 2)
-    const file = image.substring(image.indexOf(url[1]) + url[1].length + 1)
-    const src = `http://localhost:5000/uploads/offices/${url[0]}/${url[1]}/${file}`
+    images.map((image) => {
+      const url = image.split('-', 2)
+      const file = image.substring(image.indexOf(url[1]) + url[1].length + 1)
+      const src = `http://localhost:5000/uploads/offices/${url[0]}/${url[1]}/${file}`
 
-    console.log('imagesIndi', ImagesIndi);
-    console.log('src', src);
+      console.log('imagesIndi', ImagesIndi);
+      console.log('src', src);
 
-    ImagesIndi["original"] = src
-    ImagesIndi["thumbnail"] = src
+      ImagesIndi["original"] = src
+      ImagesIndi["thumbnail"] = src
 
 
-    ImagesAll.push(ImagesIndi)
-    console.log('All Images', ImagesAll);
+      ImagesAll.push(ImagesIndi)
+      console.log('All Images', ImagesAll);
 
-    ImagesIndi = {}
+      ImagesIndi = {}
 
+    })
   })
+
+  // images.map((image) => {
+  //   const url = image.split('-', 2)
+  //   const file = image.substring(image.indexOf(url[1]) + url[1].length + 1)
+  //   const src = `http://localhost:5000/uploads/offices/${url[0]}/${url[1]}/${file}`
+
+  //   console.log('imagesIndi', ImagesIndi);
+  //   console.log('src', src);
+
+  //   ImagesIndi["original"] = src
+  //   ImagesIndi["thumbnail"] = src
+
+
+  //   ImagesAll.push(ImagesIndi)
+  //   console.log('All Images', ImagesAll);
+
+  //   ImagesIndi = {}
+
+  // })
 
 
   const itemData = [
