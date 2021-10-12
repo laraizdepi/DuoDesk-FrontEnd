@@ -160,7 +160,7 @@ const ViewOffice: FC<TestProps> = (props) => {
         <AboutViews office={office} />
       </Container>
 
-      <ImageGallery items={ImagesAll} />
+      <ImageGallery items={ImagesAll} showIndex/>
 
       <div>
 
