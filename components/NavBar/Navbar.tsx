@@ -233,6 +233,7 @@ const NavbarBoot = () => {
 			<div>
 				<Navbar bg="dark" variant="dark">
 					<Container>
+<<<<<<< HEAD
 						<Navbar.Brand href="http://localhost:3000/">
 							<img
 								alt=""
@@ -242,6 +243,14 @@ const NavbarBoot = () => {
 								className="d-inline-block align-top"
 							/>{' '}
 							React Bootstrap
+=======
+						<Navbar.Brand href="http://localhost:3000/" className={style.Brand}>
+							<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Octicons-mark-github.svg/2048px-Octicons-mark-github.svg.png"
+								width="40"
+								height="40"
+							/>
+							DuoDesk
+>>>>>>> 51b2b56cdbc4f8d9ea5b0936e7787b5431b5435c
 						</Navbar.Brand>
 						<Navbar.Collapse className="justify-content-end">
 							<Button variant="gradient" gradient={{ from: 'indigo', to: 'pink' }}>

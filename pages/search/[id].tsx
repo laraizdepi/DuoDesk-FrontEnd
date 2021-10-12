@@ -1,5 +1,6 @@
 import Test from "../../components/test"
-
+import ViewOffice from "../../components/ViewOffice/ViewOffice"
+import Navbar from "../../components/NavBar/Navbar"
 export const getStaticPaths = async () =>{
     const res = await fetch('http://localhost:5000/offices')
     const data = await res.json()
@@ -28,19 +29,8 @@ export const getStaticProps = async (context: { params: { id: any; }; }) =>{
 const Details = ({oficina}) => {
     return (
         <div>
-            <h1>
-                {oficina.name}
-            </h1>
-            <h1>
-                {oficina.openDate}
-            </h1>
-            <h1>
-                {oficina.name}
-            </h1>
-            <Test />
-            <h1>
-                hello world
-            </h1>
+            <Navbar/>
+            <ViewOffice office = {oficina}/>
         </div>
     )
 }
