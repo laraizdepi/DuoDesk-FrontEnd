@@ -5,6 +5,7 @@ import { AiOutlineHeart, AiOutlineStar } from 'react-icons/ai'
 import { Carousel as BCarousel } from 'react-bootstrap'
 import { Carousel as RCarousel } from 'rsuite';
 import { IconButton, Typography } from '@mui/material'
+import { NextLink } from '../NextLink/NextLink'
 
 interface Offices {
     name: string,
@@ -60,8 +61,10 @@ const CardSearchBase: FC<{ office: Offices }> = (props) => {
     const direction = props.office.address.formatted_address.split(',', 2)
 
     return (
-        <Card withBorder shadow="sm" radius="lg" style={{ margin: '1rem', height: '100%' }}>
-            <Group direction="column" position="center">
+        <Card component={NextLink} href={`/search/${props.office.id}`}
+            withBorder shadow="sm" radius="lg" style={{ margin: '1rem', height: '100%' }}
+            className="hover:no-underline">
+            <Group direction="column" position="left" style={{ marginLeft: '1rem' }}>
                 <Card.Section>
                     <BCarousel>
                         {space.imagesUrls.map((image) => {
@@ -82,9 +85,9 @@ const CardSearchBase: FC<{ office: Offices }> = (props) => {
                 </Card.Section>
                 <Card.Section>
                     <Group position="apart" className="my-0">
-                        <Typography gutterBottom variant="body2">
+                        <Title order={2}>
                             {props.office.name}
-                        </Typography>
+                        </Title>
                         <IconButton color="primary" aria-label="upload picture" component="span" >
                             <AiOutlineHeart />
                         </IconButton>
@@ -94,7 +97,10 @@ const CardSearchBase: FC<{ office: Offices }> = (props) => {
                     </Group>
                     <Divider margins="xs" label="Amenidades de la oficina" labelPosition="center" />
                     <Group position="left">
-                        <Spoiler maxHeight={90} showLabel="Ver todas las amenidades" hideLabel="Ocultar amenidades">
+                        <Spoiler
+                            onClick={(event) => event.preventDefault()}
+                            maxHeight={90}
+                            showLabel="Ver todas las amenidades" hideLabel="Ocultar amenidades">
                             <List
                                 style={{ padding: '1rem 0' }}
                                 spacing="xs"
@@ -118,8 +124,13 @@ const CardSearchBase: FC<{ office: Offices }> = (props) => {
                     <RCarousel onSelect={(index: number, event: React.ChangeEvent) => {
                         setSpace(props.office.spaces[index])
                     }}
+                    onSlideStart={(index: number, event: React.ChangeEvent) => {
+                        setSpace(props.office.spaces[index])
+                    }}
                         as={Card}
-                        style={{ height: '100%', padding: '1rem' }}
+                        style={{ height: '100%', padding: '0px' }}
+                        autoplay
+                        autoplayInterval={10000}
                     >
                         {props.office.spaces.map((element) => {
                             const spaceAmenities = element.nameAmenities.sort((amenity1, amenity2) => {
@@ -129,11 +140,11 @@ const CardSearchBase: FC<{ office: Offices }> = (props) => {
                                 return 1
                             })
                             return (
-                                <Card key={element.nameSpace} withBorder shadow="lg" radius="xl" style={{ padding: '2rem 3rem' }}>
+                                <Card key={element.nameSpace} withBorder shadow="lg" radius="xl" style={{ padding: '2rem 2rem' }}>
                                     <Card.Section>
-                                        <Group position="apart">
+                                        <Group direction="column" position="center">
                                             <Title order={5}>{element.nameSpace}</Title>
-                                            <Badge color="teal" style={{ fontSize: '9px' }}>{element.typeSpace}</Badge>
+                                            <Text transform="capitalize">{element.typeSpace}</Text>
                                         </Group>
                                     </Card.Section>
                                     <Divider margins="xs" label="Precios del espacio" labelPosition="center" />
@@ -159,24 +170,26 @@ const CardSearchBase: FC<{ office: Offices }> = (props) => {
                                     </Card.Section>
                                     <Divider margins="xs" label="Amenidades del espacio" labelPosition="center" />
                                     <Card.Section>
-                                        <Spoiler maxHeight={90} showLabel="Ver todas las amenidades" hideLabel="Ocultar amenidades">
-                                            <List
-                                                style={{ padding: '1rem 0' }}
-                                                spacing="xs"
-                                                icon={
-                                                    <ThemeIcon radius="lg" color="indigo">
-                                                        <AiOutlineStar />
-                                                    </ThemeIcon>
-                                                }>
-                                                {element.nameAmenities.map((amenity) => {
-                                                    return (
-                                                        <List.Item key={amenity}>
-                                                            <Text>{amenity}</Text>
-                                                        </List.Item>
-                                                    )
-                                                })}
-                                            </List>
-                                        </Spoiler>
+                                        {/* <Spoiler maxHeight={90}
+                                            onClick={(event) => event.preventDefault()}
+                                            showLabel="Ver todas las amenidades" hideLabel="Ocultar amenidades"> */}
+                                        <List
+                                            style={{ padding: '1rem 0' }}
+                                            spacing="xs"
+                                            icon={
+                                                <ThemeIcon radius="lg" color="indigo">
+                                                    <AiOutlineStar />
+                                                </ThemeIcon>
+                                            }>
+                                            {element.nameAmenities.map((amenity) => {
+                                                return (
+                                                    <List.Item key={amenity}>
+                                                        <Text>{amenity}</Text>
+                                                    </List.Item>
+                                                )
+                                            })}
+                                        </List>
+                                        {/* </Spoiler> */}
                                     </Card.Section>
                                 </Card>
                             )

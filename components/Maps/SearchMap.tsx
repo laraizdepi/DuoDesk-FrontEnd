@@ -326,7 +326,7 @@ interface Offices {
 }
 
 const SearchMap: FC<{ onlyOffices: Offices[], city: string }> = (props) => {
-    useLayoutEffect(() => {
+    useEffect(() => {
         let map: google.maps.Map | google.maps.StreetViewPanorama | google.maps.InfoWindowOpenOptions | null | undefined
         const initMap = (): void => {
             map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
@@ -335,7 +335,7 @@ const SearchMap: FC<{ onlyOffices: Offices[], city: string }> = (props) => {
                 styles
             })
             const places = new google.maps.places.PlacesService(map)
-    
+
             places.findPlaceFromQuery({
                 query: props.city,
                 fields: ['name', 'geometry']
@@ -346,12 +346,34 @@ const SearchMap: FC<{ onlyOffices: Offices[], city: string }> = (props) => {
             })
 
             for (let office of props.onlyOffices) {
-                const content = (`
-                    <Card id={office.name} radius="xl">
-                        <Text>${office.name}</Text>
-                    </Card>`
-                )
-    
+                let spaces: string[] = []
+                for(let space of office.spaces){
+                    if(!spaces.includes(space.typeSpace)){
+                        spaces.push(space.typeSpace)
+                    }
+                }
+                console.log(spaces)
+                const url = office.spaces[0].imagesUrls[0].split('-', 2)
+                const file = office.spaces[0].imagesUrls[0].substring(office.spaces[0].imagesUrls[0].indexOf(url[1]) + url[1].length + 1)
+                const src = `http://localhost:5000/uploads/offices/${url[0]}/${url[1]}/${file}`
+                const content = `
+                <div class="card" style="width: 18rem;">
+                    <img src=${src} />
+                    <div class="card-body">
+                        <h1>${office.name}</h1>
+                        <ul class="list-group list-group-flush">
+                        ${spaces.map((element) => {
+                            return(
+                                `<li class="list-group-item">${element}</li>`
+                            )
+                        })}
+                        </ul>
+                    </div>
+                </div>
+                `
+
+                console.log(office.description)
+
                 const mark = new google.maps.Marker({
                     position: { lat: office.address.geometry.location.lat, lng: office.address.geometry.location.lng },
                     map,
@@ -366,7 +388,7 @@ const SearchMap: FC<{ onlyOffices: Offices[], city: string }> = (props) => {
                         anchor: new google.maps.Point(15, 30),
                     }
                 })
-    
+
                 const infowindow = new google.maps.InfoWindow({ content: content })
                 mark.addListener('click', (event: any) => {
                     infowindow.open(map, mark)
