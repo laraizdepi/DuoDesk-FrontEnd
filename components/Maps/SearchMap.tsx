@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useEffect, useLayoutEffect, useRef } from 'react'
 import { Card, Text } from '@mantine/core'
 import ReactDOMServer from 'react-dom/server'
 
@@ -325,9 +325,8 @@ interface Offices {
     openDate: string
 }
 
-const SearchMap: FC<{ offices: Offices[]}> = (props) => {
-    const [offices, setOffices] = useState<Offices[]>(props.offices)
-    useEffect(() => {
+const SearchMap: FC<{ onlyOffices: Offices[], city: string }> = (props) => {
+    useLayoutEffect(() => {
         let map: google.maps.Map | google.maps.StreetViewPanorama | google.maps.InfoWindowOpenOptions | null | undefined
         const initMap = (): void => {
             map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
@@ -335,20 +334,24 @@ const SearchMap: FC<{ offices: Offices[]}> = (props) => {
                 zoom: 11,
                 styles
             })
+            const places = new google.maps.places.PlacesService(map)
+    
+            places.findPlaceFromQuery({
+                query: props.city,
+                fields: ['name', 'geometry']
+            }, (results, status) => {
+                if (results && map) {
+                    map.setCenter(results[0].geometry?.location)
+                }
+            })
 
-            let averageX = 0
-            let averageY = 0
-
-            for (let office of props.offices) {
-                averageX += office.address.geometry.location.lng
-                averageY += office.address.geometry.location.lat
-
-                const content = ReactDOMServer.renderToStaticMarkup(
-                    <Card>
-                        <Text>{office.name}</Text>
-                    </Card>
+            for (let office of props.onlyOffices) {
+                const content = (`
+                    <Card id={office.name} radius="xl">
+                        <Text>${office.name}</Text>
+                    </Card>`
                 )
-
+    
                 const mark = new google.maps.Marker({
                     position: { lat: office.address.geometry.location.lat, lng: office.address.geometry.location.lng },
                     map,
@@ -363,26 +366,19 @@ const SearchMap: FC<{ offices: Offices[]}> = (props) => {
                         anchor: new google.maps.Point(15, 30),
                     }
                 })
-
-
+    
                 const infowindow = new google.maps.InfoWindow({ content: content })
                 mark.addListener('click', (event: any) => {
                     infowindow.open(map, mark)
                 })
                 // mark.addListener('clickoutside', () => { infowindow.close() })
             }
-
-            console.log(averageY, averageX)
-
-            if(averageX && averageY){
-                map.setCenter({
-                    lat: averageY / props.offices.length,
-                    lng: averageX / props.offices.length
-                })
-            }
         }
         initMap()
-    }, [offices])
+        return () => {
+            map = null
+        }
+    }, [props.onlyOffices])
 
     return (
         <div id="map" style={{ height: '90vh' }}>
