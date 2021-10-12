@@ -9,7 +9,7 @@ import ImageListItem from "@mui/material/ImageListItem";
 // Parts of page
 import AboutViews from "./AboutViews";
 import ImageGallery from 'react-image-gallery';
-import _ from "lodash";
+import AmenidadesGeneral from "./AmenidadesGeneral";
 
 
 const imagesT = [
@@ -112,7 +112,7 @@ const ViewOffice: FC<TestProps> = (props) => {
   return (
     <div>
       <div>
-        <Box sx={{ width: 500, height: 450, overflowY: "scroll" }}>
+        {/* <Box sx={{ width: 500, height: 450, overflowY: "scroll" }}>
           <ImageList variant="masonry" cols={3} gap={8}>
             {itemData.map((item) => (
               <ImageListItem key={item.img}>
@@ -126,10 +126,10 @@ const ViewOffice: FC<TestProps> = (props) => {
               </ImageListItem>
             ))}
           </ImageList>
-        </Box>
+        </Box> */}
       </div>
       <h1>{office.name}</h1>
-      <Carousel>
+      {/* <Carousel>
         <Carousel.Item>
           <Image
             className="d-block w-100"
@@ -154,16 +154,16 @@ const ViewOffice: FC<TestProps> = (props) => {
             preview
           />
         </Carousel.Item>
-      </Carousel>
+      </Carousel> */}
 
+
+      <ImageGallery items={ImagesAll} showIndex/>
       <Container>
         <AboutViews office={office} />
       </Container>
 
-      <ImageGallery items={ImagesAll} showIndex/>
-
       <div>
-
+          <AmenidadesGeneral office = {office}/>
       </div>
     </div>
   )
