@@ -2,7 +2,7 @@ import { FC } from "react"
 import Amenidad from "./AmenidadSingle"
 import AiFillHeart from 'react-icons/ai'
 import AmenidadSingle from "./AmenidadSingle"
-import {Container} from 'react-bootstrap'
+import { Container, Row, Col } from 'react-bootstrap'
 
 
 interface AmenidadesProps {
@@ -115,15 +115,17 @@ const AmenidadesGeneral: FC<AmenidadesProps> = (props) => {
     return (
         <Container>
             <h1>Amenidades Generales</h1>
-            {Object.keys(AmenidadesOrgani).map((title) => {
-                console.log('return amenidad', title);
-                const amenidadGroup = AmenidadesOrgani[title]
-                return (
-                    <Container>
-                        <AmenidadSingle title={title} amenidadGroup={amenidadGroup} />
-                    </Container>
-                )
-            })}
+            <Row>
+                {Object.keys(AmenidadesOrgani).map((title) => {
+                    console.log('return amenidad', title);
+                    const amenidadGroup = AmenidadesOrgani[title]
+                    return (
+                        <Col xs = {12} md = {4}>
+                            <AmenidadSingle title={title} amenidadGroup={amenidadGroup} />
+                        </Col>
+                    )
+                })}
+            </Row>
 
         </Container>
     )
