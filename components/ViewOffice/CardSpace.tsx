@@ -1,5 +1,5 @@
 import { FC } from "react"
-import CardSearchBase from "./CardSearchBase"
+import CardSearchBaseTest from "./CardSearchBaseTest"
 
 interface CardsProps {
     office : any[]
@@ -8,7 +8,7 @@ const CardSpace:FC<CardsProps> = (props) =>{
     return(
         <div>
             <h1>Espacios</h1>
-            <CardSearchBase office = {props.office}/>
+            <CardSearchBaseTest office = {props.office}/>
 
         </div>
     )

@@ -43,23 +43,6 @@ interface Offices {
 
 const CardSearchBase: FC<{ office: Offices }> = (props) => {
   const [space, setSpace] = useState(props.office.spaces[0])
-  const [opened, setOpened] = useState(false)
-
-  const generalAmenities = props.office.generalAmenities.sort((amenity1, amenity2) => {
-    if (amenity1.length < amenity2.length) {
-      return -1
-    }
-    return 1
-  })
-
-  const sliderOnChange = (event: any) => {
-    console.log(event.slideIndex)
-
-    // Change Index for Images
-    setSpace(props.office.spaces[0])
-  }
-
-  const direction = props.office.address.formatted_address.split(',', 2)
 
   return (
     <Card withBorder shadow="sm" radius="lg" style={{ margin: '1rem', height: '100%' }}>

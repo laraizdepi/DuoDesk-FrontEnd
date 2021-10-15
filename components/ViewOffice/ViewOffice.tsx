@@ -11,7 +11,7 @@ import AboutViews from "./AboutViews";
 import ImageGallery from 'react-image-gallery';
 import AmenidadesGeneral from "./AmenidadesGeneral";
 import CardSpace from "./CardSpace";
-
+import style from './VIew.module.sass'
 const imagesT = [
   {
     original: 'https://picsum.photos/id/1018/1000/600/',
@@ -91,7 +91,7 @@ const ViewOffice: FC<TestProps> = (props) => {
   
 
   return (
-    <div>
+    <div >
       <h1> {office.name}</h1>
       <ImageGallery 
         items={ImagesAll} 
