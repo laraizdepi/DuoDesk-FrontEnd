@@ -59,7 +59,6 @@ const OfficeMap: FC<{ office: Offices }> = (props) => {
                     anchor: new google.maps.Point(15, 30),
                 }
             })
-
         }
         initMap()
         return () => {
