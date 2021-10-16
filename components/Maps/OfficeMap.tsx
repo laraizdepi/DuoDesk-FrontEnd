@@ -41,7 +41,7 @@ const OfficeMap: FC<{ office: Offices }> = (props) => {
         let map: google.maps.Map | google.maps.StreetViewPanorama | google.maps.InfoWindowOpenOptions | null | undefined
         const initMap = (): void => {
             map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
-                center: { lat: -34.397, lng: 150.644 },
+                center:  { lat: props.office.address.geometry.location.lat, lng: props.office.address.geometry.location.lng },
                 zoom: 11.3,
             })
 
@@ -59,7 +59,6 @@ const OfficeMap: FC<{ office: Offices }> = (props) => {
                     anchor: new google.maps.Point(15, 30),
                 }
             })
-
         }
         initMap()
         return () => {

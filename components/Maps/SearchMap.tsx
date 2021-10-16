@@ -1,7 +1,8 @@
 import React, { FC, useEffect, useLayoutEffect, useRef } from 'react'
-import { Card, Text } from '@mantine/core'
+import { Card, Container, Image, Text } from '@mantine/core'
 import ReactDOMServer from 'react-dom/server'
 import Script from 'next/script'
+import { Carousel as BCarousel } from 'react-bootstrap'
 
 const styles = [
     {
@@ -329,11 +330,16 @@ interface Offices {
 
 const SearchMap: FC<{ onlyOffices: Offices[], city: string }> = (props) => {
     useEffect(() => {
-        const types = {
-            "Oficina privada": "Estos espacios privados pueden tomar la forma de una oficina o incluso suites personalizadas diseñadas específicamente para equipos grandes. Los miembros de una empresa comparten la habitación dedicada o la combinación de áreas alquiladas o alquiladas por la empresa.", 
-            "Escritorio personal": "Para un espacio más permanente, puede alquilar un escritorio personal o una cantidad de escritorios fijos para usted y su equipo. Esto significa que puede dejar su equipo en el trabajo durante la noche y personalizar el escritorio como desee. Normalmente, compartirá la habitación con otras empresas, lo que es ideal para establecer contactos y compartir conocimientos. Puede obtener un escritorio fijo para usted o para un equipo más grande, ideal si su negocio está creciendo, ya que es fácil alquilar más escritorios en el mismo espacio.", 
-            "Sala de conferencias": "Los espacios de coworking suelen ser más asequibles y más modernos que el centro de conferencias tradicional. Los anfitriones de eventos que buscan un lugar más pequeño, o uno que esté más alineado con su audiencia, se sienten atraídos por las características únicas de los espacios de trabajo flexibles, además de sus precios accesibles y su personal amigable.", 
-            "Espacio abierto": "Atendiendo a la distribución, podemos encontrar los conocidos como centros de coworking abiertos. Su característica principal se encuentra en que la totalidad de la zona de trabajo es de uso común. De esta manera, cualquier coworker podrá acceder a cualquier parte del área de trabajo."
+        const pricesFunction = (price: number) => {
+            let SI_SYMBOL = ["", "k", "M", "G", "T", "P", "E"];
+            const tier = Math.log10(Math.abs(price)) / 3 | 0;
+            if (tier == 0) {
+                return price
+            }
+            const suffix = SI_SYMBOL[tier]
+            const scale = Math.pow(10, tier * 3);
+            const scaled = price / scale;
+            return scaled.toFixed(1) + suffix
         }
         let map: google.maps.Map | google.maps.StreetViewPanorama | google.maps.InfoWindowOpenOptions | null | undefined
         const initMap = (): void => {
@@ -354,49 +360,41 @@ const SearchMap: FC<{ onlyOffices: Offices[], city: string }> = (props) => {
             })
 
             for (let office of props.onlyOffices) {
-                let spaces: string[] = []
+                let images: string[] = []
                 for (let space of office.spaces) {
-                    if (!spaces.includes(space.typeSpace)) {
-                        spaces.push(space.typeSpace)
+                    for (let image of space.imagesUrls) {
+                        images.push(image)
                     }
                 }
-                console.log(spaces)
                 const url = office.spaces[0].imagesUrls[0].split('-', 2)
                 const file = office.spaces[0].imagesUrls[0].substring(office.spaces[0].imagesUrls[0].indexOf(url[1]) + url[1].length + 1)
                 const src = `http://localhost:5000/uploads/offices/${url[0]}/${url[1]}/${file}`
-                const content = `
-                <div class="card m-2 rounded-md" style="width: 18rem;">
-                    <img src=${src} />
-                    <div class="card-body p-3">
-                        <h1 class="my-1">${office.name}</h1>
-                        <div class="accordion accordion-flush" id="accordionFlushExample">
-                            ${spaces.map((element) => {
-                                return(
-                                    `<div class="accordion-item">
-                                        <h2 class="accordion-header" id="flush-headingOne">
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target=${`#${element}`} aria-expanded="false" aria-controls="flush-collapseOne">
-                                            ${element}
-                                        </button>
-                                        </h2>
-                                        <div id=${element} class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                                            <div class="accordion-body">
-                                                ${types[element]}
-                                            </div>
-                                        </div>
-                                    </div>`
-                                )
-                            })}
+                const content = ReactDOMServer.renderToString(
+                    <figure className="md:flex bg-green-500 p-8 md:p-0 flex-col rounded-xl">
+                        <img className="pt-6 rounded-xl w-32 h-32 md:w-48 md:h-auto md:rounded-none mx-auto" src={src} alt="" width="384" height="512" />
+                        <div className="pt-6 md:p-8 text-center md:text-left space-y-4">
+                            <blockquote>
+                                <p className="text-lg font-semibold">
+                                    {office.name}
+                                </p>
+                            </blockquote>
+                            <hr className="w-1/2 m-auto"/>
+                            <blockquote>
+                                <p className="text-base font-medium  text-left">
+                                    “{office.description}”
+                                </p>
+                            </blockquote>
+                            <figcaption className="font-medium">
+                                <div className="text-indigo">
+                                    {office.host.firstName} {office.host.lastName}
+                                </div>
+                                <button className="text-xl mt-4 btn text-white bg-indigo hover:bg-teal">
+                                    <a href={`/search/${office.id}`} target="_blank" className="hover:no-underline hover:text-white link:no-underline">¡Rentar ahora!</a>
+                                </button>
+                            </figcaption>
                         </div>
-                        <div class="flex justify-end my-1">
-                            <button class="btn btn-primary">
-                                <a href=${`/search/${office.id}`}>
-                                    Revisar oficina
-                                </a>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                `
+                    </figure>
+                )
 
                 console.log(office.description)
 
@@ -430,7 +428,7 @@ const SearchMap: FC<{ onlyOffices: Offices[], city: string }> = (props) => {
 
     return (
         <div id="map" style={{ height: '90vh' }}>
-            <Script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"/>
+            <Script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" />
         </div>
     )
 }
