@@ -93,26 +93,37 @@ const extremePrices = (data: Offices[]) => {
         }
         return { min, max }
     }
-    else {
-        return ({ min: 0, max: 0 })
-    }
 }
 
-const rangeOfPrices = (data: Offices[], callback: (send?: any) => void, time?: 'hour' | 'day' | 'week' | 'month', prices?: number[]) => {
+const rangeOfPrices = (data: Offices[], callback: (send?: any) => void, time?: 'hour' | 'day' | 'week' | 'month', prices?: [number, number]) => {
+    let dataCopy = data.slice()
     if (time && prices) {
-        const finalData = data.filter((element) => {
-            const result = element.spaces.map((space) => {
-                if(space[`${time}Price`] < prices[0] || space[`${time}Price`] > prices[1]){
-                    return space
+        console.log(time, prices)
+        const finalData = dataCopy.filter((element) => {
+            const result = element.spaces.filter((space) => {
+                if(space[`${time}Price`] > prices[0] && space[`${time}Price`] < prices[1]){
+                    return true
                 }
-                return null
+                return false
             })
             if(result.length > 0){
                 return true
             }
             return false
+        }).map((element) => {
+            element.spaces = element.spaces.filter((space) => {
+                if(space[`${time}Price`] > prices[0] && space[`${time}Price`] < prices[1]){
+                    return true
+                }
+                return false
+            })
+            return element
         })
+        console.log("Final Data: ", finalData)
         return callback(finalData)
+    }
+    else{
+        return callback(data)
     }
 }
 
