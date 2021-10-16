@@ -3,6 +3,7 @@ import { Col, Grid } from '@mantine/core'
 import CardSearchBase from './CardSearchBase'
 
 interface Offices {
+    id: string,
     name: string,
     description: string,
     host: any,

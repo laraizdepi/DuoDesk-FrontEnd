@@ -106,7 +106,7 @@ const rangeOfPrices = (data: Offices[], callback: (send?: any) => void, time?: '
                 }
                 return false
             })
-            if(result.length !== 0){
+            if(result.length > 0){
                 return true
             }
             return false
