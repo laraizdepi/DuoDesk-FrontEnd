@@ -12,7 +12,7 @@ interface AboutProps {
 const AboutViews: FC<AboutProps> = (props) => {
   const office = props.office
   return (
-    <div>
+    <div style = {{width : '90%', marginLeft : '50px'}}>
       <h1 className={style.titleAbout}>
         {office.name}
       </h1>
@@ -21,10 +21,7 @@ const AboutViews: FC<AboutProps> = (props) => {
         <GoLocation  color = '#E64980'/>
         {office.address.formatted_address}
       </div>
-
-      {/* <Typography variant="body1" style={{ marginRight: '100px' }}>
-        {office.description}
-      </Typography> */}
+      
       <div className= {style.description}>
         <p>{office.description}</p>
       </div>

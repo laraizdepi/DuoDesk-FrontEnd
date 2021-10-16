@@ -1,15 +1,16 @@
 import { FC } from "react"
 import CardSearchBaseTest from "./CardSearchBaseTest"
-
+import style from './VIew.module.sass'
 interface CardsProps {
-    office : any[]
+    office: any[]
 }
-const CardSpace:FC<CardsProps> = (props) =>{
-    return(
+const CardSpace: FC<CardsProps> = (props) => {
+    return (
         <div>
-            <h1>Espacios</h1>
-            <CardSearchBaseTest office = {props.office}/>
-
+            <div className={style.titleEnterAme}>
+                <h1>Espacios</h1>
+            </div>
+            <CardSearchBaseTest office={props.office} />
         </div>
     )
 }

@@ -2,6 +2,7 @@ import { FC } from "react"
 import { Carousel, Col, Container, Row } from 'react-bootstrap'
 import { Image } from 'primereact/image';
 import * as React from "react";
+import { useImperativeHandle } from "react";
 import Box from "@mui/material/Box";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
@@ -28,11 +29,11 @@ const imagesT = [
 ];
 
 
-interface TestProps {
+interface srcRowProps {
   office: any[]
 }
 
-const ViewOffice: FC<TestProps> = (props) => {
+const ViewOffice: FC<srcRowProps> = (props) => {
   let ImagesAll = []
   let ImagesIndi = {}
 
@@ -88,27 +89,74 @@ const ViewOffice: FC<TestProps> = (props) => {
       cols: 2
     }
   ];
-  
+
+  const img1 = spaces[0].imagesUrls[0]
+  const img2 = spaces[0].imagesUrls[1]
+  const img3 = spaces[0].imagesUrls[2]
+  const img4 = spaces[0].imagesUrls[3]
+
+  const toSrc = (srcRow: any) => {
+    const url1 = srcRow.split('-', 2)
+    const file1 = srcRow.substring(srcRow.indexOf(url1[1]) + url1[1].length + 1)
+    const src1 = `http://localhost:5000/uploads/offices/${url1[0]}/${url1[1]}/${file1}`
+    return (src1)
+  }
+
+
 
   return (
     <div >
       <h1> {office.name}</h1>
-      <ImageGallery 
-        items={ImagesAll} 
-        showIndex 
-        showThumbnails = {false}
-        showPlayButton = {false}
-        showBullets/>
-      <Container style={{ marginLeft: '50px' }}>
+      <Row>
+        <Col xs={6}>
+          <div style={{ height: '100%', width: '100%', maxHeight: '' }} >
+            <img src={toSrc(img1)} alt="" />
+          </div>
+        </Col>
+
+        <Col xs={6}>
+          <Row>
+            <Col xs={6}>
+              <div style={{ height: '100%', width: '100%', maxHeight: '' }}>
+                <img src={toSrc(img2)} alt="" style ={{height : '220px', width : '350px'}} />
+              </div>
+            </Col>
+            <Col xs={6}>
+              <div style={{ height: '100%', width: '100%', maxHeight: '' }}>
+                <img src={toSrc(img3)} alt="" style ={{height : '220px', width : '350px', marginTop : '15px'}}/>
+              </div>
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={6}>
+              <div style={{ height: '100%', width: '100%', maxHeight: '' }}>
+                <img src={toSrc(img4)} alt="" style ={{height : '220px', width : '350px'}} />
+ 
+              </div>
+            </Col>
+            <Col xs={6}>
+              <div style={{ height: '100%', width: '100%', maxHeight: '' }}>
+                <ImageGallery
+                  items={ImagesAll}
+                  showIndex
+                  showThumbnails={false}
+                  showPlayButton={false}
+                  showBullets />
+              </div>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+      <Container >
         <AboutViews office={office} />
       </Container>
 
-      <div>
-        <AmenidadesGeneral office={office} /> 
-      </div>
 
       <div>
-        <CardSpace office = {office}/>
+        <AmenidadesGeneral office={office} />
+      </div>
+      <div>
+        <CardSpace office={office} />
       </div>
     </div>
   )

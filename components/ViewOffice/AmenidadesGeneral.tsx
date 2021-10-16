@@ -114,14 +114,14 @@ const AmenidadesGeneral: FC<AmenidadesProps> = (props) => {
   console.log('Asi queda organizado', AmenidadesOrgani);
 
   return (
-    <Container style={{ marginLeft: '50px' }}>
+    <Container >
 
       <div className={style.titleEnterAme}>
         {/* <MdCoffeeMaker /> */}
         <h1>Amenidades Generales</h1>
       </div>
 
-      <Row>
+      <Row style = {{marginLeft : '50px'}}>
         {Object.keys(AmenidadesOrgani).map((title) => {
           console.log('return amenidad', title);
           const amenidadGroup = AmenidadesOrgani[title]
