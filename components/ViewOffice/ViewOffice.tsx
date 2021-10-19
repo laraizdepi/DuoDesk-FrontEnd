@@ -7,6 +7,7 @@ import Box from "@mui/material/Box";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import { MdCoffeeMaker } from 'react-icons/md'
+import testImagesCarousel from './testImagesCarousel'
 // Parts of page 
 import AboutViews from "./AboutViews";
 import ImageGallery from 'react-image-gallery';
@@ -44,6 +45,10 @@ const ViewOffice: FC<srcRowProps> = (props) => {
 
   console.log('allSpaces', spaces);
 
+  // _onScreenChange(fullScreenElement);{
+  //   console.debug('isFullScreen?', !!fullScreenElement);
+  // }
+
 
   spaces.map((space) => {
     const images = space.imagesUrls
@@ -59,9 +64,14 @@ const ViewOffice: FC<srcRowProps> = (props) => {
 
       ImagesIndi["original"] = src
       ImagesIndi["thumbnail"] = src
+      ImagesIndi["originalHeight"] = '200px'
+      ImagesIndi["originalWidth"] = '200px'
+      ImagesIndi["thumbnailHeight"] = 200
+      ImagesIndi["thumbnailWidth"] = 200
 
 
       ImagesAll.push(ImagesIndi)
+      console.log('All Images', ImagesAll);
       console.log('All Images', ImagesAll);
 
       ImagesIndi = {}
@@ -108,39 +118,40 @@ const ViewOffice: FC<srcRowProps> = (props) => {
     <div >
       <h1> {office.name}</h1>
       <Row>
-        <Col xs={6}>
-          <div style={{ height: '100%', width: '100%', maxHeight: '' }} >
+        <Col xs={6} onClick = {() =>{console.log('Hello World')}}>
+          <div style={{ height: '100%', width: '100%', maxHeight: '' }} onClick = {() =>{console.log('Hello World')}}>
             <img src={toSrc(img1)} alt="" />
           </div>
         </Col>
 
         <Col xs={6}>
           <Row>
-            <Col xs={6}>
-              <div style={{ height: '100%', width: '100%', maxHeight: '' }}>
-                <img src={toSrc(img2)} alt="" style ={{height : '220px', width : '350px'}} />
+            <Col xs={6} >
+              <div className = {style.imagesMainMediun}>
+                <img src={toSrc(img2)} alt="" className ={style.imagesSizeInvi} onClick = {() =>{console.log('Hello World')}}/>
               </div>
             </Col>
             <Col xs={6}>
-              <div style={{ height: '100%', width: '100%', maxHeight: '' }}>
-                <img src={toSrc(img3)} alt="" style ={{height : '220px', width : '350px', marginTop : '15px'}}/>
+              <div className = {style.imagesMainMediun}>
+                <img src={toSrc(img3)} alt="" className ={style.imagesSizeInvi} onClick = {() =>{console.log('Hello World')}}/>
               </div>
             </Col>
           </Row>
           <Row>
             <Col xs={6}>
-              <div style={{ height: '100%', width: '100%', maxHeight: '' }}>
-                <img src={toSrc(img4)} alt="" style ={{height : '220px', width : '350px'}} />
+              <div className = {style.imagesMainMediun}>
+                <img src={toSrc(img4)} alt="" className ={style.imagesSizeInvi} onClick = {() =>{console.log('Hello World')}}/>
  
               </div>
             </Col>
             <Col xs={6}>
-              <div style={{ height: '100%', width: '100%', maxHeight: '' }}>
+              <div className = {style.imagesMainMediun}>
                 <ImageGallery
                   items={ImagesAll}
                   showIndex
                   showThumbnails={false}
                   showPlayButton={false}
+                  // originalHeight = {'220px'}
                   showBullets />
               </div>
             </Col>
@@ -150,8 +161,6 @@ const ViewOffice: FC<srcRowProps> = (props) => {
       <Container >
         <AboutViews office={office} />
       </Container>
-
-
       <div>
         <AmenidadesGeneral office={office} />
       </div>
