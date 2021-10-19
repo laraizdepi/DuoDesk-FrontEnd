@@ -19,6 +19,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Provider } from 'react-redux';
 import store from '../Redux';
+import DuoDeskLogo from '../Img/DuoDeskLogo.png'
 
 export default function App(props: AppProps) {
 	const { Component, pageProps } = props;
@@ -32,7 +33,7 @@ export default function App(props: AppProps) {
 					<Head>
 						<title>DuoDesk Home</title>
 						<meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
-						<link rel="shortcut icon" href="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" type="image/x-icon" />
+						<link rel="shortcut icon" href={DuoDeskLogo.src} type="image/x-icon" />
 					</Head>
 					<MantineProvider
 						theme={{

@@ -180,7 +180,7 @@ const CardSearchBase: FC<{ office: Offices }> = (props) => {
                                     </Container>
                                     <Divider margins="xs" label="Precios del espacio" labelPosition="center" />
                                     <Container style={{ marginBottom: '5px' }}>
-                                        <Group position="apart">
+                                        <Group position="left">
                                             <div>
                                                 <Title order={6}>Por hora</Title>
                                                 <Text>{pricesFunction(element.hourPrice)}</Text>

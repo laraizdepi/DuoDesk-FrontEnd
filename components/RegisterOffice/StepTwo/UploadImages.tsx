@@ -10,7 +10,6 @@ import { Center, Col, Grid, Group, Progress, Text, Button } from '@mantine/core'
 import Image from 'next/image'
 import { Tooltip } from 'primereact/tooltip';
 import { Field } from 'formik';
-import axios from 'axios';
 
 const UploadImages = () => {
     const [totalSize, setTotalSize] = useState(0);
@@ -62,7 +61,11 @@ const UploadImages = () => {
     const emptyTemplate = () => {
         return (
             <Center>
-                <Text>Arrastra y suelta tus imagenes</Text>
+                <Text align="center">
+                    Arrastra y suelta tus imagenes.
+                    Por favor revisa que la resolución de las imagenes
+                    sean de un tamaño similar y su tamaño sea mediano.
+                </Text>
             </Center>
         )
     }
@@ -89,7 +92,6 @@ const UploadImages = () => {
                                 console.log(event.files)
                                 form.setFieldValue(field.name, event.files)
                                 fileUploadRef.current.clear()
-                                
                             }}
                             onError={onTemplateClear}
                             onClear={onTemplateClear}

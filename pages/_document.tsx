@@ -1,6 +1,6 @@
 import Document, { Html, Head, Main, NextScript, DocumentContext } from 'next/document';
-import { SsrProvider, SheetsRegistry, ServerStyles } from '@mantine/core';
-import Script from 'next/script'
+import { SsrProvider, SheetsRegistry, ServerStyles } from '@mantine/core';import Script from 'next/script'
+import DuoDeskLogo from '../Img/DuoDeskLogo.svg'
 
 export default class _Document extends Document {
 	static async getInitialProps(ctx: DocumentContext) {
@@ -35,7 +35,7 @@ export default class _Document extends Document {
 		return (
 			<Html>
 				<Head>
-					<link rel="icon" href="link to favicon" />
+					<link rel="icon" href={DuoDeskLogo.src} />
 
 					{/* font title */}
 					<link rel="preconnect" href="https://fonts.googleapis.com" />

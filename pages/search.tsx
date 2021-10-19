@@ -1,5 +1,5 @@
-import React, { FC, useEffect, useState } from 'react'
-import { Grid, Col, Card, Text, Select, MultiSelect, Popover, Button, Image, Input, Divider, RangeSlider, RangeSliderProps, TextInput } from '@mantine/core'
+import React, { FC, Ref, useEffect, useRef, useState } from 'react'
+import { Grid, Col, Text, Select, Popover, Button, Image, Divider, Pagination, Center, LoadingOverlay } from '@mantine/core'
 import axios from 'axios'
 import { TagPicker } from 'rsuite'
 import Head from 'next/head'
@@ -9,9 +9,11 @@ import Navbar from '../components/NavBar/Navbar'
 import CardsSearch from '../components/Search/CardsSearch'
 import Filters from '../components/Search/Filters'
 import SearchMap from '../components/Maps/SearchMap';
-import { SelectItem } from '@mantine/core/lib/src/components/Select/types';
-// import { value } from 'dom7'
-import { useRouter } from 'next/dist/client/router'
+
+import AminitiesList from '../components/Search/AminitiesList'
+
+import NoOfficesImages from '../Img/search/not-found.svg'
+import WaitOfficeImage from '../Img/search/wait-office.svg'
 
 interface Offices {
     id: string,
@@ -49,91 +51,23 @@ interface Offices {
     openDate: string
 }
 
-const listAmenities = [
-    { label: "Acceso a internet", value: "Acceso a internet", group: "Clasicas" },
-    { label: "Protocolos de Bioseguridad", value: "Protocolos de Bioseguridad", group: "Clasicas" },
-    { label: "Parqueadero para carros", value: "Parqueadero para carros", group: "Clasicas" },
-    { label: "Parqueadero para motocicletas", value: "Parqueadero para motocicletas", group: "Clasicas" },
-    { label: "Parqueadero para bicicletas", value: "Parqueadero para bicicletas", group: "Clasicas" },
-    { label: "Parqueadero para carros gratis", value: "Parqueadero para carros gratis", group: "Clasicas" },
-    { label: "Parqueadero para motocicletas gratis", value: "Parqueadero para motocicletas gratis", group: "Clasicas" },
-    { label: "Parqueadero para bicicletas gratis", value: "Parqueadero para bicicletas gratis", group: "Clasicas" },
-    { label: "Recepción", value: "Recepción", group: "Clasicas" },
-    { label: "Elevador", value: "Elevador", group: "Clasicas" },
-    { label: "Buena iluminación", value: "Buena iluminación", group: "Clasicas" },
-    { label: "Impresora", value: "Impresora", group: "Tecnología/Conectividad" },
-    { label: "Proyector", value: "Proyector", group: "Tecnología/Conectividad" },
-    { label: "Televisor", value: "Televisor", group: "Tecnología/Conectividad" },
-    { label: "Aire Acondicionado", value: "Aire Acondicionado", group: "Tecnología/Conectividad" },
-    { label: "Fotocopiadora", value: "Fotocopiadora", group: "Tecnología/Conectividad" },
-    { label: "Escaner", value: "Escaner", group: "Tecnología/Conectividad" },
-    { label: "Cargadores", value: "Cargadores", group: "Tecnología/Conectividad" },
-    { label: "Bancos de carga", value: "Bancos de carga", group: "Alimentación" },
-    { label: "Refrigerador", value: "Refrigerador", group: "Alimentación" },
-    { label: "Café Gratis", value: "Café Gratis", group: "Alimentación" },
-    { label: "Té Gratis", value: "Té Gratis", group: "Alimentación" },
-    { label: "Snacks Gratis", value: "Snacks Gratis", group: "Alimentación" },
-    { label: "Venta de Cafe", value: "Venta de Cafe", group: "Alimentación" },
-    { label: "Alchol Permitido", value: "Alchol Permitido", group: "Alimentación" },
-    { label: "Restaurante", value: "Restaurante", group: "Alimentación" },
-    { label: "Bar/Venta de alcohol disponible", value: "Bar/Venta de alcohol disponible", group: "Alimentación" },
-    { label: "Cocina", value: "Cocina", group: "Alimentación" },
-    { label: "Servicio de cafetería", value: "Servicio de cafetería", group: "Alimentación" },
-    { label: "Zona de recreación", value: "Zona de recreación", group: "Diversión/Ocio" },
-    { label: "Gimnasio", value: "Gimnasio", group: "Diversión/Ocio" },
-    { label: "Espacio de Yoga", value: "Espacio de Yoga", group: "Diversión/Ocio" },
-    { label: "Espacio de meditación", value: "Espacio de meditación", group: "Diversión/Ocio" },
-    { label: "Zona arcade", value: "Zona arcade", group: "Diversión/Ocio" },
-    { label: "Juegos de mesa", value: "Juegos de mesa", group: "Diversión/Ocio" },
-    { label: "Libreria", value: "Libreria", group: "Diversión/Ocio" },
-    { label: "Masajes", value: "Masajes", group: "Diversión/Ocio" },
-    { label: "Lugar para fumar", value: "Lugar para fumar", group: "Diversión/Ocio" },
-    { label: "Cabinas telefonicas", value: "Cabinas telefonicas", group: "Zonas" },
-    { label: "Espacio para mascotas", value: "Espacio para mascotas", group: "Zonas" },
-    { label: "Espacio para maternidad", value: "Espacio para maternidad", group: "Zonas" },
-    { label: "Espacios al aire libre", value: "Espacios al aire libre", group: "Zonas" },
-    { label: "Sala de estar", value: "Sala de estar", group: "Zonas" },
-    { label: "Lugares para dormir", value: "Lugares para dormir", group: "Zonas" },
-    { label: "Espacio para llamada", value: "Espacio para llamada", group: "Zonas" },
-    { label: "Espacios/Zonas verdes", value: "Espacios/Zonas verdes", group: "Zonas" },
-    { label: "Casillero personal", value: "Casillero personal", group: "Zonas" },
-    { label: "Terraza", value: "Terraza", group: "Zonas" },
-    { label: "Zonas verdes", value: "Zonas verdes", group: "Zonas" },
-    { label: "Lugares de AirBnB cercanos", value: "Lugares de AirBnB cercanos", group: "Ubicación" },
-    { label: "Estacion de transporte cerca", value: "Estacion de transporte cerca", group: "Ubicación" },
-    { label: "Vista al mar", value: "Vista al mar", group: "Ubicación" },
-    { label: "Cerca al Centro Comercial", value: "Cerca al Centro Comercial", group: "Ubicación" },
-    { label: "Cerca al Aeropuerto", value: "Cerca al Aeropuerto", group: "Ubicación" },
-    { label: "Cerca al Centro", value: "Cerca al Centro", group: "Ubicación" },
-    { label: "Cerca a zonas verdes", value: "Cerca a zonas verdes", group: "Ubicación" },
-    { label: "Cerca a restaurantes", value: "Cerca a restaurantes", group: "Ubicación" },
-    { label: "Cerca a estacion de policias", value: "Cerca a estacion de policias", group: "Ubicación" },
-    { label: "Servicio de limpieza", value: "Servicio de limpieza", group: "Servicios" },
-    { label: "Primeros Auxilios", value: "Primeros Auxilios", group: "Servicios" },
-    { label: "Servicio de correo", value: "Servicio de correo", group: "Servicios" },
-    { label: "Tablero acrilico con marcadores", value: "Tablero acrilico con marcadores", group: "Servicios" },
-    { label: "Tablero de notas/noticias", value: "Tablero de notas/noticias", group: "Servicios" },
-    { label: "Servicio 24 horas", value: "Servicio 24 horas", group: "Servicios" },
-    { label: "Sillas tipo Puff", value: "Sillas tipo Puff", group: "Servicios" },
-    { label: "Sillas ergonómicas", value: "Sillas ergonómicas", group: "Servicios" },
-    { label: "Servicio días festivos", value: "Servicio días festivos", group: "Servicios" },
-    { label: "Servicio todos los días", value: "Servicio todos los días", group: "Servicios" },
-    { label: "Permite Mascotas", value: "Permite Mascotas", group: "Servicios" },
-    { label: "Seguridad Privada", value: "Seguridad Privada", group: "Servicios" },
-    { label: "Duchas", value: "Duchas", group: "Servicios" }
-]
-
 const SearchPage = (props: any) => {
     const [offices, setOffices] = useState<Offices[]>([])
     const [finalOffices, setFinalOffices] = useState<Offices[]>([])
+    const [showOffices, setShowOffices] = useState<Offices[]>([])
+    const [loading, setLoading] = useState<0 | 1 | 2 >(0)
+    const [show, setShow] = useState<boolean>(true)
     const [opened, setOpened] = useState<boolean>(false)
     const [type, setType] = useState<string>('all')
     const [amenities, setAmenities] = useState<string[]>([])
-    // const [time, setTime] = useState<string | undefined>(undefined)
     const [time, setTime] = useState<'hour' | 'day' | 'week' | 'month' | undefined>(undefined)
-    const [prices, setPrices] = useState<RangeSliderProps['value']>([0, 0])
-    const [rangePrices, setRangePrices] = useState<[number, number]>([0, 0])
+    const [prices, setPrices] = useState<[number, number]>([0, 0])
     const [days, setDays] = useState<string | undefined>(undefined)
+    const [pages, setPages] = useState<number>(1)
+    const [visible, setVisible] = useState(false)
+    const [total, setTotal] = useState<number>(Math.floor(showOffices.length))
+
+    const cardsRef: any = useRef(CardsSearch)
 
     useEffect(() => {
         const getData = async () => {
@@ -143,16 +77,29 @@ const SearchPage = (props: any) => {
             }
             console.log(url)
             const response = await axios.get(url)
-            await setOffices(response.data)
-            await setFinalOffices(response.data)
-            const extremes = await Filters.getMinMax(offices)
-            if (extremes && extremes.max !== 0) {
-                alert(JSON.stringify(extremes))
-                setRangePrices([extremes.min, extremes.max])
+            if(response.data.length > 0){
+                setOffices(response.data)
+                setFinalOffices(response.data)
+                setShowOffices(response.data.slice((pages - 1) * 10, pages * 10))
+                setTotal(Math.floor(response.data.length / 10 )+ 1)
+                setLoading(1)
+            }
+            else{
+                setLoading(2)
             }
         }
         getData()
+        console.log('Total', total)
     }, [])
+
+    useEffect(() => {
+        if (finalOffices.length === 0) {
+            setShow(false)
+        }
+        else {
+            setShow(true)
+        }
+    }, [finalOffices])
 
     useEffect(() => {
         setFinalOffices(offices)
@@ -176,6 +123,57 @@ const SearchPage = (props: any) => {
         }
     }, [type, amenities, time, days, prices])
 
+    useEffect(() => {
+        setVisible(true)
+        setShowOffices(finalOffices.slice((pages - 1) * 10, pages * 10))
+        setVisible(false)
+    }, [pages])
+
+    if(loading === 0){
+        return (
+            <div className="flex flex-col justify-center">
+                <Head>
+                    <title>DuoDesk: Busca una oficina</title>
+                </Head>
+                <Navbar />
+                <Image
+                    src={WaitOfficeImage.src}
+                    width="35%"
+                    fit="cover"
+                    className="m-auto"
+                    caption={
+                        <Text align="center" size="lg" transform="capitalize" weight="bold" className="m-auto">
+                            Estamos buscando las mejores oficinas para ti, 
+                            te pedimos que por favor esperes un momento.
+                        </Text>
+                    } />
+            </div>
+        )
+    }
+
+    if (loading === 2) {
+        return (
+            <div className="flex flex-col justify-center">
+                <Head>
+                    <title>DuoDesk: Busca una oficina</title>
+                </Head>
+                <Navbar />
+                <Image
+                    src={NoOfficesImages.src}
+                    width="35%"
+                    fit="cover"
+                    className="m-auto"
+                    caption={
+                        <Text align="center" size="lg" transform="capitalize" weight="bold" className="m-auto">
+                            No hay oficinas con esas caracteristicas. Lo sentimos.
+                            Por favor, intenta buscar con otros parametros o sí
+                            quieres puedes registrar una oficina.
+                        </Text>
+                    } />
+            </div>
+        )
+    }
+
     return (
         <div>
             <Head>
@@ -189,9 +187,10 @@ const SearchPage = (props: any) => {
                             <Col span={12} md={3} style={{ display: 'flex' }}>
                                 <TagPicker
                                     placeholder="Amenidades"
-                                    data={listAmenities}
+                                    data={AminitiesList}
                                     groupBy="group"
                                     style={{ borderRadius: '10px', width: '90%', margin: 'auto' }}
+                                    onChange={(event) => setAmenities(event.target.value)}
                                     trigger={'Enter'} />
                             </Col>
                             <Col span={12} md={3}>
@@ -251,11 +250,41 @@ const SearchPage = (props: any) => {
                                 </Popover>
                             </Col>
                         </Grid>
-                        <CardsSearch offices={finalOffices} />
+                        <div className="my-4 mx-5">
+                            <Text>Viendo {pages} - {pages * showOffices.length} de {finalOffices.length} oficinas</Text>
+                        </div>
+                        {show
+                            ?
+                            <div>
+                                <LoadingOverlay visible={visible} transitionDuration={0} />
+                                <CardsSearch offices={showOffices} ref={cardsRef} />
+                                <Center>
+                                    <Pagination
+                                        total={total}
+                                        color="violet" 
+                                        radius="xl" 
+                                        page={pages} 
+                                        onChange={setPages} 
+                                        withGutter
+                                    />
+                                </Center>
+                            </div>
+                            : <Image
+                                src={NoOfficesImages.src}
+                                width="35%"
+                                fit="cover"
+                                className="m-auto"
+                                caption={
+                                    <Text align="center" size="lg" transform="capitalize" weight="bold" className="m-auto">
+                                        No hay oficinas con dichas caracterisiticas.
+                                        Intenta con otros filtros o parametros de busqueda
+                                    </Text>
+                                } />
+                        }
                     </ScrollPanel>
                 </Col>
                 <Col span={12} md={5}>
-                    <SearchMap onlyOffices={finalOffices} city={props.city} />
+                    <SearchMap onlyOffices={showOffices} city={props.city} />
                 </Col>
             </Grid>
         </div>
@@ -263,7 +292,6 @@ const SearchPage = (props: any) => {
 }
 
 SearchPage.getInitialProps = async ({ query }: any) => {
-    console.log(query)
     return query
 }
 
