@@ -6,11 +6,44 @@ import GrLocation from 'react-icons/gr'
 import { GoLocation } from 'react-icons/go'
 import ListItemIcon from '@mui/material/ListItemIcon';
 import OfficeMap from '../Maps/OfficeMap'
-interface AboutProps {
-  office: any[]
-}
+import { useRouter } from "next/dist/client/router"
 
-const AboutViews: FC<AboutProps> = (props) => {
+interface Offices {
+  id: string,
+  name: string,
+  description: string,
+  host: any,
+  isActive: boolean,
+  generalAmenities: string[]
+  spaces: {
+      nameSpace: string,
+      typeSpace: string,
+      capacitySpace: number,
+      availableSpace: number,
+      hourPrice: number,
+      dayPrice: number,
+      weekPrice: number,
+      monthPrice: number,
+      nameAmenities: string[],
+      imagesUrls: string[],
+      booking?: any
+  }[],
+  address: any,
+  scores?: {
+      averageScore: number,
+      reviews: any
+  },
+  days: [{
+      day: string,
+      isAvailable: boolean,
+      startHour?: string,
+      endHour?: string
+  }],
+  notifications: string[],
+  official: string[],
+  openDate: string
+}
+const AboutViews: FC<{ office: Offices }> = (props) => {
   const office = props.office
   return (
     <div style={{ width: '90%', marginLeft: '50px' }}>
@@ -27,7 +60,7 @@ const AboutViews: FC<AboutProps> = (props) => {
         <p>{office.description}</p>
       </div>
 
-      <div>
+      <div >
         <h1 className={style.titleAbout}>
           Ubicacion de la oficina
         </h1>

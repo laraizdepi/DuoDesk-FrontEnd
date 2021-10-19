@@ -42,7 +42,7 @@ const OfficeMap: FC<{ office: Offices }> = (props) => {
         const initMap = (): void => {
             map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
                 center:  { lat: props.office.address.geometry.location.lat, lng: props.office.address.geometry.location.lng },
-                zoom: 11.3,
+                zoom: 15,
             })
 
             const mark = new google.maps.Marker({

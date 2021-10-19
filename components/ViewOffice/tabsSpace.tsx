@@ -71,25 +71,26 @@ interface Offices {
     notifications: string[],
     official: string[],
     openDate: string
-  }
+}
 
-const TabsSpace:React.FC<{office : Offices}> = (props) => {
-    const findTypeSpaces = (spaces:any[], typeSpace:string) =>{
+const TabsSpace: React.FC<{ office: Offices }> = (props) => {
+    const office = props.office
+    const findTypeSpaces = (spaces: any[], typeSpace: string) => {
         const allSpaces: any[] = []
-        for (const space of spaces){
-          // console.log(space);
-          if (space.typeSpace == typeSpace){
-            console.log('yes');
-            allSpaces.push(space)
-            console.log('allSpaces', allSpaces);
-          }else{
-            console.log('not'); 
-          }
-          console.log(allSpaces);
-          
+        for (const space of spaces) {
+            // console.log(space);
+            if (space.typeSpace == typeSpace) {
+                console.log('yes');
+                allSpaces.push(space)
+                console.log('allSpaces', allSpaces);
+            } else {
+                console.log('not');
+            }
+            console.log(allSpaces);
+
         }
         return allSpaces
-      }
+    }
     const [value, setValue] = React.useState(0);
 
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -98,25 +99,25 @@ const TabsSpace:React.FC<{office : Offices}> = (props) => {
     return (
         <Box sx={{ width: '100%' }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                    <Tab label="Escritorio dedicado" {...a11yProps(0)} />
-                    <Tab label="Oficina Privada" {...a11yProps(1)} />
+                <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" style = {{width: '100%'}}>
+                    <Tab label="Escritorio personal" {...a11yProps(0)} />
+                    <Tab label="Oficina privada" {...a11yProps(1)} />
                     <Tab label="Sala de conferencias" {...a11yProps(2)} />
                     <Tab label="Espacio abierto" {...a11yProps(3)} />
                 </Tabs>
             </Box>
             <TabPanel value={value} index={0}>
-                <CardSearchBaseTest/>
-                
+                <CardSearchBaseTest spaces={findTypeSpaces(office.spaces, 'Escritorio personal')} />
+
             </TabPanel>
             <TabPanel value={value} index={1}>
-                Item Two
+                <CardSearchBaseTest spaces={findTypeSpaces(office.spaces, 'Oficina privada')} />
             </TabPanel>
             <TabPanel value={value} index={2}>
-                Item Three
+                <CardSearchBaseTest spaces={findTypeSpaces(office.spaces, 'Sala de conferencias')} />
             </TabPanel>
             <TabPanel value={value} index={3}>
-                Item Four
+                <CardSearchBaseTest spaces={findTypeSpaces(office.spaces, 'Test')} />
             </TabPanel>
         </Box>
     );

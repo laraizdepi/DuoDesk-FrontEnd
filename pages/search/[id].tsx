@@ -1,7 +1,10 @@
 import Test from "../../components/test"
 import ViewOffice from "../../components/ViewOffice/ViewOffice"
 import Navbar from "../../components/NavBar/Navbar"
+import { useRouter } from "next/dist/client/router"
 export const getStaticPaths = async () =>{
+    // const router = useRouter()
+    // console.log('Url',router.asPath);
     const res = await fetch('http://localhost:5000/offices')
     const data = await res.json()
 
