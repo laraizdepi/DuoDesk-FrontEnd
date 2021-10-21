@@ -77,7 +77,7 @@ const PrevArrow: FC<ArrowsInterface> = (props) => {
     )
 }
 
-const CardSearchBase: FC<{ office: Offices }> = (props) => {
+const CardSearchBase: FC<{ office: Offices, date: string, people: number}> = (props) => {
     const [space, setSpace] = useState(props.office.spaces[0])
     const settings = {
         dots: true,

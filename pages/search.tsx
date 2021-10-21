@@ -1,5 +1,5 @@
 import React, { FC, Ref, useEffect, useRef, useState } from 'react'
-import { Grid, Col, Text, Select, Popover, Button, Image, Divider, Pagination, Center, LoadingOverlay } from '@mantine/core'
+import { Grid, Col, Text, Select, Popover, Button, Image, Divider, Pagination, Center, LoadingOverlay, MultiSelect } from '@mantine/core'
 import axios from 'axios'
 import { TagPicker } from 'rsuite'
 import Head from 'next/head'
@@ -55,7 +55,7 @@ const SearchPage = (props: any) => {
     const [offices, setOffices] = useState<Offices[]>([])
     const [finalOffices, setFinalOffices] = useState<Offices[]>([])
     const [showOffices, setShowOffices] = useState<Offices[]>([])
-    const [loading, setLoading] = useState<0 | 1 | 2 >(0)
+    const [loading, setLoading] = useState<0 | 1 | 2>(0)
     const [show, setShow] = useState<boolean>(true)
     const [opened, setOpened] = useState<boolean>(false)
     const [type, setType] = useState<string>('all')
@@ -75,16 +75,28 @@ const SearchPage = (props: any) => {
             if (props.city) {
                 url = `${url}city=${props.city}&`
             }
+            if(props.date){
+                url = `${url}date=${encodeURIComponent(props.date)}&`
+            }
             console.log(url)
             const response = await axios.get(url)
-            if(response.data.length > 0){
-                setOffices(response.data)
-                setFinalOffices(response.data)
-                setShowOffices(response.data.slice((pages - 1) * 10, pages * 10))
-                setTotal(Math.floor(response.data.length / 10 )+ 1)
+            console.log(response)
+            if (response.data.length > 0) {
+                if (props.type) {
+                    Filters.byType(props.type, response.data, setOffices)
+                    Filters.byType(props.type, response.data, setFinalOffices)
+                    Filters.byType(props.type, response.data.slice((pages - 1) * 10, pages * 10), setShowOffices)
+                }
+                else{
+                    setOffices(response.data)
+                    setFinalOffices(response.data)
+                    setShowOffices(response.data.slice((pages - 1) * 10, pages * 10))
+
+                }
+                setTotal(Math.floor(offices.length / 10) + 1)
                 setLoading(1)
             }
-            else{
+            else {
                 setLoading(2)
             }
         }
@@ -129,7 +141,7 @@ const SearchPage = (props: any) => {
         setVisible(false)
     }, [pages])
 
-    if(loading === 0){
+    if (loading === 0) {
         return (
             <div className="flex flex-col justify-center">
                 <Head>
@@ -143,7 +155,7 @@ const SearchPage = (props: any) => {
                     className="m-auto"
                     caption={
                         <Text align="center" size="lg" transform="capitalize" weight="bold" className="m-auto">
-                            Estamos buscando las mejores oficinas para ti, 
+                            Estamos buscando las mejores oficinas para ti,
                             te pedimos que por favor esperes un momento.
                         </Text>
                     } />
@@ -183,27 +195,19 @@ const SearchPage = (props: any) => {
             <Grid id="id-search" style={{ width: '100%' }}>
                 <Col span={12} md={7}>
                     <ScrollPanel style={{ width: '100%', height: '90vh' }}>
-                        <Grid id="search-filters" align="end">
-                            <Col span={12} md={3} style={{ display: 'flex' }}>
+                        <Grid id="search-filters" align="center" className="px-5">
+                            <Col span={12} md={4} style={{ display: 'flex' }}>
                                 <TagPicker
                                     placeholder="Amenidades"
                                     data={AminitiesList}
                                     groupBy="group"
-                                    style={{ borderRadius: '10px', width: '90%', margin: 'auto' }}
-                                    onChange={(event) => setAmenities(event.target.value)}
-                                    trigger={'Enter'} />
-                            </Col>
-                            <Col span={12} md={3}>
-                                <Select
-                                    id="typeSpaces"
-                                    radius="xl"
-                                    placeholder="Filtrar por espacios"
-                                    data={["Oficina privada", "Escritorio personal", "Sala de conferencias", "Espacio abierto"]}
-                                    onChange={setType}
-                                    clearable
+                                    className="rounded-xl"
+                                    style={{ borderRadius: '10px', width: '100%', margin: 'auto' }}
+                                    onChange={(value) => setAmenities(value)}
+                                    trigger={'Enter'}
                                 />
                             </Col>
-                            <Col span={12} md={3}>
+                            <Col span={12} md={4}>
                                 <Select
                                     id="select-days"
                                     radius="xl"
@@ -218,12 +222,11 @@ const SearchPage = (props: any) => {
                                     clearable
                                 />
                             </Col>
-                            <Col span={12} md={3}>
+                            <Col span={12} md={4}>
                                 <Popover
                                     opened={opened}
                                     onClose={() => setOpened(false)}
                                     target={<Button variant="outline" color="gray" radius="xl" onClick={() => setOpened((o) => !o)}>Filtrar por precios</Button>}
-                                    styles={{ body: { width: 260 } }}
                                     position="bottom"
                                     withArrow
                                 >
@@ -261,10 +264,10 @@ const SearchPage = (props: any) => {
                                 <Center>
                                     <Pagination
                                         total={total}
-                                        color="violet" 
-                                        radius="xl" 
-                                        page={pages} 
-                                        onChange={setPages} 
+                                        color="violet"
+                                        radius="xl"
+                                        page={pages}
+                                        onChange={setPages}
                                         withGutter
                                     />
                                 </Center>

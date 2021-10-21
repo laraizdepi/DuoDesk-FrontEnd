@@ -10,8 +10,7 @@ import NavBar from '../components/NavBar/Navbar';
 import SearchImputTest from '../components/SearchInput/SearchInput';
 export default function Home() {
    return (
-      <div>
-         {/* <NavbarNew3/> */}
+      <div className="w-full">
          <NavBar/>
          <HeaderHome />
          <HomeCards/>

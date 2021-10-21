@@ -1,6 +1,6 @@
 import React, { FC, useEffect } from 'react';
 import { useState } from 'react';
-import { Modal, Group, Button, Tabs, Tab, Title, Text } from '@mantine/core';
+import { Modal, Group, Button, Tabs, Tab, Title, Text, Center } from '@mantine/core';
 
 import RegisterForm from './RegisterForm';
 import LoginForm from './LoginForm';
@@ -9,7 +9,7 @@ import { BiUserCheck, BiUserPlus } from 'react-icons/bi';
 interface DataProps {
 	color: string,
 	text: string,
-	variant?: 'outline' | 'light',
+	variant?: 'outline' | 'light' | 'link',
 	form: 'login' | 'signup'
 }
 
@@ -36,18 +36,16 @@ const AuthModal: FC<DataProps> = (props) => {
 					</Tab>
 				</Tabs>
 			</Modal>
-			<Group position="center">
+			<div>
 				<Button
 					color={props.color}
 					onClick={() => setOpened(true)}
 					variant={props.variant}
 					radius='lg'
-					size="md"
-					style={{ marginRight: '10px' }}
-				>
+					>
 					{props.text}
 				</Button>
-			</Group>
+			</div>
 		</div>
 	);
 }
