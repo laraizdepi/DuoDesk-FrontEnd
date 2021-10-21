@@ -1,4 +1,4 @@
-import { FC } from "react"
+import { FC, useState } from "react"
 import { Col, Container, Row } from 'react-bootstrap'
 import * as React from "react";
 // Parts of page 
@@ -13,6 +13,9 @@ import OfficeMap from '../Maps/OfficeMap'
 import ChangeDates from './ChangeDates'
 import NavbarSection from './NavbarSection'
 import NavbarSectionMateria from './NavbarSectionMateria'
+import TestImages from './TestImages'
+import ReactBnbGallery from 'react-bnb-gallery';
+
 interface Offices {
   id: string,
   name: string,
@@ -52,6 +55,10 @@ interface Offices {
 const ViewOffice: FC<{ office: Offices }> = (props) => {
   let ImagesAll: any = []
   let ImagesIndi = {}
+  let photos = []
+  const [isOpen, setIsOpen] = useState(false);
+  const [numberIma, setNumberIma] = useState(0)
+
 
   const office = props.office
   const spaces = office.spaces
@@ -67,7 +74,6 @@ const ViewOffice: FC<{ office: Offices }> = (props) => {
   // _onScreenChange(fullScreenElement);{
   //   console.debug('isFullScreen?', !!fullScreenElement);
   // }
-
 
   spaces.map((space) => {
     const images = space.imagesUrls
@@ -87,12 +93,8 @@ const ViewOffice: FC<{ office: Offices }> = (props) => {
       ImagesIndi["thumbnailTitle"] = 'Espacio luminoso'
       ImagesIndi["thumbnailLabel"] = 'Espacio Vista al mar'
       ImagesIndi["description"] = 'Oficina Privada'
-      // ImagesIndi["originalHeight"] = 200
-      // ImagesIndi["originalWidth"] = 200
-      // ImagesIndi["originalWidth"] = '200px'
-      // ImagesIndi["thumbnailHeight"] = 200
-      // ImagesIndi["thumbnailWidth"] = 200
 
+      photos.push(src)
 
       ImagesAll.push(ImagesIndi)
       console.log('All Images', ImagesAll);
@@ -122,7 +124,7 @@ const ViewOffice: FC<{ office: Offices }> = (props) => {
     <div style={{ marginTop: '10px' }}>
       <Row style={{ marginLeft: '5px' }}>
         <Col xs={6} onClick={() => { console.log('Hello World') }}>
-          <div style={{ height: '100%', width: '100%', maxHeight: '' }} onClick={() => { console.log('Hello World') }}>
+          <div style={{ height: '100%', width: '100%', maxHeight: '' , cursor : 'pointer'}} onClick={() => (setIsOpen(true))}>
             <img src={toSrc(img1)} alt="" />
           </div>
         </Col>
@@ -130,32 +132,33 @@ const ViewOffice: FC<{ office: Offices }> = (props) => {
         <Col xs={6}>
           <Row>
             <Col xs={6} >
-              <div className={style.imagesMainMediun}>
+              <div className={style.imagesMainMediun} onClick={() => setIsOpen(true)}>
                 <img src={toSrc(img2)} alt="" className={style.imagesSizeInvi} onClick={() => { console.log('Hello World') }} />
               </div>
             </Col>
             <Col xs={6}>
-              <div className={style.imagesMainMediun}>
+              <div className={style.imagesMainMediun} onClick={() => setIsOpen(true)}>
                 <img src={toSrc(img3)} alt="" className={style.imagesSizeInvi} onClick={() => { console.log('Hello World') }} />
               </div>
             </Col>
           </Row>
           <Row>
             <Col xs={6}>
-              <div className={style.imagesMainMediun}>
+              <div className={style.imagesMainMediun} onClick={() => setIsOpen(true)}>
                 <img src={toSrc(img4)} alt="" className={style.imagesSizeInvi} onClick={() => { console.log('Hello World') }} />
-
               </div>
             </Col>
             <Col xs={6}>
-              <div className={style.imagesMainMediun}>
-                <ImageGallery
-                  items={ImagesAll}
-                  showIndex
-                  // showThumbnails={false}
-                  showPlayButton={false}
-                  // originalHeight = {'220px'}
-                  showBullets />
+              <div className={style.imagesMainMediun} onClick={() => setIsOpen(true)}>
+                <img src={toSrc(img4)} alt="" className={style.imagesSizeInvi} onClick={() => { console.log('Hello World') }} />
+              </div>
+              <div>
+                <ReactBnbGallery
+                  show={isOpen}
+                  photos={photos}
+                  onClose={() => setIsOpen(false)}
+                  activePhotoIndex  = {numberIma}
+                />
               </div>
             </Col>
           </Row>
@@ -165,7 +168,7 @@ const ViewOffice: FC<{ office: Offices }> = (props) => {
         <NavbarSection/>
       </Container> */}
       <Container>
-        <NavbarSectionMateria/>
+        <NavbarSectionMateria />
       </Container>
       <Container >
         <AboutViews office={office} />
@@ -176,12 +179,11 @@ const ViewOffice: FC<{ office: Offices }> = (props) => {
       <div>
         <CardSpace office={office} />
       </div>
-      {/* <div >
-        <h1 className={style.titleAbout}>
-          Ubicacion de la oficina
-        </h1>
-        <OfficeMap office={office} />
-      </div> */}
+
+      <div>
+        <TestImages />
+      </div>
+
 
     </div>
   )
