@@ -66,10 +66,9 @@ interface CardSearchBaseTestProps {
 
 const CardSearchBaseTest: FC< CardSearchBaseTestProps > = (props) => {
   const spaces = props.spaces
+  
   return (
-    // <Card withBorder shadow="sm" radius="lg" style={{ margin: '1rem', height: '100%' }}>
     <>
-    {/* <TabsSpace escritorioD={[]} oficinaP={[]} salaC={[]} espacioA={[]}/> */}
       <Group direction="column" position="center">
         <Card.Section>
           <div>
@@ -183,6 +182,3 @@ const CardSearchBaseTest: FC< CardSearchBaseTestProps > = (props) => {
 
 export default CardSearchBaseTest
 
-function office(office: any, arg1: string): any {
-  throw new Error('Function not implemented.')
-}

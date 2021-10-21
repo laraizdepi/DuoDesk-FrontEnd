@@ -38,6 +38,7 @@
     "primereact": "^6.6.0",
     "prism-react-renderer": "^1.2.1",
     "react": "^17.0.2",
+    "react-bnb-gallery": "^1.4.4",
     "react-bootstrap": "^2.0.0-beta.6",
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",

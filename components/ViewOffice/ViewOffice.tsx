@@ -11,7 +11,8 @@ import { useRouter } from "next/dist/client/router"
 import TabsSpace from './tabsSpace'
 import OfficeMap from '../Maps/OfficeMap'
 import ChangeDates from './ChangeDates'
-
+import NavbarSection from './NavbarSection'
+import NavbarSectionMateria from './NavbarSectionMateria'
 interface Offices {
   id: string,
   name: string,
@@ -82,12 +83,15 @@ const ViewOffice: FC<{ office: Offices }> = (props) => {
 
       ImagesIndi["original"] = src
       ImagesIndi["thumbnail"] = src
-      ImagesIndi["originalHeight"] = '200px'
-      ImagesIndi["originalHeight"] = 200
-      ImagesIndi["originalWidth"] = 200
-      ImagesIndi["originalWidth"] = '200px'
-      ImagesIndi["thumbnailHeight"] = 200
-      ImagesIndi["thumbnailWidth"] = 200
+      ImagesIndi["originalTitle"] = 'Espacio Abierto'
+      ImagesIndi["thumbnailTitle"] = 'Espacio luminoso'
+      ImagesIndi["thumbnailLabel"] = 'Espacio Vista al mar'
+      ImagesIndi["description"] = 'Oficina Privada'
+      // ImagesIndi["originalHeight"] = 200
+      // ImagesIndi["originalWidth"] = 200
+      // ImagesIndi["originalWidth"] = '200px'
+      // ImagesIndi["thumbnailHeight"] = 200
+      // ImagesIndi["thumbnailWidth"] = 200
 
 
       ImagesAll.push(ImagesIndi)
@@ -148,7 +152,7 @@ const ViewOffice: FC<{ office: Offices }> = (props) => {
                 <ImageGallery
                   items={ImagesAll}
                   showIndex
-                  showThumbnails={false}
+                  // showThumbnails={false}
                   showPlayButton={false}
                   // originalHeight = {'220px'}
                   showBullets />
@@ -157,6 +161,12 @@ const ViewOffice: FC<{ office: Offices }> = (props) => {
           </Row>
         </Col>
       </Row>
+      {/* <Container>
+        <NavbarSection/>
+      </Container> */}
+      <Container>
+        <NavbarSectionMateria/>
+      </Container>
       <Container >
         <AboutViews office={office} />
       </Container>

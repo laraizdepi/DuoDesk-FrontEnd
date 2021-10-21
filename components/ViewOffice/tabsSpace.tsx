@@ -108,7 +108,6 @@ const TabsSpace: React.FC<{ office: Offices }> = (props) => {
             </Box>
             <TabPanel value={value} index={0}>
                 <CardSearchBaseTest spaces={findTypeSpaces(office.spaces, 'Escritorio personal')} />
-
             </TabPanel>
             <TabPanel value={value} index={1}>
                 <CardSearchBaseTest spaces={findTypeSpaces(office.spaces, 'Oficina privada')} />
