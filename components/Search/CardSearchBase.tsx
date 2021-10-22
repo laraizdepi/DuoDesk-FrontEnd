@@ -77,8 +77,15 @@ const PrevArrow: FC<ArrowsInterface> = (props) => {
     )
 }
 
-const CardSearchBase: FC<{ office: Offices, date: string, people: number}> = (props) => {
+const CardSearchBase: FC<{ office: Offices, date?: string, people?: number}> = (props) => {
     const [space, setSpace] = useState(props.office.spaces[0])
+    let url = `/search/${props.office.id}?`
+    if(props.date){
+        url = `${url}date=${props.date}&`
+    }
+    if(props.people){
+        url = `${url}people=${props.people}&`
+    }
     const settings = {
         dots: true,
         infinite: true,
@@ -110,7 +117,7 @@ const CardSearchBase: FC<{ office: Offices, date: string, people: number}> = (pr
                 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css" />
                 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css" />
             </Head>
-            <Card component={NextLink} href={`/search/${props.office.id}`}
+            <Card component={NextLink} href={url}
                 withBorder radius="lg" shadow="lg"
                 style={{ margin: '1rem' }} className="hover:no-underline">
                 <Group direction="column" position="left" style={{ marginLeft: '1rem' }}>

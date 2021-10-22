@@ -52,94 +52,57 @@ interface Offices {
 }
 
 const SearchPage = (props: any) => {
-    const [offices, setOffices] = useState<Offices[]>([])
-    const [finalOffices, setFinalOffices] = useState<Offices[]>([])
-    const [showOffices, setShowOffices] = useState<Offices[]>([])
+    const [initialOffices, setInitialOffices] = useState<Offices[]>([])
+    const [filteredOffices, setFilteredOffices] = useState<Offices[]>([])
+    const [shownOffices, setShownOffices] = useState<Offices[]>([])
+    const [total, setTotal] = useState<number>(Math.floor(shownOffices.length))
+    const [pages, setPages] = useState<number>(1)
+
     const [loading, setLoading] = useState<0 | 1 | 2>(0)
     const [show, setShow] = useState<boolean>(true)
     const [opened, setOpened] = useState<boolean>(false)
-    const [type, setType] = useState<string>('all')
+
     const [amenities, setAmenities] = useState<string[]>([])
+    const [days, setDays] = useState<string | undefined>(undefined)
     const [time, setTime] = useState<'hour' | 'day' | 'week' | 'month' | undefined>(undefined)
     const [prices, setPrices] = useState<[number, number]>([0, 0])
-    const [days, setDays] = useState<string | undefined>(undefined)
-    const [pages, setPages] = useState<number>(1)
-    const [visible, setVisible] = useState(false)
-    const [total, setTotal] = useState<number>(Math.floor(showOffices.length))
 
-    const cardsRef: any = useRef(CardsSearch)
 
     useEffect(() => {
         const getData = async () => {
-            let url = 'http://localhost:5000/offices?'
-            if (props.city) {
-                url = `${url}city=${props.city}&`
-            }
-            if(props.date){
-                url = `${url}date=${encodeURIComponent(props.date)}&`
-            }
-            console.log(url)
+            let url = `http://localhost:5000/offices?`
+            if (props.city) url = `${url}city=${props.city}&`
+            if (props.type) url = `${url}type=${encodeURIComponent(props.type)}&`
+            if (props.date) url = `${url}date=${encodeURIComponent(props.date)}&`
+            if (props.people) url = `${url}people=${props.people}&`
             const response = await axios.get(url)
-            console.log(response)
             if (response.data.length > 0) {
-                if (props.type) {
-                    Filters.byType(props.type, response.data, setOffices)
-                    Filters.byType(props.type, response.data, setFinalOffices)
-                    Filters.byType(props.type, response.data.slice((pages - 1) * 10, pages * 10), setShowOffices)
-                }
-                else{
-                    setOffices(response.data)
-                    setFinalOffices(response.data)
-                    setShowOffices(response.data.slice((pages - 1) * 10, pages * 10))
-
-                }
-                setTotal(Math.floor(offices.length / 10) + 1)
+                setInitialOffices(response.data)
+                setFilteredOffices(response.data)
+                setShownOffices(response.data.slice((pages - 1) * 10, pages * 10))
+                setTotal(Math.floor(initialOffices.length / 10) + 1)
                 setLoading(1)
             }
-            else {
-                setLoading(2)
-            }
+            else setLoading(2)
         }
         getData()
-        console.log('Total', total)
     }, [])
 
+
     useEffect(() => {
-        if (finalOffices.length === 0) {
-            setShow(false)
-        }
-        else {
+        setFilteredOffices(initialOffices)
+        setPages(1)
+        if (amenities && amenities.length > 0) setFilteredOffices(Filters.byAmenities(amenities, filteredOffices))
+        if (days) setFilteredOffices(Filters.byDays(days, filteredOffices))
+    }, [amenities, time, days, prices, loading])
+
+    useEffect(() => {
+        if (filteredOffices.length > 0) {
             setShow(true)
+            setShownOffices(filteredOffices.slice((pages - 1) * 10, pages * 10))
         }
-    }, [finalOffices])
-
-    useEffect(() => {
-        setFinalOffices(offices)
-        if (type !== 'all' && type !== "" && type) {
-            Filters.byType(type, finalOffices, setFinalOffices)
-        }
-        if (amenities.length > 0) {
-            if (type !== 'all' && type !== "") {
-                Filters.byAmenities(amenities, finalOffices, setFinalOffices, type)
-            }
-            else {
-                Filters.byAmenities(amenities, finalOffices, setFinalOffices)
-            }
-        }
-        if (days) {
-            Filters.byDays(days, finalOffices, setFinalOffices)
-        }
-        if (prices && JSON.stringify(prices) !== JSON.stringify([0, 0]) && time) {
-            console.log("Final Offices:", finalOffices)
-            Filters.byPrices(finalOffices, setFinalOffices, time, prices)
-        }
-    }, [type, amenities, time, days, prices])
-
-    useEffect(() => {
-        setVisible(true)
-        setShowOffices(finalOffices.slice((pages - 1) * 10, pages * 10))
-        setVisible(false)
-    }, [pages])
+        else setShow(false)
+    }, [filteredOffices])
 
     if (loading === 0) {
         return (
@@ -196,7 +159,7 @@ const SearchPage = (props: any) => {
                 <Col span={12} md={7}>
                     <ScrollPanel style={{ width: '100%', height: '90vh' }}>
                         <Grid id="search-filters" align="center" className="px-5">
-                            <Col span={12} md={4} style={{ display: 'flex' }}>
+                            <Col span={12} md={4}>
                                 <TagPicker
                                     placeholder="Amenidades"
                                     data={AminitiesList}
@@ -210,7 +173,6 @@ const SearchPage = (props: any) => {
                             <Col span={12} md={4}>
                                 <Select
                                     id="select-days"
-                                    radius="xl"
                                     placeholder="Filtrar por días"
                                     data={[
                                         { label: 'Todos los días', value: 'all' },
@@ -253,14 +215,13 @@ const SearchPage = (props: any) => {
                                 </Popover>
                             </Col>
                         </Grid>
-                        <div className="my-4 mx-5">
-                            <Text>Viendo {pages} - {pages * showOffices.length} de {finalOffices.length} oficinas</Text>
-                        </div>
                         {show
                             ?
                             <div>
-                                <LoadingOverlay visible={visible} transitionDuration={0} />
-                                <CardsSearch offices={showOffices} ref={cardsRef} />
+                                <div className="my-4 mx-5">
+                                    <Text>Viendo {pages} - {pages * shownOffices.length} de {filteredOffices.length} oficinas</Text>
+                                </div>
+                                <CardsSearch offices={shownOffices} date={props.date} people={props.people} />
                                 <Center>
                                     <Pagination
                                         total={total}
@@ -287,7 +248,7 @@ const SearchPage = (props: any) => {
                     </ScrollPanel>
                 </Col>
                 <Col span={12} md={5}>
-                    <SearchMap onlyOffices={showOffices} city={props.city} />
+                    <SearchMap offices={shownOffices} city={props.city} />
                 </Col>
             </Grid>
         </div>

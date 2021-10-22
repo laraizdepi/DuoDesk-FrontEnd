@@ -1,4 +1,5 @@
 interface Offices {
+    id: string,
     name: string,
     description: string,
     host: any,
@@ -33,30 +34,86 @@ interface Offices {
     openDate: string
 }
 
-export { }
+const byAmenities = (list: string[], data: Offices[]) => {
+    const finalData = data.filter((office) => {
+        if (list.length > 0) {
+            for (let amenity of list) {
+                if (office.generalAmenities.includes(amenity)) {
+                    return true
+                }
+                else {
+                    const result = office.spaces.filter((space) => {
+                        if (space.nameAmenities.includes(amenity)) {
+                            return true
+                        }
+                        return false
+                    })
+                    if (result && result.length > 0) {
+                        office.spaces = result
+                        return true
+                    }
+                    else {
+                        return false
+                    }
+                }
+            }
+        }
+        else {
+            return true
+        }
+    })
+    return finalData
+}
 
-const typeOffice = (type: string, data: Offices[], callback: (send?: any) => void) => {
-    const finalData = data.filter((element) => {
-        const result = element.spaces.filter((space) => {
-            if (space.typeSpace === type) {
-                return true
+const byDays = (days: string | undefined = undefined, data: Offices[]) => {
+    let finalData: Offices[] = []
+    if (days === "week") {
+        finalData = data.filter((element) => {
+            console.log(element)
+            for (let day of element.days) {
+                if (day.day === 'Week') return true
             }
             return false
         })
-        if (result.length > 0) {
-            return true
-        }
-        return false
-    }).map((element) => {
-        element.spaces = element.spaces.filter((space) => {
-            if (space.typeSpace === type) {
-                return true
+    }
+    else if (days === "with saturday") {
+        finalData = data.filter((element) => {
+            let count = 0
+            for (let day of element.days) {
+                if (day.day === 'Week') count++
+                else if (day.day === "Saturday") count++
             }
+            if (count === 2) return true
+            return false
         })
-        return element
-    })
-    console.log(finalData)
-    return callback(finalData)
+    }
+    else if (days === "with sunday") {
+        finalData = data.filter((element) => {
+            let count = 0
+            for (let day of element.days) {
+                if (day.day === 'Week') count++
+                else if (day.day === "Sunday") count++
+            }
+            if (count === 2) return true
+            return false
+        })
+    }
+    else if (days === "all") {
+        finalData = data.filter((element) => {
+            let count = 0
+            for (let day of element.days) {
+                if (day.day === 'Week') count++
+                else if (day.day === "Saturday") count++
+                else if (day.day === "Sunday") count++
+            }
+            if (count === 3) return true
+            return false
+        })
+    }
+    else {
+        finalData = data.slice()
+    }
+    return finalData
 }
 
 const extremePrices = (data: Offices[]) => {
@@ -101,18 +158,18 @@ const rangeOfPrices = (data: Offices[], callback: (send?: any) => void, time?: '
         console.log(time, prices)
         const finalData = dataCopy.filter((element) => {
             const result = element.spaces.filter((space) => {
-                if(space[`${time}Price`] > prices[0] && space[`${time}Price`] < prices[1]){
+                if (space[`${time}Price`] > prices[0] && space[`${time}Price`] < prices[1]) {
                     return true
                 }
                 return false
             })
-            if(result.length > 0){
+            if (result.length > 0) {
                 return true
             }
             return false
         }).map((element) => {
             element.spaces = element.spaces.filter((space) => {
-                if(space[`${time}Price`] > prices[0] && space[`${time}Price`] < prices[1]){
+                if (space[`${time}Price`] > prices[0] && space[`${time}Price`] < prices[1]) {
                     return true
                 }
                 return false
@@ -122,128 +179,9 @@ const rangeOfPrices = (data: Offices[], callback: (send?: any) => void, time?: '
         console.log("Final Data: ", finalData)
         return callback(finalData)
     }
-    else{
+    else {
         return callback(data)
     }
-}
-
-const selectDays = (days: string | undefined = undefined, data: Offices[], callback: (send?: any) => void) => {
-    let finalData: Offices[] = []
-    if (days === "week") {
-        finalData = data.filter((element) => {
-            console.log(element)
-            for (let day of element.days) {
-                if (day.day === 'Week') {
-                    return true
-                }
-            }
-            return false
-        })
-    }
-    else if (days === "with saturday") {
-        finalData = data.filter((element) => {
-            let count = 0
-            for (let day of element.days) {
-                if (day.day === 'Week') {
-                    count++
-                }
-                else if (day.day === "Saturday") {
-                    count++
-                }
-            }
-            if (count === 2) {
-                return true
-            }
-            return false
-        })
-    }
-    else if (days === "with sunday") {
-        finalData = data.filter((element) => {
-            let count = 0
-            for (let day of element.days) {
-                if (day.day === 'Week') {
-                    count++
-                }
-                else if (day.day === "Sunday") {
-                    count++
-                }
-            }
-            if (count === 2) {
-                return true
-            }
-            return false
-        })
-    }
-    else if (days === "all") {
-        finalData = data.filter((element) => {
-            let count = 0
-            for (let day of element.days) {
-                if (day.day === 'Week') {
-                    count++
-                }
-                else if (day.day === "Saturday") {
-                    count++
-                }
-                else if (day.day === "Sunday") {
-                    count++
-                }
-            }
-            if (count === 3) {
-                return true
-            }
-            return false
-        })
-    }
-    else {
-        finalData = data.slice()
-    }
-    return callback(finalData)
-}
-
-const amenities = (list: string[], data: Offices[], callback: (send?: any) => void, filterSpaces?: string) => {
-    const finalData = data.filter((element) => {
-        if (filterSpaces) {
-            for (let item of list) {
-                const result = element.spaces.filter((element) => {
-                    if (element.typeSpace === filterSpaces) {
-                        if (element.nameAmenities.includes(item)) {
-                            return true
-                        }
-                        return false
-                    }
-                    return false
-                })
-                if (result.length === 0) {
-                    return false
-                }
-                else {
-                    return true
-                }
-            }
-        }
-        else {
-            for (let item of list) {
-                if (!element.generalAmenities.includes(item)) {
-                    const result = element.spaces.filter((element) => {
-                        if (element.nameAmenities.includes(item)) {
-                            return true
-                        }
-                        else {
-                            return false
-                        }
-                    })
-                    if (result.length === 0) {
-                        return false
-                    }
-                    else {
-                        return true
-                    }
-                }
-                return true
-            }
-        }
-    })
-    return callback(finalData)
 }
 
 const filterRange = (rating: number, data: Offices[], callback: (send?: any) => void) => {
@@ -277,10 +215,9 @@ const filterRange = (rating: number, data: Offices[], callback: (send?: any) => 
 }
 
 const filter = {
-    byType: typeOffice,
+    byAmenities,
+    byDays,
     byPrices: rangeOfPrices,
-    byDays: selectDays,
-    byAmenities: amenities,
     byRange: filterRange,
     getMinMax: extremePrices
 }

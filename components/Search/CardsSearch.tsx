@@ -38,7 +38,7 @@ interface Offices {
     openDate: string
 }
 
-const CardsSearch: FC<{ offices: Offices[], ref: any }> = React.forwardRef((props, ref) => {
+const CardsSearch: FC<{ offices: Offices[], date?: string, people?: number}> = React.forwardRef((props, ref) => {
     return (
         <div style={{ position: 'relative' }}>
             <div>
@@ -50,6 +50,8 @@ const CardsSearch: FC<{ offices: Offices[], ref: any }> = React.forwardRef((prop
                                     <CardSearchBase
                                         office={element}
                                         key={element.name}
+                                        date={props.date}
+                                        people={props.people}
                                     />
                                 </Col>
                             )

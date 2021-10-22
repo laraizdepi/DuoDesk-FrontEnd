@@ -328,10 +328,11 @@ interface Offices {
     openDate: string
 }
 
-const SearchMap: FC<{ onlyOffices: Offices[], city: string }> = (props) => {
+const SearchMap: FC<{ offices: Offices[], city: string }> = (props) => {
     useEffect(() => {
-        console.log('Props Offices Search Maps', props.onlyOffices)
-        let map: google.maps.Map | google.maps.StreetViewPanorama | google.maps.InfoWindowOpenOptions | null | undefined
+        console.log('Props Offices Search Maps', props.offices)
+        // let map: google.maps.Map | google.maps.StreetViewPanorama | google.maps.InfoWindowOpenOptions | null | undefined
+        let map: any
         const infowindow = new google.maps.InfoWindow
         const initMap = (): void => {
             map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
@@ -341,17 +342,22 @@ const SearchMap: FC<{ onlyOffices: Offices[], city: string }> = (props) => {
             })
             const places = new google.maps.places.PlacesService(map)
 
-            places.findPlaceFromQuery({
-                query: props.city,
-                fields: ['geometry']
-            }, (results, status) => {
-                if (results && map) {
-                    map.setCenter(results[0].geometry?.location)
-                }
-            })
+            if(props.city){
+                places.findPlaceFromQuery({
+                    query: props.city,
+                    fields: ['geometry']
+                }, (results, status) => {
+                    if (results && map) {
+                        map.setCenter(results[0].geometry?.location)
+                    }
+                })
+            }
+            else{
+                map.setCenter({ lat: props.offices[0].address.geometry.location.lat, lng: props.offices[0].address.geometry.location.lng })
+            }
 
 
-            for (let office of props.onlyOffices) {
+            for (let office of props.offices) {
                 let images: string[] = []
                 for (let space of office.spaces) {
                     for (let image of space.imagesUrls) {
@@ -443,7 +449,7 @@ const SearchMap: FC<{ onlyOffices: Offices[], city: string }> = (props) => {
         return () => {
             map = null
         }
-    }, [props.onlyOffices])
+    }, [props.offices])
 
     return (
         <div id="map" style={{ height: '90vh' }}>

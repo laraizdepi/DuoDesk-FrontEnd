@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Avatar, Button, Menu, Group, Image, Input, Autocomplete, TextInput, Select, Drawer, Modal } from '@mantine/core'
 import { useForm, useWindowScroll } from '@mantine/hooks'
 import { NextLink } from '../NextLink/NextLink';
+import Link from 'next/link'
 
 import { loginUser, logoutUser } from '../../Redux/actions/authActions';
 
@@ -12,14 +13,23 @@ import AuthModal from '../Authenticacion/AuthModal';
 
 import Logo from '../../Img/logos/DuoDeskLogo.png'
 
-import style from './Navbar.module.sass'
 import { DatePicker } from '@mantine/dates';
 import AuthDrawer from '../Authenticacion/AuthDrawer';
+import { updateSearch } from '../../Redux/actions/searchActions';
 
 const NavBar = () => {
 	const [mobile, setMobile] = useState<boolean>(false)
 	const [opened, setOpened] = useState<boolean>(false)
 	const [color, setColor] = useState<string>('white')
+	const dispatch = useDispatch()
+	const user = useSelector((state: any) => {
+		return state.authentication
+			? state.authentication
+			: { logged: false }
+	})
+	const search = useSelector((state: any) => {
+		return state.search
+	})
 
 	const searchForm = useForm({
 		initialValues: {
@@ -44,12 +54,9 @@ const NavBar = () => {
 		if (values.type) {
 			url = `${url}type=${values.type}`
 		}
-		alert(url)
-		router.push(url, url)
+		window.location.href = url
 	}
 
-	const dispatch = useDispatch()
-	const router = useRouter()
 	const [scroll, scrollTo] = useWindowScroll()
 	const spaces = ["Oficina privada", "Escritorio personal", "Sala de conferencias", "Espacio abierto"]
 
@@ -67,7 +74,14 @@ const NavBar = () => {
 			}
 		}
 		window.addEventListener('resize', handleResize)
+
 		return () => {
+			dispatch(updateSearch({
+				city: searchForm.values.city,
+				date: searchForm.values.date,
+				people: searchForm.values.people,
+				type: searchForm.values.type
+			}))
 			window.removeEventListener('resize', handleResize)
 		}
 	}, [])
@@ -81,11 +95,6 @@ const NavBar = () => {
 		}
 	}, [scroll.y])
 
-	const user = useSelector((state: any) => {
-		return state.authentication
-			? state.authentication
-			: { logged: false }
-	})
 
 	const logOutHandler = () => {
 		dispatch(logoutUser())
@@ -95,12 +104,12 @@ const NavBar = () => {
 		return (
 			<div className="flex flex-row justify-between items-center m-3 mr-0">
 				<div className="">
-					<NextLink href='/'>
+					<Link href='/'>
 						<Image
 							src={Logo.src}
 							width={50}
 						/>
-					</NextLink>
+					</Link>
 				</div>
 				<div>
 					<Drawer opened={opened} size="xl" onClose={() => setOpened(false)} title="Buscar una oficina" padding="md">
@@ -135,7 +144,7 @@ const NavBar = () => {
 									type="number"
 									min={1}
 									value={searchForm.values.people}
-									onChange={event => searchForm.setFieldValue('people', Number(event.target.value || 1))}
+									onChange={event => searchForm.setFieldValue('people', Number(event.target.value))}
 									placeholder="Número de personas" />
 							</div>
 							<div>
@@ -183,13 +192,13 @@ const NavBar = () => {
 	return (
 		<div className={`flex flex-row justify-around items-center sticky top-0 z-10 bg-${color} p-2 w-full shadow-md`}>
 			<div>
-				<NextLink href='/'>
+				<Link href='/'>
 					<Image
 						src={Logo.src}
 						fit='cover'
 						width={100}
 					/>
-				</NextLink>
+				</Link>
 			</div>
 			<form onSubmit={searchForm.onSubmit(handleSubmit)} className="flex flex-row justify-between border px-3 py-2 rounded-3xl">
 				<div>
