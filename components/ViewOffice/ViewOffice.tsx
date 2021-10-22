@@ -63,13 +63,13 @@ const ViewOffice: FC<{ office: Offices }> = (props) => {
   const office = props.office
   const spaces = office.spaces
   // const images = spaces.imagesUrls
-  console.log('office', office);
+  // console.log('office', office);
 
-  console.log('allSpaces', spaces);
+  // console.log('allSpaces', spaces);
 
   const router = useRouter()
-  console.log('Url', router.query);
-  console.log('This is the path');
+  // console.log('Url', router.query);
+  // console.log('This is the path');
 
   // _onScreenChange(fullScreenElement);{
   //   console.debug('isFullScreen?', !!fullScreenElement);
@@ -77,15 +77,17 @@ const ViewOffice: FC<{ office: Offices }> = (props) => {
 
   spaces.map((space) => {
     const images = space.imagesUrls
-    console.log("imagesPerSpace", images);
+    const typeOfImages = space.typeSpace
+    // console.log("imagesPerSpace", images);
 
     images.map((image) => {
+      let photo = {}
       const url = image.split('-', 2)
       const file = image.substring(image.indexOf(url[1]) + url[1].length + 1)
       const src = `http://localhost:5000/uploads/offices/${url[0]}/${url[1]}/${file}`
 
-      console.log('imagesIndi', ImagesIndi);
-      console.log('src', src);
+      // console.log('imagesIndi', ImagesIndi);k=
+      // console.log('src', src);
 
       ImagesIndi["original"] = src
       ImagesIndi["thumbnail"] = src
@@ -94,12 +96,18 @@ const ViewOffice: FC<{ office: Offices }> = (props) => {
       ImagesIndi["thumbnailLabel"] = 'Espacio Vista al mar'
       ImagesIndi["description"] = 'Oficina Privada'
 
-      photos.push(src)
+      photo['photo'] = src
+      photo['caption'] = typeOfImages
+      photo['subcaption'] = typeOfImages
+
+      // photos.push(src)
+      photos.push(photo)
 
       ImagesAll.push(ImagesIndi)
-      console.log('All Images', ImagesAll);
-      console.log('All Images', ImagesAll);
+      // console.log('All Images', ImagesAll);
+      // console.log('All Images', ImagesAll);
 
+      photo = {}  
       ImagesIndi = {}
 
     })
@@ -118,13 +126,16 @@ const ViewOffice: FC<{ office: Offices }> = (props) => {
     return (src1)
   }
 
-
+  const changeOpenAndNumber = (number:number) =>{
+    setNumberIma(number)
+    setIsOpen(true)
+  }
 
   return (
     <div style={{ marginTop: '10px' }}>
       <Row style={{ marginLeft: '5px' }}>
         <Col xs={6} onClick={() => { console.log('Hello World') }}>
-          <div style={{ height: '100%', width: '100%', maxHeight: '' , cursor : 'pointer'}} onClick={() => (setIsOpen(true))}>
+          <div style={{ height: '100%', width: '100%', maxHeight: '' , cursor : 'pointer'}} onClick={() => (changeOpenAndNumber(0))}>
             <img src={toSrc(img1)} alt="" />
           </div>
         </Col>
@@ -132,25 +143,25 @@ const ViewOffice: FC<{ office: Offices }> = (props) => {
         <Col xs={6}>
           <Row>
             <Col xs={6} >
-              <div className={style.imagesMainMediun} onClick={() => setIsOpen(true)}>
-                <img src={toSrc(img2)} alt="" className={style.imagesSizeInvi} onClick={() => { console.log('Hello World') }} />
+              <div className={style.imagesMainMediun} onClick={() => changeOpenAndNumber(1)}>
+                <img src={photos[1]['photo']} alt="" className={style.imagesSizeInvi} onClick={() => { console.log('Hello World') }} />
               </div>
             </Col>
-            <Col xs={6}>
-              <div className={style.imagesMainMediun} onClick={() => setIsOpen(true)}>
-                <img src={toSrc(img3)} alt="" className={style.imagesSizeInvi} onClick={() => { console.log('Hello World') }} />
+            <Col xs={6}>  
+              <div className={style.imagesMainMediun} onClick={() => changeOpenAndNumber(2)}>
+                <img src={photos[2]['photo']} alt="" className={style.imagesSizeInvi} onClick={() => { console.log('Hello World') }} />
               </div>
             </Col>
           </Row>
           <Row>
             <Col xs={6}>
-              <div className={style.imagesMainMediun} onClick={() => setIsOpen(true)}>
-                <img src={toSrc(img4)} alt="" className={style.imagesSizeInvi} onClick={() => { console.log('Hello World') }} />
+              <div className={style.imagesMainMediun} onClick={() => changeOpenAndNumber(3)}>
+                <img src={photos[3]['photo']} alt="" className={style.imagesSizeInvi} onClick={() => { console.log('Hello World') }} />
               </div>
             </Col>
             <Col xs={6}>
-              <div className={style.imagesMainMediun} onClick={() => setIsOpen(true)}>
-                <img src={toSrc(img4)} alt="" className={style.imagesSizeInvi} onClick={() => { console.log('Hello World') }} />
+              <div className={style.imagesMainMediun} onClick={() => changeOpenAndNumber(4)}>
+                <img src={photos[4]['photo']} alt="" className={style.imagesSizeInvi} onClick={() => { console.log('Hello World') }} />
               </div>
               <div>
                 <ReactBnbGallery
@@ -179,12 +190,6 @@ const ViewOffice: FC<{ office: Offices }> = (props) => {
       <div>
         <CardSpace office={office} />
       </div>
-
-      <div>
-        <TestImages />
-      </div>
-
-
     </div>
   )
 }

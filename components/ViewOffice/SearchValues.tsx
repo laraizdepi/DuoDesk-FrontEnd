@@ -14,8 +14,8 @@ const SearchValues: FC<SearchProps> = (props) => {
     const subtotalUgly = (subtotal + subtotal * 15 / 100)
     const total = Intl.NumberFormat('de-DE', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(subtotalUgly)
     // console.log(new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(total));
-    console.log('router', router.query)
-    console.log(space.hourPrice)
+    // console.log('router', router.query)
+    // console.log(space.hourPrice)
     return (
         <div>
             <p>$ {total}</p>

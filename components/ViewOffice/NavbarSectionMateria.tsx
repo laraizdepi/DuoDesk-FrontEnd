@@ -14,9 +14,9 @@ const NavbarSectionMateria = () => {
     };
     const [scroll, scrollTo] = useWindowScroll();
     return (
-        <div>
+        <div >
             <Box sx={{ width: '100%' }}>
-                {console.log(`position x: ${scroll.x}, y: ${scroll.y}`)}
+                {/* {console.log(`position x: ${scroll.x}, y: ${scroll.y}`)} */}
 
                 <Tabs
                     value={value}
@@ -25,11 +25,11 @@ const NavbarSectionMateria = () => {
                     indicatorColor="secondary"
                     aria-label="secondary tabs example"
                 >
-                    <Tab value="one" label="Imagenes" onClick={() => scrollTo({ y: 84 })} />
-                    <Tab value="two" label="Description" onClick={() => scrollTo({ y: 720 })} />
-                    <Tab value="three" label="Ubicacion" onClick={() => scrollTo({ y: 912 })} />
-                    <Tab value="four" label="Amenidades" onClick={() => scrollTo({ y: 1649 })} />
-                    <Tab value="five" label="Espacios" onClick={() => scrollTo({ y: 2090 })} />
+                    <Tab value="one" label="Imagenes" onClick={() => scrollTo({ y: 0 })} />
+                    <Tab value="two" label="Description" onClick={() => scrollTo({ y: 656 })} />
+                    <Tab value="three" label="Ubicacion" onClick={() => scrollTo({ y: 845 })} />
+                    <Tab value="four" label="Amenidades" onClick={() => scrollTo({ y: 1594 })} />
+                    <Tab value="five" label="Espacios" onClick={() => scrollTo({ y: 2024 })} />
                 </Tabs>
             </Box>
 

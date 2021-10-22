@@ -18,34 +18,6 @@ interface Offices {
   isActive: boolean,
   generalAmenities: string[]
   spaces: {
-      nameSpace: string,
-      typeSpace: string,
-      capacitySpace: number,
-      availableSpace: number,
-      hourPrice: number,
-      dayPrice: number,
-      weekPrice: number,
-      monthPrice: number,
-      nameAmenities: string[],
-      imagesUrls: string[],
-      booking?: any
-  }[],
-  address: any,
-  scores?: {
-      averageScore: number,
-      reviews: any
-  },
-  days: [{
-      day: string,
-      isAvailable: boolean,
-      startHour?: string,
-      endHour?: string
-  }],
-  notifications: string[],
-  official: string[],
-  openDate: string
-}
-interface Spaces {
     nameSpace: string,
     typeSpace: string,
     capacitySpace: number,
@@ -57,25 +29,56 @@ interface Spaces {
     nameAmenities: string[],
     imagesUrls: string[],
     booking?: any
+  }[],
+  address: any,
+  scores?: {
+    averageScore: number,
+    reviews: any
+  },
+  days: [{
+    day: string,
+    isAvailable: boolean,
+    startHour?: string,
+    endHour?: string
+  }],
+  notifications: string[],
+  official: string[],
+  openDate: string
+}
+interface Spaces {
+  nameSpace: string,
+  typeSpace: string,
+  capacitySpace: number,
+  availableSpace: number,
+  hourPrice: number,
+  dayPrice: number,
+  weekPrice: number,
+  monthPrice: number,
+  nameAmenities: string[],
+  imagesUrls: string[],
+  booking?: any
 }
 
 interface CardSearchBaseTestProps {
-  spaces : any[]
+  spaces: any[]
+  available?: boolean
 }
 
 
-const CardSearchBaseTest: FC< CardSearchBaseTestProps > = (props) => {
+const CardSearchBaseTest: FC<CardSearchBaseTestProps> = (props) => {
   const spaces = props.spaces
-  
+  const [opacity, setopacity] = useState(1)
+  const available = props.available
+  // const available = true 
   return (
     <>
       <Group direction="column" position="center">
         <Card.Section>
           <div>
-            {spaces.map((space : any[]) => {
+            {spaces.map((space: any[]) => {
               return (
                 <div>
-                  <Card withBorder shadow="sm" radius="lg" style={{ margin: '1rem', height: '100%' }}>
+                  <Card withBorder shadow="sm" radius="lg" style={{ margin: '1rem', height: '100%', opacity: opacity }}>
                     <Row style={{ marginBottom: '10px' }}>
                       {/* Images Slider for Spaces */}
                       <Col xs={12} md={6}>
@@ -151,19 +154,7 @@ const CardSearchBaseTest: FC< CardSearchBaseTestProps > = (props) => {
                                 {/* </List> */}
                               </div>
                             </Spoiler>
-                            <Row>
-                              <Col xs={9}>
-                                <Button color="pink" radius="lg">
-                                  Reserva este espacio
-                                </Button>
-                              </Col>
-                              {/* <Col xs={3}>
-                                <p>$PRECIO TOTAL</p>
-                              </Col> */}
-                              <Col xs={3}>
-                                <SearchValues space ={space}/>
-                              </Col>
-                            </Row>
+                            <IsAvailable space={space} available={available} setopacity={setopacity} />
                           </Card.Section>
                         </Card>
                       </Col>
@@ -178,6 +169,32 @@ const CardSearchBaseTest: FC< CardSearchBaseTestProps > = (props) => {
     </>
     // </Card >
   )
+}
+
+const IsAvailable = ({ space, available, setopacity }) => {
+  if (available) {
+    setopacity(1)
+    return (
+      <Row>
+        <Col xs={9}>
+          <Button color="pink" radius="lg">
+            Reserva este espacio
+          </Button>
+        </Col>
+        <Col xs={3}>
+          <SearchValues space={space} />
+        </Col>
+      </Row>
+
+    )
+  } else {
+    setopacity(0.6)
+    return (
+      <Col xs={12} style ={{display : 'flex', alignItems:'center', justifyContent : 'center'}}>
+        <p style = {{fontSize : '19px', opacity:'1'}}>No esta disponible</p>
+      </Col>
+    )
+  }
 }
 
 export default CardSearchBaseTest

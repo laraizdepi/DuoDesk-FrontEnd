@@ -111,7 +111,7 @@ const AmenidadesGeneral: FC<AmenidadesProps> = (props) => {
     listAmenidades = []
 
   }
-  console.log('Asi queda organizado', AmenidadesOrgani);
+  // console.log('Asi queda organizado', AmenidadesOrgani);
 
   return (
     <Container >
@@ -123,7 +123,7 @@ const AmenidadesGeneral: FC<AmenidadesProps> = (props) => {
 
       <Row style = {{marginLeft : '50px'}}>
         {Object.keys(AmenidadesOrgani).map((title) => {
-          console.log('return amenidad', title);
+          // console.log('return amenidad', title);
           const amenidadGroup = AmenidadesOrgani[title]
           return (
             <Col xs={12} md={4}>
