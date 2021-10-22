@@ -8,7 +8,9 @@ export const NextLink = forwardRef(
     ) => (
         <Link href={href}>
             {/* eslint-disable-next-line jsx-a11y/anchor-has-content */}
-            <a {...others} ref={ref} />
+            <a {...others} ref={ref}>
+                {others.children}
+            </a>
         </Link>
     )
 );

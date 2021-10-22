@@ -29,13 +29,6 @@ const RegisterForm: FC<AuthForm> = (props) => {
         },
     })
 
-    useEffect(() => {
-		router.replace(router.pathname, '/sign-up', {shallow: true})
-		return () => {
-			router.replace(router.pathname, router.pathname, {shallow: true})
-		}
-	}, [])
-
     const submitHandler = async () => {
         const request = await signUp(form.values.email, form.values.password, form.values.firstName, form.values.lastName)
         props.changeTabs(0)

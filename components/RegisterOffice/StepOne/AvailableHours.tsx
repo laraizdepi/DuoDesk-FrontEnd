@@ -33,9 +33,19 @@ const AvailableHours: FC<HoursProps> = React.forwardRef((props, ref: any) => {
                     <h4>{props.title}</h4>
                 </Col>
                 {props.disable ?
-                    <Col span={6}>
-                        <Switch id={`switch-${slugTitle}`} checked={!active} onChange={handleDisable} label={!active ? `Disponible ${props.title}` : `No disponible ${props.title}`} />
-                    </Col>
+                    <Field name={`switch-${slugTitle}-time`}>
+                        {({ field, form, meta }: any) => (
+                            <LocalizationProvider dateAdapter={DateAdapter}>
+                                <Col span={6}>
+                                    <Switch id={`switch-${slugTitle}`} 
+                                    checked={field.value || false} 
+                                    onChange={() => form.setFieldValue(`switch-${slugTitle}-time`, !field.value)} 
+                                    label={!active ? `Disponible ${props.title}` : `No disponible ${props.title}`} />
+                                </Col>
+                            </LocalizationProvider>
+                        )}
+                    </Field>
+
                     :
                     null
                 }
@@ -47,16 +57,16 @@ const AvailableHours: FC<HoursProps> = React.forwardRef((props, ref: any) => {
                             <LocalizationProvider dateAdapter={DateAdapter}>
                                 <TimePicker
                                     label={`Apertura ${props.title}`}
-                                    disabled={active} 
+                                    disabled={!form.values[`switch-${slugTitle}-time`]}
                                     value={field.value || undefined}
                                     onChange={(newValue) => {
                                         const date = new Date(newValue.$d)
                                         let hours = String(date.getHours())
                                         let minutes = String(date.getMinutes())
-                                        if(hours.length < 2){
+                                        if (hours.length < 2) {
                                             hours = `0${hours}`
                                         }
-                                        if(minutes.length < 2){
+                                        if (minutes.length < 2) {
                                             minutes = `0${minutes}`
                                         }
                                         const time = `${hours}:${minutes}`
@@ -75,16 +85,16 @@ const AvailableHours: FC<HoursProps> = React.forwardRef((props, ref: any) => {
                             <LocalizationProvider dateAdapter={DateAdapter}>
                                 <TimePicker
                                     label={`Cierre ${props.title}`}
-                                    disabled={active} 
+                                    disabled={!form.values[`switch-${slugTitle}-time`]}
                                     value={field.value || undefined}
                                     onChange={(newValue) => {
                                         const date = new Date(newValue.$d)
                                         let hours = String(date.getHours())
                                         let minutes = String(date.getMinutes())
-                                        if(hours.length < 2){
+                                        if (hours.length < 2) {
                                             hours = `0${hours}`
                                         }
-                                        if(minutes.length < 2){
+                                        if (minutes.length < 2) {
                                             minutes = `0${minutes}`
                                         }
                                         const time = `${hours}:${minutes}`

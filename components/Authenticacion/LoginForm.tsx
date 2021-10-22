@@ -28,13 +28,6 @@ const LoginForm: FC = (props) => {
 		},
 	})
 
-	useEffect(() => {
-		router.replace(router.pathname, '/login', {shallow: true})
-		return () => {
-			router.replace(router.pathname, router.pathname, {shallow: true})
-		}
-	}, [])
-
 	const dispatch = useDispatch()
 
 	const submitHandler = async () => {

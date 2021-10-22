@@ -117,7 +117,7 @@ const RegisterSteps = () => {
 						nameAmenities: [],
 					}}
 					onSubmit={async (values, actions) => {
-						if(values.description.length < 120 || values.description.length > 550){
+						if (values.description.length < 120 || values.description.length > 550) {
 							notifications.showNotification({
 								title: 'Algo ha salido mal',
 								message: `Por favor, introduce una descripción para tu oficina
@@ -126,7 +126,7 @@ const RegisterSteps = () => {
 							})
 							return
 						}
-						if(!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(values.officialEmail)){
+						if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(values.officialEmail)) {
 							notifications.showNotification({
 								title: 'Algo ha salido mal',
 								message: `Por favor, introduce correo de contacto valido.`,
@@ -134,7 +134,7 @@ const RegisterSteps = () => {
 							})
 							return
 						}
-						if(!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(values.notificationEmailMain)){
+						if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(values.notificationEmailMain)) {
 							notifications.showNotification({
 								title: 'Algo ha salido mal',
 								message: `Por favor, introduce correo de notificaciones principal valido.`,
@@ -142,7 +142,7 @@ const RegisterSteps = () => {
 							})
 							return
 						}
-						if(!values.notificationPhoneMain || values.notificationPhoneMain.length !== 10){
+						if (!values.notificationPhoneMain || values.notificationPhoneMain.length !== 10) {
 							notifications.showNotification({
 								title: 'Algo ha salido mal',
 								message: `Por favor, introduce un número valido, en el número
@@ -151,7 +151,7 @@ const RegisterSteps = () => {
 							})
 							return
 						}
-						if(!values.officialPhone || values.officialPhone.length !== 10){
+						if (!values.officialPhone || values.officialPhone.length !== 10) {
 							notifications.showNotification({
 								title: 'Algo ha salido mal',
 								message: `Por favor, introduce un número valido, en el número
@@ -161,24 +161,35 @@ const RegisterSteps = () => {
 							return
 						}
 						const data = new FormData()
+						if (values.location) {
+							data.append('location', JSON.stringify(values.location))
+						}
+						else {
+							notifications.showNotification({
+								title: 'Algo ha salido mal',
+								message: `Por favor verifica que has colocado la
+								dirección de tu oficina`,
+								color: 'pink', icon: <MdErrorOutline />
+							})
+							return
+						}
 						data.append('title', values.title)
 						data.append('description', values.description)
 						data.append('generalAmenities', values.officeAmenities)
 						data.append('weekSchedule', values["open-de-lunes-a-viernes"])
 						data.append('weekSchedule', values["close-de-lunes-a-viernes"])
-						if (values['open-sabado']) {
-							if (values['close-sabado']) {
-								data.append('saturdaySchedule', values['open-sabado'])
-								data.append('saturdaySchedule', values['close-sabado'])
+						if (values['open-sabado-time'] && values[`switch-sabado-time`]) {
+							if (values['close-sabado-time']) {
+								data.append('saturdaySchedule', values['open-sabado-time'])
+								data.append('saturdaySchedule', values['close-sabado-time'])
 							}
 						}
-						if (values['open-domingo']) {
-							if (values['close-domingo']) {
-								data.append('sundaySchedule', values['open-domingo'])
-								data.append('sundaySchedule', values['close-domingo'])
+						if (values['open-domingo-time'] && values[`switch-domingo-time`]) {
+							if (values['close-domingo-time']) {
+								data.append('sundaySchedule', values['open-domingo-time'])
+								data.append('sundaySchedule', values['close-domingo-time'])
 							}
 						}
-						data.append('location', JSON.stringify(values.location))
 						for (let space of values.spaces) {
 							space.imagesUrls = []
 							console.log(space.spaceImages)
@@ -196,23 +207,23 @@ const RegisterSteps = () => {
 						data.append('official', values.officialPhone)
 						data.append('openDate', values.openDate)
 						console.log(values.openDate)
-						if(values.numberNotifications !== 0) {
+						if (values.numberNotifications !== 0) {
 							for (let i = 0; i < Number(values.numberNotifications); i++) {
-								if(!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(values[`notificationEmail${i}`])){
+								if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(values[`notificationEmail${i}`])) {
 									notifications.showNotification({
 										title: 'Algo ha salido mal',
 										message: `Por favor, introduce un correo valido, en el correo
-										para notificaciones número ${i+1}`,
+										para notificaciones número ${i + 1}`,
 										color: 'pink', icon: <MdErrorOutline />
 									})
 									return
 								}
 								data.append('notifications', values[`notificationEmail${i}`])
-								if(!values[`notificationPhoneMain${i}`] || values[`notificationPhoneMain${i}`].length !== 10){
+								if (!values[`notificationPhoneMain${i}`] || values[`notificationPhoneMain${i}`].length !== 10) {
 									notifications.showNotification({
 										title: 'Algo ha salido mal',
 										message: `Por favor, introduce un número valido, en el número
-										para notificaciones número ${i+1}`,
+										para notificaciones número ${i + 1}`,
 										color: 'pink', icon: <MdErrorOutline />
 									})
 									return
@@ -231,7 +242,7 @@ const RegisterSteps = () => {
 									color: 'teal', icon: <MdDoneAll />
 								})
 							}
-							else{
+							else {
 								notifications.showNotification({
 									title: 'Algo ha salido mal',
 									message: `${response.data}`,

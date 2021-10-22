@@ -1,10 +1,12 @@
 import React, { FC, useEffect } from "react";
-import { Badge, Center, Divider, Group, Title, Text, Button, Card } from "@mantine/core"
+import { Badge, Center, Divider, Group, Title, Text, Button, Card, Image } from "@mantine/core"
 import { Carousel } from "primereact/carousel";
 import _ from "lodash";
 
 import Amenidades from "./Amenidades";
 import ImagesSlide from "./ImagesSlide";
+
+import SpacesEmpty from '../../../../Img/register/spaces-empty.svg'
 
 import style from './stepTwo.module.sass'
 
@@ -17,7 +19,17 @@ const Preview: FC<PreviewProps> = (props) => {
 	if (props.spaces.length === 0) {
 		return (
 			<Center style={{ height: '100%' }}>
-				<Title order={2}>Empieza a añadir tus espacios</Title>
+				<Image
+					src={SpacesEmpty.src}
+					width="90%"
+					fit="cover"
+					className="m-auto"
+					caption={
+						<Text component={Title} order={4} align="center" size="lg" transform="capitalize" weight="bold" className="m-auto w-3/5">
+							Empieza a añadir tus espacios con el formulario de la
+							derecha. Por favor verifica todos los campos antes de añadir cada espacio.
+						</Text>
+					} />
 			</Center>
 		)
 	}
@@ -30,19 +42,19 @@ const Preview: FC<PreviewProps> = (props) => {
 
 	const spaceTemplate = (space: any) => {
 		let color;
-		if(space.typeSpace === "Oficina privada"){
+		if (space.typeSpace === "Oficina privada") {
 			color = "teal"
 		}
-		else if(space.typeSpace === "Escritorio personal"){
+		else if (space.typeSpace === "Escritorio personal") {
 			color = "pink"
 		}
-		else if(space.typeSpace === "Sala de conferencias"){
+		else if (space.typeSpace === "Sala de conferencias") {
 			color = "indigo"
 		}
-		else{
+		else {
 			color = "teal"
 		}
-		
+
 		return (
 			<Card>
 				<div style={{ padding: '30px' }}>
@@ -52,7 +64,7 @@ const Preview: FC<PreviewProps> = (props) => {
 					<div>
 						<div className={style.InfoBasics}>
 							<div>
-								<Group position="apart"  style={{ marginBottom: '10px' }}>
+								<Group position="apart" style={{ marginBottom: '10px' }}>
 									<p className={style.TitleBasics}>{space.nameSpace}</p>
 									<Badge
 										color={color}
@@ -101,13 +113,13 @@ const Preview: FC<PreviewProps> = (props) => {
 						</div>
 					</div>
 				</div>
-					<Center>
-						<Button color="red" onClick={() => {
-							props.setSpaces(props.spaces.filter((value: any) => {
-								return !_.isEqual(value, space)
-							}))
-						}}>Eliminar espacio</Button>
-					</Center>
+				<Center>
+					<Button color="red" onClick={() => {
+						props.setSpaces(props.spaces.filter((value: any) => {
+							return !_.isEqual(value, space)
+						}))
+					}}>Eliminar espacio</Button>
+				</Center>
 			</Card>
 		);
 	};
