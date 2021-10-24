@@ -13,7 +13,6 @@ interface TabPanelProps {
 
 function TabPanel(props: TabPanelProps) {
     const { children, value, index, ...other } = props;
-
     return (
         <div
             role="tabpanel"
@@ -97,45 +96,39 @@ const TabsSpace: React.FC<{ office: Offices }> = (props) => {
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
     };
+    const EscritorioPersonal = `Escritorio personal ${findTypeSpaces(office.spaces, 'Escritorio personal').length} `
+    const OficinaPrivada = `Oficina privada ${findTypeSpaces(office.spaces, 'Oficina privada').length}`
+    const SalaConferencias = `Sala de conferencias ${findTypeSpaces(office.spaces, 'Sala de conferencias').length}`
+    const EspacioAbierto = `Espacio abierto ${findTypeSpaces(office.spaces, 'Espacio abierto').length}`
     return (
-        <Box sx={{ width: '100%' }}>
+        <Box sx={{ width: '100%' }} >
 
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }} style={{ marginLeft: '50px' }}>
                 <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" style={{ width: '100%' }}>
-                    <Tab label="Escritorio personal" {...a11yProps(0)} />
-                    <Tab label="Oficina privada" {...a11yProps(1)} />
-                    <Tab label="Sala de conferencias" {...a11yProps(2)} />
-                    <Tab label="Espacio abierto" {...a11yProps(3)} />
+                    <Tab label={EscritorioPersonal} {...a11yProps(0)} />
+                    <Tab label={OficinaPrivada} {...a11yProps(1)} />
+                    <Tab label= {SalaConferencias} {...a11yProps(2)} />
+                    <Tab label= {EspacioAbierto} {...a11yProps(3)} />
                 </Tabs>
             </Box>
             <TabPanel value={value} index={0}>
-
-                <AreThereExist space={findTypeSpaces(office.spaces, 'Escritorio personal')} available = {true}/>
+                <AreThereExist space={findTypeSpaces(office.spaces, 'Escritorio personal')} available={true} />
                 {/* <CardSearchBaseTest spaces={findTypeSpaces(office.spaces, 'Escritorio personal')} /> */}
                 {/* {console.log('VER VALUE', findTypeSpaces(office.spaces, 'Escritorio personal'))} */}
             </TabPanel>
             <TabPanel value={value} index={1}>
-                <AreThereExist space={findTypeSpaces(office.spaces, 'Oficina privada')} available = {true}/>
+                <AreThereExist space={findTypeSpaces(office.spaces, 'Oficina privada')} available={true} />
                 {/* <CardSearchBaseTest spaces={findTypeSpaces(office.spaces, 'Oficina privada')} /> */}
                 {/* {console.log('VER VALUE', findTypeSpaces(office.spaces, 'Oficina privada'))} */}
-
             </TabPanel>
             <TabPanel value={value} index={2}>
-                <AreThereExist space={findTypeSpaces(office.spaces, 'Sala de conferencias')} available = {false}/>
+                <AreThereExist space={findTypeSpaces(office.spaces, 'Sala de conferencias')} available={false} />
                 {/* <CardSearchBaseTest spaces={findTypeSpaces(office.spaces, 'Sala de conferencias')} /> */}
                 {/* {console.log('VER VALUE', findTypeSpaces(office.spaces, 'Sala de conferencias'))} */}
 
             </TabPanel>
             <TabPanel value={value} index={3}>
-                <AreThereExist space={findTypeSpaces(office.spaces, 'Espacio abierto')} available = {true}/>
-                {/* <h1>Hello World</h1>
-                <div>
-                    <h1 style={{ fontSize: '100px' }}>ITS WORKED</h1>
-                    <img src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg" alt="" srcset="" />
-                </div> */}
-                {/* <CardSearchBaseTest spaces={findTypeSpaces(office.spaces, 'Espacio abierto')} /> */}
-                {/* {console.log('VER VALUE', findTypeSpaces(office.spaces, 'Espacio abierto'))} */}
-
+                <AreThereExist space={findTypeSpaces(office.spaces, 'Espacio abierto')} available={true} />
             </TabPanel>
         </Box>
     );
@@ -145,12 +138,12 @@ const AreThereExist = ({ space, available }) => {
     // if (Object.keys(space).length >= 0) {
     if (Object.keys(space).length > 0) {
         return (
-            <CardSearchBaseTest spaces={space} available = {available}/>
+            <CardSearchBaseTest spaces={space} available={available} />
         )
     } else {
         return (
-            <div style={{display : 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                <img src={noOffices.src} height = '40px' style = {{height : '450px'}} />
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <img src={noOffices.src} height='40px' style={{ height: '463px' }} />
             </div>
 
         )

@@ -10,54 +10,7 @@ import { Button } from '@mantine/core'
 import { TabPanel } from '@mui/lab'
 import TabsSpace from './tabsSpace'
 import SearchValues from './SearchValues'
-interface Offices {
-  id: string,
-  name: string,
-  description: string,
-  host: any,
-  isActive: boolean,
-  generalAmenities: string[]
-  spaces: {
-    nameSpace: string,
-    typeSpace: string,
-    capacitySpace: number,
-    availableSpace: number,
-    hourPrice: number,
-    dayPrice: number,
-    weekPrice: number,
-    monthPrice: number,
-    nameAmenities: string[],
-    imagesUrls: string[],
-    booking?: any
-  }[],
-  address: any,
-  scores?: {
-    averageScore: number,
-    reviews: any
-  },
-  days: [{
-    day: string,
-    isAvailable: boolean,
-    startHour?: string,
-    endHour?: string
-  }],
-  notifications: string[],
-  official: string[],
-  openDate: string
-}
-interface Spaces {
-  nameSpace: string,
-  typeSpace: string,
-  capacitySpace: number,
-  availableSpace: number,
-  hourPrice: number,
-  dayPrice: number,
-  weekPrice: number,
-  monthPrice: number,
-  nameAmenities: string[],
-  imagesUrls: string[],
-  booking?: any
-}
+
 
 interface CardSearchBaseTestProps {
   spaces: any[]

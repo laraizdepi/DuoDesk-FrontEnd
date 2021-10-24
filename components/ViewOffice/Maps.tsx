@@ -1,7 +1,6 @@
-import { FC } from "react"
+import React, { FC } from "react"
+import OfficeMap from '../Maps/OfficeMap'
 import style from './VIew.module.sass'
-import TabsSpace from './tabsSpace'
-import ChangeDates from './ChangeDates'
 
 interface Offices {
     id: string,
@@ -38,21 +37,18 @@ interface Offices {
     official: string[],
     openDate: string
 }
-const CardSpace: FC<{office : Offices}> = (props) => {
+
+const Maps: FC<{ office: Offices }> = (props) => {
     const office = props.office
+
     return (
-        <div>
-            <div className={style.titleEnterAme}>
-                <h1>Espacios</h1>
-            </div>
-            <div>
-            <ChangeDates/>
-            </div>
-            <div>
-                <TabsSpace office = {office}/>
-            </div>
-            {/* <CardSearchBaseTest office={props.office} /> */}
+        <div id = 'map' style={{ width: '90%', marginLeft: '50px' }}>
+            <h1 className={style.titleEnterAme}>
+                Ubicacion de la oficina
+            </h1>
+            <OfficeMap office={office} />
         </div>
     )
 }
-export default CardSpace
+
+export default Maps

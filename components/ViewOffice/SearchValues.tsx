@@ -16,11 +16,25 @@ const SearchValues: FC<SearchProps> = (props) => {
     // console.log(new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(total));
     // console.log('router', router.query)
     // console.log(space.hourPrice)
-    return (
-        <div>
-            <p>$ {total}</p>
-        </div>
-    )
+     
+    console.log('subtotal', );
+    
+    if (subtotal > 0) {
+        console.log('type of number', typeof subtotal);
+        console.log('there are a number', subtotalUgly);
+        return (
+            <div>
+                <p>$ {total}</p>
+            </div>
+        )
+    } else {
+        console.log('total', total);
+        return (
+            <div>
+                <p>HAS TU BUSQUEDA</p>
+            </div>
+        )
+    }
 }
 
 export default SearchValues

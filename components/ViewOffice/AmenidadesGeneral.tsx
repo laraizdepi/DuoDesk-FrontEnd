@@ -6,10 +6,42 @@ import { Container, Row, Col } from 'react-bootstrap'
 import { MdCoffeeMaker } from 'react-icons/md'
 import style from './VIew.module.sass'
 
-interface AmenidadesProps {
-  office: any[]
+interface Offices {
+  id: string,
+  name: string,
+  description: string,
+  host: any,
+  isActive: boolean,
+  generalAmenities: string[]
+  spaces: {
+      nameSpace: string,
+      typeSpace: string,
+      capacitySpace: number,
+      availableSpace: number,
+      hourPrice: number,
+      dayPrice: number,
+      weekPrice: number,
+      monthPrice: number,
+      nameAmenities: string[],
+      imagesUrls: string[],
+      booking?: any
+  }[],
+  address: any,
+  scores?: {
+      averageScore: number,
+      reviews: any
+  },
+  days: [{
+      day: string,
+      isAvailable: boolean,
+      startHour?: string,
+      endHour?: string
+  }],
+  notifications: string[],
+  official: string[],
+  openDate: string
 }
-const AmenidadesGeneral: FC<AmenidadesProps> = (props) => {
+const AmenidadesGeneral: FC<{office: Offices}> = (props) => {
   const AmenidadesGen = {
     'Clasicas': [
       'Acceso a internet',
@@ -111,7 +143,6 @@ const AmenidadesGeneral: FC<AmenidadesProps> = (props) => {
     listAmenidades = []
 
   }
-  // console.log('Asi queda organizado', AmenidadesOrgani);
 
   return (
     <Container >

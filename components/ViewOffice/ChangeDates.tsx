@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DateTimePicker from '@mui/lab/DateTimePicker';
-import { Button, NativeSelect, NumberInput, TextInput } from '@mantine/core';
+import { Button, NativeSelect, NumberInput, Select, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/hooks';
 import { FC, useState } from 'react';
 import { useRouter } from 'next/router';
@@ -12,6 +12,7 @@ import { Container, Row, Col } from 'react-bootstrap'
 import { useNotifications } from '@mantine/notifications';
 import { useWindowScroll } from '@mantine/hooks';
 import { InputNumber } from 'rsuite';
+import { Calendar } from '@mantine/dates';
 
 interface ChangeDatesProps {
   url?: string
@@ -22,6 +23,8 @@ const ChangeDates: FC<ChangeDatesProps> = () => {
   const router = useRouter()
   const notifications = useNotifications();
   const [scroll, scrollTo] = useWindowScroll();
+  const [value3, setValue3] = useState(new Date());
+  const [render, setrender] = useState(2)
 
   const initPeriod = router.query.period
   // const initCuantity = parseInt(router.query.cuantity)
@@ -52,7 +55,8 @@ const ChangeDates: FC<ChangeDatesProps> = () => {
     initialValues: {
       cuantity: minimoValue,
       period: 'month',
-      date: '2021-10-21:11:00AM',
+      // date: '2021-10-21:11:00AM',
+      date: '2021-12-01T00:00:00.000Z',
       people: initPeople
     }
   })
@@ -62,6 +66,7 @@ const ChangeDates: FC<ChangeDatesProps> = () => {
     const date = values.date
     const people = values.people
     scrollTo({ y: 10000 })
+    setrender(render + 1)
 
 
     notifications.showNotification({
@@ -86,7 +91,7 @@ const ChangeDates: FC<ChangeDatesProps> = () => {
     }
   }, [form.values.period])
   return (
-    <div>
+    <div style={{ marginLeft: '50px',  }}>
       <form onSubmit={form.onSubmit((values: any) => changeDatesValue(values))}>
         <Container>
           <Row>
@@ -103,11 +108,26 @@ const ChangeDates: FC<ChangeDatesProps> = () => {
                   label="Elige tu rango de tiempo"
                   // value={initPeriod}
                   value={form.values.period}
-
                   onChange={(event) => form.setFieldValue('period', event.currentTarget.value)}
-                  radius="lg"
+                  radius="xs"
+                  // radius="lg"
                   required
                 />
+                {/* <Select
+                  placeholder="Elegi tu formato de tiempo"
+                  label="Elige tu rango de tiempo"
+                  data={[
+                    { value: 'hour', label: 'hora' },
+                    { value: 'day', label: 'dia' },
+                    { value: 'week', label: 'semana' },
+                    { value: 'month', label: 'mes' },
+                  ]}
+                  value={form.values.period}
+                  onChange={(event) => form.setFieldValue('period', event.value)}
+                  radius="md"
+                  // radius="lg"
+                  required
+                /> */}
               </div>
             </Col>
             <Col xs={12} md={2}>
@@ -116,8 +136,10 @@ const ChangeDates: FC<ChangeDatesProps> = () => {
                   min={minimoValue}
                   placeholder="Cantidad de tiempo"
                   label="Cantidad de tiempo"
-                  radius="lg"
+                  radius="xs"
+                  // size= 'md'
                   required
+                  hideControls
                   // defaultValue = {initCuantity}
                   // defaultValue={20}
                   value={form.values.cuantity}
@@ -132,10 +154,11 @@ const ChangeDates: FC<ChangeDatesProps> = () => {
                   min={1}
                   placeholder="Para Cuantas Personas"
                   label="Para cuantas personas"
-                  radius="lg"
+                  radius="xs"
                   required
-                  value={form.values.people}
-                  // value = {initPeople}
+                  hideControls
+                  // value={form.values.people}
+                  value={initPeople}
                   // value = {3}
                   // defaultValue={initPeople}
 
@@ -143,27 +166,36 @@ const ChangeDates: FC<ChangeDatesProps> = () => {
                 />
               </div>
             </Col>
-            <Col xs={12} md={4}>
-              <div style={{ marginTop: '15px' }}>
+            <Col xs={12} md={3} style={{ height: '36px' }}>
+              <div style={{ marginTop: '15px', height: '36px' }}>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
-                  <Stack spacing={3}>
-                    <DateTimePicker
-                      label="El dia y hora que comienzas"
-                      value={form.values.date}
-                      onChange={(val) => form.setFieldValue('date', val)}
-                      renderInput={(params) => <TextField {...params} />}
-                    />
-                  </Stack>
+                  {/* <Stack spacing={3}> */}
+                  <DateTimePicker
+                    // renderInput={(params) => (
+                    //   <TextField {...params} helperText="TEst" />
+                    // )}
+                    label="El dia y hora que comienzas"
+                    value={form.values.date}
+                    onChange={(val) => form.setFieldValue('date', val)}
+                    renderInput={(params) => <TextField {...params} />}
+                  />
+                  {/* </Stack> */}
                 </LocalizationProvider>
               </div>
             </Col>
+            {/* <div>
+              <Calendar value={value3} onChange={setValue3} />
+            </div> */}
+            <Col>
+            </Col>
           </Row>
-          <Button type="submit" radius="lg" color="indigo">Cambiar Datos</Button>
-
+          <div style = {{marginTop :'14px', marginBottom : '14px'}}>
+              <Button type="submit" radius="lg" color="indigo">Cambiar Datos</Button>
+          </div>
         </Container>
       </form>
 
-      <InputNumber defaultValue={initPeople} max={100} min={10} />
+      {/* <InputNumber defaultValue={initPeople} max={100} min={10} /> */}
 
 
     </div>
