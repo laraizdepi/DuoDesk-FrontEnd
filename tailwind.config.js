@@ -56,7 +56,7 @@ module.exports = {
 			blue: colors.blue
 		},
 		fontFamily: {
-			'title': ['Dosis', 'sans-serif']
+			'title': 'Inter, sans-serif'
 		}
 	},
 	variants: {

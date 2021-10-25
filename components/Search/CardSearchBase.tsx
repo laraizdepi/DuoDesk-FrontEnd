@@ -111,18 +111,21 @@ const CardSearchBase: FC<{ office: Offices, date?: string, people?: number}> = (
         return scaled.toFixed(1) + suffix
     }
 
+    console.log(props.office.id)
+
     return (
         <div>
             <Head>
                 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css" />
                 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css" />
             </Head>
-            <Card onClick={() => window.open(url, '_blank')}
+            <Card component='a' href={url} target='_blank'
                 withBorder radius="lg" shadow="lg"
-                style={{ margin: '1rem' }} className="hover:no-underline">
+                style={{ margin: '1rem' }} className="hover:no-underline"
+                id={props.office.id}>
                 <Group direction="column" position="left" style={{ marginLeft: '1rem' }}>
                     <div>
-                        <BCarousel onClick={(event) => event.preventDefault()}>
+                        <BCarousel>
                             {space.imagesUrls.map((image) => {
                                 const url = image.split('-', 2)
                                 const file = image.substring(image.indexOf(url[1]) + url[1].length + 1)
@@ -187,7 +190,7 @@ const CardSearchBase: FC<{ office: Offices, date?: string, people?: number}> = (
                                     </Container>
                                     <Divider margins="xs" label="Precios del espacio" labelPosition="center" />
                                     <Container style={{ marginBottom: '5px' }}>
-                                        <Group position="left">
+                                        <Group position="left" className="justify-end md:justify-start">
                                             <div>
                                                 <Title order={6}>Por hora</Title>
                                                 <Text>{pricesFunction(element.hourPrice)}</Text>

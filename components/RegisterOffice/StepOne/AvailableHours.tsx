@@ -1,7 +1,7 @@
-import React, { FC, useState } from "react"
+import React, { FC, useState, useEffect } from "react"
 import { Calendar } from 'primereact/calendar';
 import { Grid, Col, Switch } from '@mantine/core'
-import { Field } from "formik";
+import { Field, useFormikContext } from "formik";
 import DateAdapter from '@mui/lab/AdapterDayjs'
 import TimePicker from '@mui/lab/TimePicker'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
@@ -13,7 +13,14 @@ interface HoursProps {
 }
 
 const AvailableHours: FC<HoursProps> = React.forwardRef((props, ref: any) => {
+    const formikContext = useFormikContext()
     const [active, setActive] = useState<boolean>(props.disable || false)
+
+    useEffect(() => {
+        if(!props.disable){
+            formikContext.setFieldValue(`switch-${slugTitle}-time`, true)
+        }
+    }, [])
 
     const handleDisable = () => {
         setActive(!active)
@@ -25,6 +32,10 @@ const AvailableHours: FC<HoursProps> = React.forwardRef((props, ref: any) => {
         .replace(/\-\-+/g, '-')
         .replace(/^-+/, '')
         .replace(/-+$/, '')
+
+    // if(!props.disable){
+    //     formikContext.setFieldValue(`switch-${slugTitle}-time`, true)
+    // }
 
     return (
         <div>

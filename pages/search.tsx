@@ -1,5 +1,5 @@
 import React, { FC, Ref, useEffect, useRef, useState } from 'react'
-import { Grid, Col, Text, Select, Popover, Button, Image, Divider, Pagination, Center, LoadingOverlay, MultiSelect, RangeSlider, Modal, Container } from '@mantine/core'
+import { Grid, Col, Text, Select, Popover, Button, Image, Divider, Pagination, Center, LoadingOverlay, MultiSelect, RangeSlider, Modal, Container, TextInput, NumberInput, Drawer } from '@mantine/core'
 import axios from 'axios'
 import { TagPicker } from 'rsuite'
 import Head from 'next/head'
@@ -63,6 +63,7 @@ const SearchPage = (props: any) => {
     const [show, setShow] = useState<boolean>(true)
     const [opened, setOpened] = useState<boolean>(false)
     const [openedMap, setOpenedMap] = useState<boolean>(false)
+    const [openedDrawer, setOpenedDrawer] = useState<boolean>(false)
 
     const [amenities, setAmenities] = useState<string[]>([])
     const [days, setDays] = useState<string | undefined>(undefined)
@@ -99,8 +100,8 @@ const SearchPage = (props: any) => {
         setPages(1)
         if (amenities && amenities.length > 0) setFilteredOffices(Filters.byAmenities(amenities, filteredOffices))
         if (days) setFilteredOffices(Filters.byDays(days, filteredOffices))
-        if (period && prices) setFilteredOffices(Filters.byPrices(filteredOffices, prices, period))
-    }, [amenities, days, period, prices, loading])
+        if (period) setFilteredOffices(Filters.byPrices(filteredOffices, prices, period))
+    }, [amenities, days, period, prices, loading, extremes])
 
     useEffect(() => {
         if (filteredOffices.length > 0) {
@@ -121,7 +122,6 @@ const SearchPage = (props: any) => {
             else {
                 setMobile(false)
             }
-            alert(mobile)
         }
         window.addEventListener('resize', handleResize)
         return () => {
@@ -181,43 +181,43 @@ const SearchPage = (props: any) => {
                     <title>DuoDesk: Busca una oficina</title>
                 </Head>
                 <Navbar />
-                <Container style={{ width: '100%', height: '90vh' }}>
-                    <Grid id="search-filters" align="center" className="px-5 mt-3">
-                        <Col span={12} md={4}>
-                            <TagPicker
-                                placeholder="Amenidades"
-                                data={AminitiesList}
-                                groupBy="group"
-                                className="rounded-xl"
-                                style={{ borderRadius: '10px', width: '100%', margin: 'auto' }}
-                                onChange={(value) => setAmenities(value)}
-                                trigger={'Enter'}
-                            />
-                        </Col>
-                        <Col span={12} md={4}>
-                            <Select
-                                id="select-days"
-                                placeholder="Filtrar por días"
-                                data={[
-                                    { label: 'Todos los días', value: 'all' },
-                                    { label: 'Entre semana', value: 'week' },
-                                    { label: 'Entre semana y Sabado', value: 'with saturday' },
-                                    { label: 'Entre semana y Domingo', value: 'with sunday' },
-                                ]}
-                                onChange={setDays}
-                                clearable
-                            />
-                        </Col>
-                        <Col span={12} md={4}>
-                            <Popover
-                                opened={opened}
-                                onClose={() => setOpened(false)}
-                                target={<Button variant="outline" color="gray" onClick={() => setOpened(!opened)} className="w-full">Filtrar por precios</Button>}
-                                position="bottom"
-                                withArrow
-                            >
+                <Container className="flex flex-col flex-grow">
+                    <Button onClick={() => setOpenedDrawer(true)} color="indigo" className='m-auto'>
+                        Filtar oficinas
+                    </Button>
+                    <Drawer
+                        opened={openedDrawer}
+                        onClose={() => setOpenedDrawer(false)}
+                    >
+                        <Grid id="search-filters" align="center" className="px-5 mt-3">
+                            <Col span={12} md={4}>
+                                <TagPicker
+                                    placeholder="Amenidades"
+                                    data={AminitiesList}
+                                    groupBy="group"
+                                    className="rounded-xl"
+                                    style={{ borderRadius: '10px', width: '100%', margin: 'auto' }}
+                                    onChange={(value) => setAmenities(value)}
+                                    trigger={'Enter'}
+                                />
+                            </Col>
+                            <Col span={12} md={4}>
+                                <Select
+                                    id="select-days"
+                                    placeholder="Filtrar por días"
+                                    data={[
+                                        { label: 'Todos los días', value: 'all' },
+                                        { label: 'Entre semana', value: 'week' },
+                                        { label: 'Entre semana y Sabado', value: 'with saturday' },
+                                        { label: 'Entre semana y Domingo', value: 'with sunday' },
+                                    ]}
+                                    onChange={setDays}
+                                    clearable
+                                />
+                            </Col>
+                            <Col span={12} md={4}>
                                 <div>
-                                    <Divider margins="xs" label="Precios de la oficina" labelPosition="center" />
+                                    <Divider margins="xs" label="Filtrar por precios" labelPosition="center" />
                                     <Select style={{ marginBottom: '4rem' }}
                                         placeholder="Tipo de intervalo"
                                         data={[
@@ -238,9 +238,9 @@ const SearchPage = (props: any) => {
                                         labelAlwaysOn
                                     />
                                 </div>
-                            </Popover>
-                        </Col>
-                    </Grid>
+                            </Col>
+                        </Grid>
+                    </Drawer>
                     {show
                         ?
                         <div>
@@ -278,7 +278,7 @@ const SearchPage = (props: any) => {
                     >
                         <SearchMap offices={shownOffices} city={props.city} />
                     </Modal>
-                    <Button color="pink" onClick={() => setOpenedMap(true)} className="fixed bottom-5 right-5" style={{ position: 'fixed'}}>
+                    <Button color="pink" onClick={() => setOpenedMap(true)} className="fixed bottom-5 right-5" style={{ position: 'fixed' }}>
                         Mapa
                     </Button>
                 </Container>
@@ -343,12 +343,26 @@ const SearchPage = (props: any) => {
                                             value={period}
                                             clearable
                                         />
-                                        <RangeSlider
-                                            onChange={setPrices}
-                                            value={prices}
-                                            min={extremes.min}
-                                            max={extremes.max}
-                                            labelAlwaysOn
+                                        <NumberInput
+                                            label="Precio minimo"
+                                            value={prices[0]}
+                                            onChange={(event) => setPrices([Number(event.valueOf()), prices[1]])}
+                                            onBlur={(event) => {
+                                                if (Number(event.target.value) < extremes.min) {
+                                                    setPrices([extremes.min, prices[1]])
+                                                }
+                                            }}
+                                            step={10000}
+                                        />
+                                        <NumberInput
+                                            label="Precio máximo"
+                                            value={prices[1]}
+                                            onChange={(event) => setPrices([prices[0], Number(event.valueOf())])}
+                                            onBlur={(event) => {
+                                                if (Number(event.target.value) > extremes.max) {
+                                                    setPrices([prices[0], extremes.max])
+                                                }
+                                            }}
                                         />
                                     </div>
                                 </Popover>

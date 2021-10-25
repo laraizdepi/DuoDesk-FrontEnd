@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { Grid, Col, TextInput, Textarea, Group, Divider } from '@mantine/core'
+import { Grid, Col, TextInput, Textarea, Group, Divider, Text } from '@mantine/core'
 import { Field, connect, useFormikContext } from 'formik'
 import yup from 'yup'
 
@@ -110,14 +110,19 @@ const StepOne = () => {
                     </Field>
                     <Field name='description'>
                         {({ field, form, meta }: any) => (
-                            <RichText
-                                value={field.value}
-                                controls={[['bold', 'italic', 'underline', 'strike', 'clean'], ['h1', 'h2', 'h3', 'h4'], ['unorderedList', 'orderedList'], ['link', 'blockquote'], ['alignLeft', 'alignCenter', 'alignRight'], ['sup', 'sub'],]}
-                                onChange={(event) => form.setFieldValue(field.name, event.valueOf())}
-                                placeholder="Introduce la descripción de tu oficina"
-                                aria-label="My textarea"
-                                id="officeDescription"
-                            />
+                            <div className='flex flex-col space-y-2 my-4'>
+                                <Text weight={500}>
+                                    Descripción de la oficina
+                                </Text>
+                                <RichText
+                                    value={field.value}
+                                    controls={[['bold', 'italic', 'underline', 'strike', 'clean'], ['h1', 'h2', 'h3', 'h4'], ['unorderedList', 'orderedList'], ['link', 'blockquote'], ['sup', 'sub'],]}
+                                    onChange={(event) => form.setFieldValue(field.name, event.valueOf())}
+                                    placeholder="Introduce la descripción de tu oficina"
+                                    aria-label="My textarea"
+                                    id="officeDescription"
+                                />                                
+                            </div>
                         )}
                     </Field>
                     <Field name="officeAmenities">

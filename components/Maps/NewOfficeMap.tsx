@@ -100,7 +100,7 @@ const NewOfficeMap: FC = () => {
                     </Field>
                 </div>
             </div>
-            <div id="map" style={{ height: '75vh' }}></div>
+            <div id="map" style={{ height: '90vh' }}></div>
             <div id={Styles.infowindowContent}>
                 <span id="place-name" className="title"></span>
                 <span id="place-address"></span>

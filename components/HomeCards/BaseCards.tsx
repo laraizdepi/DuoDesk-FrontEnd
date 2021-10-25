@@ -19,7 +19,7 @@ const Cards: FC<cardsProps> = (props) => {
 				</Text>
 			</div>
 			<div className="p-3">
-				<Text align="center">
+				<Text align="center" className='font-title'>
 					{props.text}
 				</Text>
 			</div>

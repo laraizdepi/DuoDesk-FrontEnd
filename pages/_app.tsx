@@ -35,9 +35,15 @@ export default function App(props: AppProps) {
 						<title>DuoDesk Home</title>
 						<meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
 						<link rel="shortcut icon" href={DuoDeskLogo.src} type="image/x-icon" />
-						<link rel="preconnect" href="https://fonts.googleapis.com"/>
-						<link rel="preconnect" href="https://fonts.gstatic.com"/>
-						<link href="https://fonts.googleapis.com/css2?family=Dosis:wght@700&display=swap" rel="stylesheet"/>
+						{/* <link rel="preconnect" href="https://fonts.googleapis.com" />
+						<link rel="preconnect" href="https://fonts.gstatic.com" /> */}
+						{/* <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@700&display=swap" rel="stylesheet" /> */}
+						{/* <link href="https://fonts.googleapis.com/css2?family=Dosis" rel="stylesheet" />
+						<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet" /> */}
+						<link
+							href="https://fonts.googleapis.com/css2?family=Inter&display=optional"
+							rel="stylesheet"
+						/>
 					</Head>
 					<MantineProvider
 						theme={{

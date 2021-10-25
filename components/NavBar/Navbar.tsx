@@ -234,6 +234,13 @@ const NavBar = () => {
 						size="xs"
 						placeholder="Fecha de inicio"
 						variant="unstyled"
+						excludeDate={(date) => {
+							const now = new Date(Date.now())
+							if(+date === +now){
+								alert(date)
+							}
+							return !(+date > +now)
+						}}
 						value={searchForm.values.date}
 						onChange={event => {
 							if (event?.valueOf()) {
