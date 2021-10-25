@@ -117,12 +117,12 @@ const CardSearchBase: FC<{ office: Offices, date?: string, people?: number}> = (
                 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css" />
                 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css" />
             </Head>
-            <Card component={NextLink} href={url}
+            <Card onClick={() => window.open(url, '_blank')}
                 withBorder radius="lg" shadow="lg"
                 style={{ margin: '1rem' }} className="hover:no-underline">
                 <Group direction="column" position="left" style={{ marginLeft: '1rem' }}>
                     <div>
-                        <BCarousel>
+                        <BCarousel onClick={(event) => event.preventDefault()}>
                             {space.imagesUrls.map((image) => {
                                 const url = image.split('-', 2)
                                 const file = image.substring(image.indexOf(url[1]) + url[1].length + 1)
@@ -133,7 +133,7 @@ const CardSearchBase: FC<{ office: Offices, date?: string, people?: number}> = (
                                             height="12rem"
                                             src={src}
                                             radius="lg"
-                                            fit="cover" />
+                                            fit="contain" />
                                     </BCarousel.Item>
                                 )
                             })}

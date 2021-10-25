@@ -38,6 +38,7 @@ const AuthModal: FC<DataProps> = (props) => {
             </Modal>
             <div>
                 <Button
+                    id="Auth-Modal"
                     color={props.color}
                     onClick={() => setOpened(true)}
                     variant={props.variant}

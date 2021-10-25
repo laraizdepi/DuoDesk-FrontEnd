@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { Grid, Col, TextInput, Textarea, Group, Divider } from '@mantine/core'
-import { useDispatch } from 'react-redux';
-import { Field, connect } from 'formik'
+import { Field, connect, useFormikContext } from 'formik'
 import yup from 'yup'
 
 import AvailableHours from './AvailableHours';
@@ -10,7 +9,9 @@ import { BsFillStarFill } from 'react-icons/bs';
 import { Chip, TextField, Autocomplete } from '@mui/material';
 import { useNotifications } from '@mantine/notifications';
 import { MdErrorOutline } from 'react-icons/md';
-
+import RichTextEditor from '@mantine/rte';
+import RichText from '../../RichText/RichText';
+import parse from 'html-react-parser'
 
 const StepOne = () => {
     const amenities = [
@@ -88,12 +89,10 @@ const StepOne = () => {
     ]
 
     const notifications = useNotifications()
+    const formikContext: any = useFormikContext()
 
     return (
         <div>
-            <div style={{ textAlign: 'center', marginBottom: '1%' }}>
-                <h3>Datos básicos de tu oficina</h3>
-            </div>
             <Grid id="step-one" columns={24}>
                 <Col span={24} md={11}>
                     <Field name='title'>
@@ -111,27 +110,13 @@ const StepOne = () => {
                     </Field>
                     <Field name='description'>
                         {({ field, form, meta }: any) => (
-                            <Textarea
+                            <RichText
                                 value={field.value}
-                                onChange={(event) => form.setFieldValue(field.name, event.target.value)}
-                                onBlur={(event) => {
-                                    if(field.value.length < 120 || field.value.length > 550){
-                                        notifications.showNotification({
-                                            title: 'Error en la descripción de tu oficina',
-                                            message: `Por favor, introduce una descripción para tu oficina
-                                            que tenga entre 120 y 550 caracteres.`,
-                                            color: 'pink', icon: <MdErrorOutline />
-                                        })
-                                        return
-                                    }
-                                }}
+                                controls={[['bold', 'italic', 'underline', 'strike', 'clean'], ['h1', 'h2', 'h3', 'h4'], ['unorderedList', 'orderedList'], ['link', 'blockquote'], ['alignLeft', 'alignCenter', 'alignRight'], ['sup', 'sub'],]}
+                                onChange={(event) => form.setFieldValue(field.name, event.valueOf())}
                                 placeholder="Introduce la descripción de tu oficina"
-                                label="Descripción de la oficina"
-                                aria-label="My textarea" radius="md" size="md"
+                                aria-label="My textarea"
                                 id="officeDescription"
-                                minRows={4}
-                                autosize
-                                maxRows={9}
                             />
                         )}
                     </Field>

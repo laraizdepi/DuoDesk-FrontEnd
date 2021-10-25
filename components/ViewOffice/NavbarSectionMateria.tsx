@@ -11,7 +11,7 @@ const theme = createTheme({
         primary: {
             // light: will be calculated from palette.primary.main,
             main: '#12B886',
-            
+
             // dark: will be calculated from palette.primary.main,
             // contrastText: will be calculated to contrast with palette.primary.main
         },
@@ -40,25 +40,25 @@ const NavbarSectionMateria = () => {
     };
     const [scroll, scrollTo] = useWindowScroll();
     return (
-        <div style={{ marginTop: '20px' }}>
+        <div style={{ marginTop: '20px' }} className="sticky top-0">
             <ThemeProvider theme={theme}>
                 <Box sx={{ width: '100%' }}>
-                    {/* {console.log(`position x: ${scroll.x}, y: ${scroll.y}`)} */}
-
-                    <Tabs
-                        value={value}
-                        onChange={handleChange}
-                        // textColor="secondary"
-                        indicatorColor="primary"
-                        aria-label="secondary tabs example"
-                    // color = '#12B886'
-                    >
-                        <Tab value="one" label="Imagenes" onClick={() => scrollTo({ y: 0 })} />
-                        <Tab value="two" label="Description" onClick={() => scrollTo({ y: 656 })} />
-                        <Tab value="three" label="Ubicacion" onClick={() => scrollTo({ y: 845 })} />
-                        <Tab value="four" label="Amenidades" onClick={() => scrollTo({ y: 1594 })} />
-                        <Tab value="five" label="Espacios" onClick={() => scrollTo({ y: 2024 })} />
-                    </Tabs>
+                    <div>
+                        <Tabs
+                            value={value}
+                            onChange={handleChange}
+                            // textColor="secondary"
+                            indicatorColor="primary"
+                            aria-label="secondary tabs example"
+                        // color = '#12B886'
+                        >
+                            <Tab value="one" label="Imagenes" onClick={() => scrollTo({ y: 0 })} />
+                            <Tab value="two" label="Description" onClick={() => scrollTo({ y: 656 })} />
+                            <Tab value="three" label="Ubicacion" onClick={() => scrollTo({ y: 845 })} />
+                            <Tab value="four" label="Amenidades" onClick={() => scrollTo({ y: 1594 })} />
+                            <Tab value="five" label="Espacios" onClick={() => scrollTo({ y: 2024 })} />
+                        </Tabs>
+                    </div>
                 </Box>
             </ThemeProvider>
 

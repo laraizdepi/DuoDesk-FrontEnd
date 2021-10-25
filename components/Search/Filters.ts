@@ -116,72 +116,50 @@ const byDays = (days: string | undefined = undefined, data: Offices[]) => {
     return finalData
 }
 
-const extremePrices = (data: Offices[]) => {
-    if (data.length > 0) {
-        let min = data[0].spaces[0].hourPrice
-        let max = data[0].spaces[0].hourPrice
-        for (let office of data) {
-            for (let space of office.spaces) {
-                if (space.hourPrice < min) {
-                    min = space.hourPrice
-                }
-                if (space.hourPrice > max) {
-                    max = space.hourPrice
-                }
-                if (space.dayPrice < min) {
-                    min = space.dayPrice
-                }
-                if (space.dayPrice > max) {
-                    max = space.dayPrice
-                }
-                if (space.weekPrice < min) {
-                    min = space.weekPrice
-                }
-                if (space.weekPrice > max) {
-                    max = space.weekPrice
-                }
-                if (space.monthPrice < min) {
-                    min = space.monthPrice
-                }
-                if (space.monthPrice > max) {
-                    max = space.monthPrice
-                }
-            }
+const getMinMax = (data: Offices[]) => {
+    let min = data[0].spaces[0].hourPrice
+    let max = data[0].spaces[0].hourPrice
+    for(let office of data){
+        for(let space of office.spaces){
+            if(space.hourPrice < min) min = space.hourPrice
+            if(space.dayPrice < min) min = space.dayPrice
+            if(space.weekPrice < min) min = space.weekPrice
+            if(space.monthPrice < min) min = space.monthPrice
+            if(space.hourPrice > max) max = space.hourPrice
+            if(space.dayPrice > max) max = space.dayPrice
+            if(space.weekPrice > max) max = space.weekPrice
+            if(space.monthPrice > max) max = space.monthPrice
         }
-        return { min, max }
     }
+    return {min, max}
 }
 
-const rangeOfPrices = (data: Offices[], callback: (send?: any) => void, time?: 'hour' | 'day' | 'week' | 'month', prices?: [number, number]) => {
-    let dataCopy = data.slice()
-    if (time && prices) {
-        console.log(time, prices)
-        const finalData = dataCopy.filter((element) => {
-            const result = element.spaces.filter((space) => {
-                if (space[`${time}Price`] > prices[0] && space[`${time}Price`] < prices[1]) {
-                    return true
-                }
-                return false
-            })
-            if (result.length > 0) {
-                return true
-            }
-            return false
-        }).map((element) => {
-            element.spaces = element.spaces.filter((space) => {
-                if (space[`${time}Price`] > prices[0] && space[`${time}Price`] < prices[1]) {
-                    return true
-                }
-                return false
-            })
-            return element
-        })
-        console.log("Final Data: ", finalData)
-        return callback(finalData)
+const byPrices = (data: Offices[], prices: [number, number], period: string) => {
+    const comparePrices = (min: number, max: number, price: number) => {
+        console.log('Min:', min)
+        console.log('Max:', max)
+        console.log('Price:', price)
+        if(min <= price && price <= max){
+            return true
+        }
+        return false
     }
-    else {
-        return callback(data)
-    }
+
+    const finalData = data.filter((office) => {
+        let result = []
+        if(period === 'hour') result = office.spaces.filter((space) => comparePrices(prices[0], prices[1], space.hourPrice))
+        else if(period === 'day') result = office.spaces.filter((space) => comparePrices(prices[0], prices[1], space.dayPrice))
+        else if(period === 'week') result = office.spaces.filter((space) => comparePrices(prices[0], prices[1], space.weekPrice))
+        else if(period === 'month') result = office.spaces.filter((space) => comparePrices(prices[0], prices[1], space.monthPrice))
+        else return true
+
+        if(result.length > 0){
+            return true
+        }
+        return false
+    })
+
+    return finalData
 }
 
 const filterRange = (rating: number, data: Offices[], callback: (send?: any) => void) => {
@@ -217,9 +195,9 @@ const filterRange = (rating: number, data: Offices[], callback: (send?: any) => 
 const filter = {
     byAmenities,
     byDays,
-    byPrices: rangeOfPrices,
+    byPrices,
     byRange: filterRange,
-    getMinMax: extremePrices
+    getMinMax
 }
 
 export default filter

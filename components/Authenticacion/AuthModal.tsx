@@ -18,31 +18,32 @@ const AuthModal: FC<DataProps> = (props) => {
 	const [activeTabs, setActiveTabs] = useState(0)
 
 	useEffect(() => {
-		if(props.form === 'signup'){
+		if (props.form === 'signup') {
 			setActiveTabs(1)
 		}
 	}, [])
 
 	return (
 		<div>
-			<Modal opened={opened} onClose={() => setOpened(false)} size={600} 
-			title={<Text component={Title} order={2}>Inicia sesión o registrate</Text>}>
+			<Modal opened={opened} onClose={() => setOpened(false)} size={600}
+				title={<Text component={Title} order={2}>Inicia sesión o registrate</Text>}>
 				<Tabs active={activeTabs} onTabChange={setActiveTabs}>
-					<Tab label="Iniciar sesión" icon={<BiUserCheck size="20px"/>}>
-						<LoginForm/>
+					<Tab label="Iniciar sesión" icon={<BiUserCheck size="20px" />}>
+						<LoginForm />
 					</Tab>
 					<Tab label="Registro" icon={<BiUserPlus size="20px" />}>
-						<RegisterForm changeTabs={setActiveTabs}/>
+						<RegisterForm changeTabs={setActiveTabs} />
 					</Tab>
 				</Tabs>
 			</Modal>
 			<div>
 				<Button
+					id="Auth-Modal"
 					color={props.color}
 					onClick={() => setOpened(true)}
 					variant={props.variant}
 					radius='lg'
-					>
+				>
 					{props.text}
 				</Button>
 			</div>

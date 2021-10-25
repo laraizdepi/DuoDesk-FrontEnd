@@ -10,10 +10,13 @@ import { Center, Col, Grid, Group, Progress, Text, Button } from '@mantine/core'
 import Image from 'next/image'
 import { Tooltip } from 'primereact/tooltip';
 import { Field } from 'formik';
+import { useNotifications } from '@mantine/notifications';
+import { MdErrorOutline } from 'react-icons/md';
 
 const UploadImages = () => {
     const [totalSize, setTotalSize] = useState(0);
     const fileUploadRef = useRef<any>();
+    const notifications = useNotifications()
 
     const onTemplateClear = () => {
         setTotalSize(0);
@@ -75,11 +78,9 @@ const UploadImages = () => {
 
     return (
         <div>
-            {/* <Toast ref={toast}></Toast> */}
             <Tooltip target=".custom-choose-btn" content="Elegir archivo(s)" position="bottom" />
             <Tooltip target=".custom-upload-btn" content="Confirmar archivos" position="bottom" />
             <Tooltip target=".custom-cancel-btn" content="Resetear" position="bottom" />
-
             <div className="card">
                 <Field name="spaceImages">
                     {({ field, form, meta }: any) => (
@@ -89,9 +90,17 @@ const UploadImages = () => {
                             maxFileSize={10000000}
                             customUpload
                             uploadHandler={async(event: any) => {
-                                console.log(event.files)
-                                form.setFieldValue(field.name, event.files)
-                                fileUploadRef.current.clear()
+                                if(event.files.length >= 5){
+                                    form.setFieldValue(field.name, event.files)
+                                    fileUploadRef.current.clear()
+                                }
+                                else{
+                                    notifications.showNotification({
+                                        title: 'Algo ha salido mal',
+                                        message: `Por favor, selecciona un minimo de 5 imagenes por espacio`,
+                                        color: 'pink', icon: <MdErrorOutline />
+                                    })
+                                }
                             }}
                             onError={onTemplateClear}
                             onClear={onTemplateClear}

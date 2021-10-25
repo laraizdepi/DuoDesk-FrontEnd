@@ -117,15 +117,6 @@ const RegisterSteps = () => {
 						nameAmenities: [],
 					}}
 					onSubmit={async (values, actions) => {
-						if (values.description.length < 120 || values.description.length > 550) {
-							notifications.showNotification({
-								title: 'Algo ha salido mal',
-								message: `Por favor, introduce una descripción para tu oficina
-								que tenga entre 120 y 550 caracteres.`,
-								color: 'pink', icon: <MdErrorOutline />
-							})
-							return
-						}
 						if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(values.officialEmail)) {
 							notifications.showNotification({
 								title: 'Algo ha salido mal',
@@ -169,6 +160,24 @@ const RegisterSteps = () => {
 								title: 'Algo ha salido mal',
 								message: `Por favor verifica que has colocado la
 								dirección de tu oficina`,
+								color: 'pink', icon: <MdErrorOutline />
+							})
+							return
+						}
+						if (values.description.length < 120 || values.description.length > 550) {
+							notifications.showNotification({
+								title: 'Algo ha salido mal',
+								message: `Por favor, introduce una descripción para tu oficina
+								que tenga entre 120 y 550 caracteres.`,
+								color: 'pink', icon: <MdErrorOutline />
+							})
+							return
+						}
+						if (values.title.length < 16) {
+							notifications.showNotification({
+								title: 'Algo ha salido mal',
+								message: `Por favor, introduce un titulo con
+								un minimo de 16 caracteres`,
 								color: 'pink', icon: <MdErrorOutline />
 							})
 							return

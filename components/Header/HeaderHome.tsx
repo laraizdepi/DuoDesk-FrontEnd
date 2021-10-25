@@ -1,39 +1,88 @@
 import React from 'react'
-import NavbarBoot from '../NavBar/Navbar'
 import { Grid, Col, Image, Title, Text, Group, Button, Divider } from '@mantine/core';
-import headerImage from '../../Img/home/headerTeamWork.svg'
-import Home from "../../Img/home/Home.svg"
-import styles from "./Header.module.sass"
+import { useNotifications } from '@mantine/notifications';
+import { MdDoneAll } from 'react-icons/md';
+import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
+import LandingImage from '../../Img/home/landing-image.svg'
 
 const HeaderHome = () => {
+    const router = useRouter()
+    const notifications = useNotifications()
+    const user = useSelector((state: any) => {
+        return state.authentication
+            ? state.authentication
+            : { logged: false }
+    })
+
+    const rentOffice = () => {
+        const modal = document.getElementById('Auth-Modal')
+        if (user.logged) {
+            router.push('/register-office')
+        }
+        else {
+            modal?.click()
+        }
+    }
+
+    const focusSearch = () => {
+        const input = document.getElementById('city-search')
+        input?.focus()
+        notifications.showNotification({
+            title: 'Empieza a buscar una oficina',
+            message: `Solo tienes que introducir en la barra de busqueda superior
+            aquellos datos que se adapten a tus necesidades. Luego, da click en buscar
+            y esperamos que consigas la oficina perfecta para ti`,
+            color: 'teal',
+            icon: <MdDoneAll />
+        })
+    }
+
 
     return (
         <div>
-            <Grid style={{ margin: '7rem 3rem', marginRight: '0', marginBottom: '7rem' }} id="headerHome">
-                <Col span={12} md={6}>
-                    <Text variant="gradient" 
+            <Grid className='my-4 mx-1 flex flex-row justify-around' id="headerHome">
+                <Col span={12} md={6} className="m-auto p-5">
+                    <Text variant="gradient"
+                    align="center"
                         component={Title} order={1}
                         gradient={{ from: 'pink', to: 'indigo', deg: 50 }}
                     >
                         Encuentra tu lugar perfecto para trabajar
                     </Text>
-                    <Text size="xl" align="left" style={{ marginTop: '1.5rem', marginRight: '5rem' }}>
-                    Ahora es el momento de que todo esté bien.
-                    Por eso, te invitamos a rentar oficinas con nosotros
+                    <Text size="xl" align="center">
+                        Nuestra misión es apoyarte para que puedas trabajar en un lugar
+                        comodo sin complicaciones y de forma agil. Sabemos que un buen sitio
+                        es fundamental para un gran trabajo, y por eso, nuestro objetivo es que
+                        puedas mejorarlo en las mejores oficinas.
                     </Text>
-                    <Group position="left" spacing="xl" withGutter style={{marginTop: '1.5rem'}}>
-                        <Button size="lg" radius="xl"
-                            variant="gradient" gradient={{ from: 'pink', to: 'indigo', deg: 50 }}>
-                            Empezar ahora
+                    <Group position="apart" spacing="xl" withGutter style={{ marginTop: '1.5rem' }}>
+                        <Button
+                            size="lg"
+                            radius="xl"
+                            onClick={focusSearch}
+                            variant="gradient"
+                            gradient={{ from: 'pink', to: 'indigo', deg: 50 }}>
+                            ¡Conseguir una oficina!
                         </Button>
-                        <Divider orientation="vertical" margins="sm" />
-                        <Button size="lg" radius="xl"
-                            color="pink" variant="outline">
-                            Aprender más
+                        <Button
+                            size="lg"
+                            radius="xl"
+                            color="pink"
+                            variant="outline"
+                            onClick={rentOffice}
+                        >
+                            ¡Rentar una oficina!
                         </Button>
                     </Group>
                 </Col>
-                
+                <Col span={12} md={6} className="m-auto">
+                    <Image
+                        width="90%"
+                        fit="cover"
+                        src={LandingImage.src}
+                    />
+                </Col>
             </Grid>
         </div>
     );

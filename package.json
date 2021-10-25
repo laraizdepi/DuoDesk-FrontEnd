@@ -26,6 +26,7 @@
     "bootstrap": "^5.1.0",
     "daisyui": "^1.14.2",
     "dayjs": "^1.10.7",
+    "filepond": "^4.30.3",
     "formik": "^2.2.9",
     "formik-material-ui": "^4.0.0-alpha.1",
     "google-map-react": "^2.1.10",

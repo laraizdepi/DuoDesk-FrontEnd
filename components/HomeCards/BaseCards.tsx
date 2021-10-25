@@ -5,38 +5,29 @@ interface cardsProps {
 	img: string,
 	text: string,
 	title: string,
-	color: string
+	link?: string
 }
 const Cards: FC<cardsProps> = (props) => {
-	const styles = {
-		margin: '2rem 1rem'
-	}
-
-	return(
-		<div>
-			<Card padding="xl" radius="lg" shadow="xs" withBorder>
-				<Card.Section style={styles}>
-					<Group position="left">
-						<Avatar
-							size="xl"
-							radius="xl"
-							src={props.img}
-						/>
-					</Group>
-				</Card.Section>
-				<Card.Section style={styles}>
-					<Title order={2}>{props.title}</Title>
-				</Card.Section>
-				<Card.Section style={styles}>
-					<Text>{props.text}</Text>
-				</Card.Section>
-				<Card.Section style={styles}>
-					<Button variant="light" onClick={(event: any) => {
-						document.body.scrollTop = 0
-						document.documentElement.scrollTop = 0
-					}}>¡Me interesa!</Button>
-				</Card.Section>
-			</Card>
+	return (
+		<div className="flex flex-col p-5 space-y-5 bg-white border shadow-md rounded-xl">
+			<div className="flex justify-center -mt-20">
+				<Avatar src={props.img} className="border bg-white p-2" size="xl"/>
+			</div>
+			<div>
+				<Text component={Title} order={3} align="center" className='font-title'>
+					{props.title}
+				</Text>
+			</div>
+			<div className="p-3">
+				<Text align="center">
+					{props.text}
+				</Text>
+			</div>
+			<div className="flex justify-center">
+				<Button color="teal" className='hover:bg-indigo hover:cursor-pointer'>
+					¡Leer más!
+				</Button>
+			</div>
 		</div>
 	)
 }
