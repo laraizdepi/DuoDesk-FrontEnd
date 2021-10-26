@@ -20,6 +20,8 @@ import "slick-carousel/slick/slick-theme.css";
 import { Provider } from 'react-redux';
 import store from '../Redux';
 import 'react-bnb-gallery/dist/style.css'
+import 'filepond/dist/filepond.min.css'
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
 import DuoDeskLogo from '../Img/logos/DuoDeskLogo.png'
 
 export default function App(props: AppProps) {
