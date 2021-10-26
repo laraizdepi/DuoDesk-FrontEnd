@@ -39,7 +39,7 @@ interface Offices {
 
 const Schedule: FC<{ office: Offices }> = (props) => {
     const office = props.office
-    const tConvert = (time: any) =>{
+    const tConvert = (time: any) => {
         // Check correct time format and split into components
         time = time.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
 
@@ -54,32 +54,17 @@ const Schedule: FC<{ office: Offices }> = (props) => {
     const startWeek = tConvert(office.days.[0].startHour)
     const endWeek = tConvert(office.days.[0].endHour)
 
-    if (office.days.length === 1) {
-        console.log('its worked', office.days.length);
-        return (
-            <div className = {style.Schedule}>
-                <h1 className = {style.ScheduleTitle}> Between {office.days.[0].day}</h1>
-                <p>abre a {startWeek}</p>
-                <p>cierra a {endWeek}</p>
-            </div>
-        )
+    let dateSat = 'No abierto'
+    let dateSun = 'No abierto'
 
-    } else if (office.days.length === 2) {
+    if (office.days.length === 2) {
+
         const startSat = tConvert(office.days.[1].startHour)
         const endSat = tConvert(office.days.[1].endHour)
 
-        return (
-            <div className = {style.Schedule}>
-                <h5 className = {style.ScheduleTitle}> Between {office.days.[0].day}</h5>
-                <p>abre a {startWeek}</p>
-                <p>cierra a {endWeek}</p>
+        dateSat = `${startSat} - ${endSat}`
 
-                <h3 className = {style.ScheduleTitle}>{office.days.[1].day}</h3>
-                <p>abre a {startSat}</p>
-                <p>cierra a {endSat}</p>
-            </div>
-        )
-    } else {
+    } else if (office.days.length === 3) {
 
         const startSat = tConvert(office.days.[1].startHour)
         const endSat = tConvert(office.days.[1].endHour)
@@ -87,23 +72,32 @@ const Schedule: FC<{ office: Offices }> = (props) => {
         const startSun = tConvert(office.days.[2].startHour)
         const endSun = tConvert(office.days.[2].endHour)
 
-        return (
-            <div  className = {style.Schedule}>
-                <h1 className = {style.ScheduleTitle}> Between {office.days.[0].day}</h1>
-                <p>abre a {startWeek}</p>
-                <p>cierra a {endWeek}</p>
-
-
-                <h1 className = {style.ScheduleTitle}>{office.days.[1].day}</h1>
-                <p>abre a {startSat}</p>
-                <p>cierra a {endSat}</p>
-
-                <h1 className = {style.ScheduleTitle}> {office.days.[2].day}</h1>
-                <p>abre a {startSun}</p>
-                <p>cierra a {endSun}</p>
-            </div>
-        )
+        dateSat = `${startSat} - ${endSat}`
+        dateSun = `${startSun} - ${endSun}`
     }
+
+    return (
+        <div className={style.Schedule}>
+            <div className={style.ScheduleTitle}>
+                <p>Horario</p>
+            </div>
+            <div className={style.ScheduleContainer}>
+                <div className={style.SchedulePeriod}>
+                    <p className={style.ScheduleSubTitle}>Lunes - Viernes</p>
+                    <p className={style.ScheduleDate}>{startWeek} - {endWeek}</p>
+                </div>
+                <div className={style.SchedulePeriod}>
+                    <p className={style.ScheduleSubTitle}>Sabados</p>
+                    <p className={style.ScheduleDate}>{dateSat}</p>
+                </div>
+                <div className={style.SchedulePeriod}>
+                    <p className={style.ScheduleSubTitle}>Domingos</p>
+                    <p className={style.ScheduleDate}>{dateSun}</p>
+                </div>
+            </div>
+        </div>
+
+    )
 
 }
 

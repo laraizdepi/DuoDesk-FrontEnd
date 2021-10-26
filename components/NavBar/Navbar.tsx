@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useRouter } from 'next/dist/client/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { Avatar, Button, Menu, Group, Image, Input, Autocomplete, TextInput, Select, Drawer, Modal } from '@mantine/core'
@@ -18,8 +18,11 @@ import { getSearch, updateSearch } from '../../Redux/actions/searchActions';
 
 import Logo from '../../Img/logos/DuoDeskLogo.png'
 
-
-const NavBar = () => {
+interface NavbarProps {
+	stick : string
+}
+const NavBar:FC<NavbarProps>= (props) => {
+	const stick = props.stick
 	const [mobile, setMobile] = useState<boolean>(false)
 	const [opened, setOpened] = useState<boolean>(false)
 	const [color, setColor] = useState<string>('white')
@@ -114,7 +117,7 @@ const NavBar = () => {
 
 	if (mobile) {
 		return (
-			<div className={`flex flex-row justify-between items-center m-3 mr-0 sticky top-0 z-10 bg-${color} shadow-md`}>
+			<div className={`flex flex-row justify-between items-center m-3 mr-0 ${stick} top-0 z-10 bg-${color} shadow-md`}>
 				<div className="">
 					<Image
 						src={Logo.src}
@@ -206,7 +209,7 @@ const NavBar = () => {
 	}
 
 	return (
-		<div className={`flex flex-row justify-around items-center sticky top-0 z-10 bg-${color} p-2 w-full shadow-md`}>
+		<div className={`flex flex-row justify-around items-center ${stick} top-0 z-10 bg-${color} p-2 w-full shadow-md`}>
 			<div>
 				<Image
 					src={Logo.src}

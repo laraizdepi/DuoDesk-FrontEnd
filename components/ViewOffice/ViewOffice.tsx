@@ -134,22 +134,28 @@ const ViewOffice: FC<{ office: Offices }> = (props) => {
 				</Col>
 			</Row>
 
-			<Container >
+			<Container>
 				<AboutViews office={office} />
 			</Container>
 
-			<div>
+			<div id='amenidades'>
 				<AmenidadesGeneral office={office} />
 			</div>
-			<div>
+			<div id='spaces'>
 				<CardSpace office={office} />
 			</div>
-			<Container>
-				{/* <OfficeMap office={office} /> */}
-			</Container>
+			<div className={style.titleEnterAme} id='map'>
+				<h1>Ubicacion</h1>
+			</div>
+			{/* <div style = {{display : 'flex', justifyContent : 'center'}} > */}
+			<div>
+				<div style={{ width: '1350px' }}>
+					<OfficeMap office={office} />
+				</div>
+			</div>
 
 			<div>
-				<Schedule office={office} />
+				{/* <Schedule office={office} /> */}
 			</div>
 		</div>
 	)

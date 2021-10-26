@@ -31,7 +31,7 @@ export const getStaticProps = async (context: { params: { id: any; }; }) =>{
 const Details = ({oficina}) => {
     return (
         <div>
-            <Navbar/>
+            <Navbar stick  = {''}/>
             <ViewOffice office = {oficina}/>
         </div>
     )
