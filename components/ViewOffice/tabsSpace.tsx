@@ -101,7 +101,7 @@ const TabsSpace: React.FC<{ office: Offices }> = (props) => {
     const SalaConferencias = `Sala de conferencias ${findTypeSpaces(office.spaces, 'Sala de conferencias').length}`
     const EspacioAbierto = `Espacio abierto ${findTypeSpaces(office.spaces, 'Espacio abierto').length}`
     return (
-        <Box sx={{ width: '100%' }} >
+        <Box sx={{ width: '100%' }} id = 'resultSpaces' >
 
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }} style={{ marginLeft: '50px' }}>
                 <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" style={{ width: '100%' }}>

@@ -10,6 +10,7 @@ import { Button } from '@mantine/core'
 import { TabPanel } from '@mui/lab'
 import TabsSpace from './tabsSpace'
 import SearchValues from './SearchValues'
+import { IoPeopleOutline } from 'react-icons/io5'
 
 
 interface CardSearchBaseTestProps {
@@ -22,16 +23,16 @@ const CardSearchBaseTest: FC<CardSearchBaseTestProps> = (props) => {
   const spaces = props.spaces
   const [opacity, setopacity] = useState(1)
   const available = props.available
-  // const available = true 
+
   return (
     <>
-      <Group direction="column" position="center">
+      <Group direction="column" position="center"> 
         <Card.Section>
           <div>
             {spaces.map((space: any[]) => {
               return (
                 <div>
-                  <Card withBorder shadow="sm" radius="lg" style={{ margin: '1rem', height: '100%', opacity: opacity }}>
+                  <Card withBorder shadow="sm" radius="lg" style={{ margin: '0rem', height: '100%', opacity: opacity }}>
                     <Row style={{ marginBottom: '10px' }}>
                       {/* Images Slider for Spaces */}
                       <Col xs={12} md={6}>
@@ -42,11 +43,7 @@ const CardSearchBaseTest: FC<CardSearchBaseTestProps> = (props) => {
                             const src = `http://localhost:5000/uploads/offices/${url[0]}/${url[1]}/${file}`
                             return (
                               <BCarousel.Item key={image} interval={3000}>
-                                <Image
-                                  height="25rem"
-                                  src={src}
-                                  // radius="lg"
-                                  fit="contain" />
+                                <img src={src} alt="" style={{ objectFit: 'cover', height: '26rem', width: '700px' }} />
                               </BCarousel.Item>
                             )
                           })}
@@ -56,10 +53,33 @@ const CardSearchBaseTest: FC<CardSearchBaseTestProps> = (props) => {
                       <Col xs={12} md={6}>
                         <Card key={space.nameSpace} withBorder shadow="lg" radius="xl" style={{ padding: '2rem 3rem' }}>
                           <Card.Section>
-                            <Group position="apart">
-                              <Title order={5} style={{ fontSize: '25px' }}>{space.nameSpace}</Title>
-                              <Badge color="teal" style={{ fontSize: '9px' }}>{space.typeSpace}</Badge>
-                            </Group>
+                            <div >
+
+                              <Row>
+                                <Col md={10}>
+
+                                  <Title order={5} style={{ fontSize: '25px' }}>{space.nameSpace}</Title>
+                                  {/* <h1>t</h1> */}
+                                </Col>
+                                <Col md={2}>
+                                  <h2 style={{ display: 'flex', alignItems: 'center', fontSize: '22px' }}>
+                                  {/* <h2>   */}
+                                    <IoPeopleOutline style={{ marginBottom: '2px', marginRight: '5px' }} /> {space.capacitySpace}
+                                  </h2>
+                                </Col>
+                              </Row>
+                              {/* <Row>
+                                <Col md = {11}>
+                                  </Col>
+                                <Col md  = {1}>
+                                </Col>
+                               </Row> */}
+                              <Row>
+                                <Col>
+                                  <Badge color="teal" size='lg' style={{ fontSize: '11px' }}>{space.typeSpace}</Badge>
+                                </Col>
+                              </Row>
+                            </div>
                           </Card.Section>
                           <Divider margins="xs" label="Precios del espacio" labelPosition="center" />
                           <Card.Section style={{ marginBottom: '5px' }}>
@@ -143,8 +163,8 @@ const IsAvailable = ({ space, available, setopacity }) => {
   } else {
     setopacity(0.6)
     return (
-      <Col xs={12} style ={{display : 'flex', alignItems:'center', justifyContent : 'center'}}>
-        <p style = {{fontSize : '19px', opacity:'1'}}>No esta disponible</p>
+      <Col xs={12} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <p style={{ fontSize: '19px', opacity: '1' }}>No esta disponible</p>
       </Col>
     )
   }

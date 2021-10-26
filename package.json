@@ -48,6 +48,7 @@
     "react-multi-carousel": "^2.6.5",
     "react-redux": "^7.2.5",
     "react-slick": "^0.28.1",
+    "react-stick": "^4.1.4",
     "redux": "^4.1.1",
     "redux-thunk": "^2.3.0",
     "rsuite": "^5.0.0",

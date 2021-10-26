@@ -5,6 +5,10 @@ import * as React from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
+// import Stick from 'react-stick'
+
+import style from './VIew.module.sass'
+
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 const theme = createTheme({
     palette: {
@@ -40,7 +44,7 @@ const NavbarSectionMateria = () => {
     };
     const [scroll, scrollTo] = useWindowScroll();
     return (
-        <div style={{ marginTop: '20px' }} className="sticky top-0">
+        <div className = {style.TabsNavigation} >
             <ThemeProvider theme={theme}>
                 <Box sx={{ width: '100%' }}>
                     <div>
@@ -50,13 +54,15 @@ const NavbarSectionMateria = () => {
                             // textColor="secondary"
                             indicatorColor="primary"
                             aria-label="secondary tabs example"
+                            variant="scrollable"
+                            scrollButtons="auto"
                         // color = '#12B886'
                         >
                             <Tab value="one" label="Imagenes" onClick={() => scrollTo({ y: 0 })} />
                             <Tab value="two" label="Description" onClick={() => scrollTo({ y: 656 })} />
-                            <Tab value="three" label="Ubicacion" onClick={() => scrollTo({ y: 845 })} />
-                            <Tab value="four" label="Amenidades" onClick={() => scrollTo({ y: 1594 })} />
-                            <Tab value="five" label="Espacios" onClick={() => scrollTo({ y: 2024 })} />
+                            <Tab value="three" label="Ubicacion" onClick={() => window.location.href = '#map'} />
+                            <Tab value="four" label="Amenidades" onClick={() => window.location.href = '#amenidades'} />
+                            <Tab value="five" label="Espacios" onClick={() => window.location.href = '#spaces'} />
                         </Tabs>
                     </div>
                 </Box>
