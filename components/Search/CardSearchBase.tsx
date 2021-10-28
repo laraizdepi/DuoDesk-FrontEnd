@@ -151,12 +151,11 @@ const CardSearchBase: FC<{ office: Offices, date?: string, people?: number}> = (
                         <Group position="right">
                             <Text>{props.office.scores?.averageScore ? <div><FaRegStar color="#4C6EF5" />{props.office.scores?.averageScore}</div> : null}</Text>
                         </Group>
-                        <Divider margins="xs" label="Amenidades de la oficina" labelPosition="center" />
                         <Group position="left">
                             <Spoiler
                                 onClick={(event) => event.preventDefault()}
-                                maxHeight={90}
-                                showLabel="Ver todas las amenidades" hideLabel="Ocultar amenidades">
+                                maxHeight={10}
+                                showLabel="Ver amenidades generales" hideLabel="Ocultar amenidades">
                                 <List
                                     style={{ padding: '1rem 0' }}
                                     spacing="xs"
@@ -177,11 +176,11 @@ const CardSearchBase: FC<{ office: Offices, date?: string, people?: number}> = (
                         </Group>
                     </div>
                 </Group>
-                <div className="m-2 p-3">
+                <div className="py-3">
                     <Slider {...settings} >
                         {props.office.spaces.map((element) => {
                             return (
-                                <Card shadow="lg" withBorder padding="xl" key={element.nameSpace}>
+                                <Card shadow="lg" withBorder padding="lg" key={element.nameSpace} className='py-2'>
                                     <Container>
                                         <Group direction="column" position="center">
                                             <Title order={5}>{element.nameSpace}</Title>
@@ -190,30 +189,29 @@ const CardSearchBase: FC<{ office: Offices, date?: string, people?: number}> = (
                                     </Container>
                                     <Divider margins="xs" label="Precios del espacio" labelPosition="center" />
                                     <Container style={{ marginBottom: '5px' }}>
-                                        <Group position="left" className="justify-end md:justify-start">
+                                        <Group position="apart" className="justify-end md:justify-start">
                                             <div>
-                                                <Title order={6}>Por hora</Title>
+                                                <Title order={6}>Hora</Title>
                                                 <Text>{pricesFunction(element.hourPrice)}</Text>
                                             </div>
                                             <div>
-                                                <Title order={6}>Por día</Title>
+                                                <Title order={6}>Día</Title>
                                                 <Text>{pricesFunction(element.dayPrice)}</Text>
                                             </div>
                                             <div>
-                                                <Title order={6}>Por mes</Title>
+                                                <Title order={6}>Mes</Title>
                                                 <Text>{pricesFunction(element.weekPrice)}</Text>
                                             </div>
                                             <div>
-                                                <Title order={6}>Por semana</Title>
+                                                <Title order={6}>Semana</Title>
                                                 <Text>{pricesFunction(element.monthPrice)}</Text>
                                             </div>
                                         </Group>
                                     </Container>
-                                    <Divider margins="xs" label="Amenidades del espacio" labelPosition="center" />
-                                    <Container>
-                                        <Spoiler maxHeight={90}
+                                    <Container className='flex flex-col justify-center'>
+                                        <Spoiler maxHeight={10}
                                             onClick={(event) => event.preventDefault()}
-                                            showLabel="Ver todas las amenidades" hideLabel="Ocultar amenidades">
+                                            showLabel="Ver todas las amenidades del espacio" hideLabel="Ocultar amenidades">
                                             <List
                                                 style={{ padding: '1rem 0' }}
                                                 spacing="xs"

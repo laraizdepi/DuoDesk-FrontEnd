@@ -8,7 +8,6 @@ import { Modal, Image, Title, Text, Button } from '@mantine/core';
 import RegisterNotAuth from '../Img/register/register-office.svg'
 
 const RegisterOffice = () => {
-	const modalRef = useRef()
 	const user = useSelector((state: any) => {
 		return state.authentication
 			? state.authentication
