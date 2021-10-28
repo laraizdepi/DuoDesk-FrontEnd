@@ -144,11 +144,11 @@ const ViewOffice: FC<{ office: Offices }> = (props) => {
 			<div id='spaces'>
 				<CardSpace office={office} />
 			</div>
-			<div className={style.titleEnterAme} id='map'>
+			<div className={style.titleEnterAme} id='BigMap'>
 				<h1>Ubicacion</h1>
 			</div>
-			{/* <div style = {{display : 'flex', justifyContent : 'center'}} > */}
-			<div>
+			<div style = {{display : 'flex', justifyContent : 'center'}} >
+			{/* <div> */}
 				<div style={{ width: '1350px' }}>
 					<OfficeMap office={office} />
 				</div>
