@@ -16,63 +16,66 @@ import style from "./AuthModal.module.sass"
 import { useRouter } from 'next/dist/client/router';
 
 const LoginForm: FC = (props) => {
-	const [loading, setLoading] = useState(false);
+	const [loading, setLoading] = useState(false)
+	const [error, setError] = useState('')
 	const router = useRouter()
 	const form = useForm({
 		initialValues: { firstName: '', lastName: '', email: '', password: '', termsOfService: true, },
-		validationRules: {
-			firstName: (value) => value.trim().length >= 2,
-			lastName: (value) => value.trim().length >= 2,
-			email: (value) => /^\S+@\S+$/.test(value),
-			password: (value) => /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/.test(value),
-		},
+		// validationRules: {
+		// 	firstName: (value) => value.trim().length >= 2,
+		// 	lastName: (value) => value.trim().length >= 2,
+		// 	email: (value) => /^\S+@\S+$/.test(value),
+		// 	password: (value) => /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/.test(value),
+		// },
 	})
 
 	const dispatch = useDispatch()
 
-	const submitHandler = async () => {
-		const request = await logIn(form.values.email, form.values.password)
-		if (request) {
-			dispatch(loginUser())
-		}
+	const handleSubmit = async(values: any) => {
+		await logIn(form.values.email, form.values.password)
+		dispatch(loginUser())
+		// console.log(request)
+		// if (request) {
+		// 	window.location.href = 'http://localhost:5000/auth/login'
+		// }
 	}
 	return (
-		<form onSubmit={form.onSubmit(submitHandler)}>
-			<Paper style={{ position: 'relative' }}>
-				<LoadingOverlay visible={loading} />
-				<TextInput
-					required
-					placeholder="Tu Correo"
-					label="Email"
-					radius="lg"
-					icon={<EnvelopeClosedIcon />}
-					value={form.values.email}
-					onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
-					onFocus={() => form.setFieldError('email', false)}
-					error={form.errors.email && 'Field should contain a valid email'}
-				/>
-				<PasswordInput
-					style={{ marginTop: 15 }}
-					required
-					placeholder="Micoworking1"
-					label="Contraseña"
-					showPasswordLabel="Show password"
-					hidePasswordLabel="Hide password"
-					icon={<LockClosedIcon />}
-					radius="lg"
-					value={form.values.password}
-					onChange={(event) => form.setFieldValue('password', event.currentTarget.value)}
-					onFocus={() => form.setFieldError('password', false)}
-					error={form.errors.password && 'Password should contain 1 number, 1 letter and at least 6 characters'}
-				/>
-			</Paper>
-			<Grid justify="center" style={{ textAlign: 'center', marginTop: '1rem' }}>
-				<Col span={12} md={6}>
-					<Button color="teal" type="submit" size="sm">
-						Iniciar sesión
-					</Button>
-				</Col>
-			</Grid>
+		<div>
+			<form onSubmit={form.onSubmit(handleSubmit)}>
+				<Paper style={{ position: 'relative' }}>
+					<LoadingOverlay visible={loading} />
+					<TextInput
+						required
+						placeholder="Tu Correo"
+						label="Email"
+						radius="lg"
+						icon={<EnvelopeClosedIcon />}
+						value={form.values.email}
+						onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
+						onFocus={() => form.setFieldError('email', false)}
+						error={form.errors.email && 'Field should contain a valid email'}
+					/>
+					<PasswordInput
+						style={{ marginTop: 15 }}
+						required
+						placeholder="Micoworking1"
+						label="Contraseña"
+						showPasswordLabel="Show password"
+						hidePasswordLabel="Hide password"
+						icon={<LockClosedIcon />}
+						radius="lg"
+						value={form.values.password}
+						onChange={(event) => form.setFieldValue('password', event.currentTarget.value)}
+						onFocus={() => form.setFieldError('password', false)}
+						error={form.errors.password && 'Password should contain 1 number, 1 letter and at least 6 characters'}
+					/>
+					<div className='flex flex-row justify-center my-3'>
+						<Button color="teal" type="submit" size="sm">
+							Iniciar sesión
+						</Button>
+					</div>
+				</Paper>
+			</form>
 			<div style={{ textAlign: 'center', marginBottom: '30px' }}>
 				<Grid justify="center">
 					<Col span={12} md={6}>
@@ -156,7 +159,7 @@ const LoginForm: FC = (props) => {
 					</Col>
 				</Grid>
 			</div>
-		</form>
+		</div>
 	)
 }
 export default LoginForm

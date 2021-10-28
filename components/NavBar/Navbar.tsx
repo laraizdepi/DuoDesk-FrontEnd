@@ -110,7 +110,6 @@ const NavBar:FC<NavbarProps>= (props) => {
 	}
 
 
-
 	const logOutHandler = () => {
 		dispatch(logoutUser())
 	}
@@ -193,7 +192,7 @@ const NavBar:FC<NavbarProps>= (props) => {
 							control={<Avatar src={user.user.image} radius="xl" size="md" />}
 						>
 							<Menu.Label>Cuenta</Menu.Label>
-							<Menu.Item>Mi cuenta</Menu.Item>
+							<Menu.Item onClick={() => router.push('/dashboard/account', '/dashboard/account')}>Mi cuenta</Menu.Item>
 							<Menu.Item onClick={() => router.push('/register-office', '/register-office')}>Registrar una oficina</Menu.Item>
 							<Menu.Label>Sesión</Menu.Label>
 							<Menu.Item color="pink" onClick={logOutHandler}>Cerrar sesión</Menu.Item>
@@ -288,7 +287,7 @@ const NavBar:FC<NavbarProps>= (props) => {
 						control={<Avatar src={user.user.image} radius="xl" size="md" />}
 					>
 						<Menu.Label>Cuenta</Menu.Label>
-						<Menu.Item>Mi cuenta</Menu.Item>
+						<Menu.Item onClick={() => router.push('/dashboard/account', '/dashboard/account')}>Mi cuenta</Menu.Item>
 						<Menu.Item onClick={() => router.push('/register-office', '/register-office')}>Registrar una oficina</Menu.Item>
 						<Menu.Label>Sesión</Menu.Label>
 						<Menu.Item color="pink" onClick={logOutHandler}>Cerrar sesión</Menu.Item>

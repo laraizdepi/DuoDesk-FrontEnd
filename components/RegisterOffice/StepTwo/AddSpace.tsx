@@ -7,7 +7,6 @@ import TextField from '@mui/material/TextField';
 import { BsFillStarFill } from 'react-icons/bs'
 import { MdErrorOutline, MdDoneAll } from 'react-icons/md'
 import { useNotifications } from '@mantine/notifications';
-import { MultiSelect } from 'primereact/multiselect';
 
 import UploadImages from './UploadImages';
 
