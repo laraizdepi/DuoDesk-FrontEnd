@@ -1,15 +1,17 @@
-import React, { useState, FC, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, FC } from 'react';
 import { useForm } from '@mantine/hooks';
 import { EnvelopeClosedIcon, LockClosedIcon } from '@modulz/radix-icons';
 import { TextInput, PasswordInput, Checkbox, Button, Paper, LoadingOverlay, Grid, Col } from '@mantine/core';
-import { logIn, signUp } from '../../services/authentication';
-import { loginUser } from '../../Redux/actions/authActions';
+import { signUp } from '../../services/authentication';
 import { TiVendorMicrosoft } from 'react-icons/ti';
 import { SiFacebook } from 'react-icons/si';
 import { FcGoogle } from 'react-icons/fc';
 import style from "./AuthModal.module.sass"
 import { useRouter } from 'next/dist/client/router';
+import { useNotifications } from '@mantine/notifications';
+import { RiUserUnfollowLine } from 'react-icons/ri'
+import { CgUnavailable } from 'react-icons/cg';
+import { IoCheckmarkDoneCircleOutline } from 'react-icons/io5';
 
 interface AuthForm {
     changeTabs: Function
@@ -18,20 +20,53 @@ interface AuthForm {
 const RegisterForm: FC<AuthForm> = (props) => {
     const [loading, setLoading] = useState(false);
     const router = useRouter()
+    const notifications = useNotifications()
 
     const form = useForm({
         initialValues: { firstName: '', lastName: '', email: '', password: '', termsOfService: true, },
         validationRules: {
-            firstName: (value) => value.trim().length >= 2,
-            lastName: (value) => value.trim().length >= 2,
+            firstName: (value) => value.trim().length >= 4,
+            lastName: (value) => value.trim().length >= 4,
             email: (value) => /^\S+@\S+$/.test(value),
-            password: (value) => /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/.test(value),
+            password: (value) => /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(value),
         },
     })
 
     const submitHandler = async () => {
+        if (!form.values.termsOfService) {
+            return notifications.showNotification({
+                title: 'Error en el registro',
+                message: 'Tienes que aceptar los terminos y condiciones',
+                color: 'pink',
+                icon: <CgUnavailable />
+            })
+        }
         const request = await signUp(form.values.email, form.values.password, form.values.firstName, form.values.lastName)
-        props.changeTabs(0)
+        if (request?.status === 400) {
+            return notifications.showNotification({
+                title: 'Error en el registro',
+                message: 'Ya existe un usuario con ese correo',
+                color: 'pink',
+                icon: <RiUserUnfollowLine />
+            })
+        }
+        else if (request?.status === 500) {
+            return notifications.showNotification({
+                title: 'Error en el registro',
+                message: 'Hay un error en el servidor, por favor intentalo más tarde',
+                color: 'pink',
+                icon: <CgUnavailable />
+            })
+        }
+        else{
+            notifications.showNotification({
+                title: 'Registro exitoso',
+                message: 'Tu cuenta ha sido creada, ya puedes iniciar sesión',
+                color: 'teal',
+                icon: <IoCheckmarkDoneCircleOutline />
+            })
+            return props.changeTabs(0)
+        }
     }
 
     return (
@@ -49,7 +84,7 @@ const RegisterForm: FC<AuthForm> = (props) => {
                         value={form.values.firstName}
                         onChange={(event) => form.setFieldValue('firstName', event.currentTarget.value)}
                         onFocus={() => form.setFieldError('firstName', false)}
-                        error={form.errors.firstName && 'First name should include at least 2 characters'}
+                        error={form.errors.firstName && 'Tu nombre debe tener al menos 4 caracteres'}
                     />
 
                     <TextInput
@@ -61,7 +96,7 @@ const RegisterForm: FC<AuthForm> = (props) => {
                         value={form.values.lastName}
                         onChange={(event) => form.setFieldValue('lastName', event.currentTarget.value)}
                         onFocus={() => form.setFieldError('lastName', false)}
-                        error={form.errors.lastName && 'Last name should include at least 2 characters'}
+                        error={form.errors.lastName && 'Tu apellido debe tener al menos 4 caracteres'}
                     />
                 </div>
 
@@ -74,7 +109,7 @@ const RegisterForm: FC<AuthForm> = (props) => {
                     value={form.values.email}
                     onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
                     onFocus={() => form.setFieldError('email', false)}
-                    error={form.errors.email && 'Field should contain a valid email'}
+                    error={form.errors.email && 'Introduce un email valido, por favor'}
                 />
 
                 <PasswordInput
@@ -89,7 +124,7 @@ const RegisterForm: FC<AuthForm> = (props) => {
                     value={form.values.password}
                     onChange={(event) => form.setFieldValue('password', event.currentTarget.value)}
                     onFocus={() => form.setFieldError('password', false)}
-                    error={form.errors.password && 'Password should contain 1 number, 1 letter and at least 6 characters'}
+                    error={form.errors.password && 'La contraseña debe tener al menos: números, letras y minimo 8 caracteres'}
                 />
 
 

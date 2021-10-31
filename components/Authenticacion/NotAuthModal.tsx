@@ -1,17 +1,11 @@
-import React from "react";
+import React, { FC } from "react";
 import { useSelector } from 'react-redux';
 import { Modal, Image, Title, Text, Button } from '@mantine/core';
 import RegisterNotAuth from '../../Img/register/register-office.svg'
 
-const NotAuthModal = () => {
-    const user = useSelector((state: any) => {
-        return state.authentication
-            ? state.authentication
-            : { logged: false }
-    })
-
+const NotAuthModal:FC<{open: boolean}> = (props) => {
     return (
-        <Modal opened={!user.logged} onClose={() => { window.location.replace('/') }} title="Error de autenticación">
+        <Modal opened={props.open} onClose={() => { window.location.replace('/') }} title="Error de autenticación">
             <hr className='m-3' />
             <Image
                 src={RegisterNotAuth.src}

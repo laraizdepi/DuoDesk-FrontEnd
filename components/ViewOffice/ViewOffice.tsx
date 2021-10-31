@@ -62,9 +62,7 @@ const ViewOffice: FC<{ office: Offices }> = (props) => {
 
 		images.map((image) => {
 			let photo = {}
-			const url = image.split('-', 2)
-			const file = image.substring(image.indexOf(url[1]) + url[1].length + 1)
-			const src = `http://localhost:5000/uploads/offices/${url[0]}/${url[1]}/${file}`
+			const src = image
 
 			photo['photo'] = src
 			photo['caption'] = typeOfImages

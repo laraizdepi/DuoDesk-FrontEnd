@@ -1,22 +1,30 @@
 import React, { useEffect, useState } from 'react'
-import { Avatar, Button, Card, Center, Divider, Group, Image, Modal, Overlay, Text, TextInput, Title } from '@mantine/core'
+import axios from 'axios'
 import Head from 'next/head'
+import { Avatar, Button, Card, Center, Divider, Group, Image, Modal, Overlay, Text, TextInput, Title } from '@mantine/core'
+import { useForm } from '@mantine/hooks'
+import { useNotifications } from '@mantine/notifications'
 import { useDispatch, useSelector } from 'react-redux'
-import { loginUser } from '../../Redux/actions/authActions'
+
+import { TiWarningOutline } from 'react-icons/ti'
+import { BiEdit } from 'react-icons/bi'
+import { MdEditRoad, MdOutlineCancel } from 'react-icons/md'
+import { HiOutlineSaveAs, HiOutlineUserRemove } from 'react-icons/hi'
+import { CgUnavailable } from 'react-icons/cg'
+import { AiOutlineFileProtect } from 'react-icons/ai'
+
+import DeleteAccount from '../../components/UserAccount/DeleteAccount'
+import NotAuthModal from '../../components/Authenticacion/NotAuthModal'
+import UpdatePassword from '../../components/UserAccount/UpdatePassword'
+import DashboardNavBar from '../../components/NavBar/DashboardNavBar'
+
 import GoogleLogo from '../../Img/logos/GoogleLogo.svg'
 import FacebookLogo from '../../Img/logos/FacebookLogo.svg'
 import MicrosoftLogo from '../../Img/logos/MicrosoftLogo.svg'
 import DuoDeskLogo from '../../Img/logos/DuoDeskLogo.png'
-import { Container } from '@material-ui/core'
-import DeleteAccount from '../../components/UserAccount/DeleteAccount'
-import { useForm } from '@mantine/hooks'
-import { GrEdit } from 'react-icons/gr'
-import { TiWarningOutline } from 'react-icons/ti'
-import { BiEdit } from 'react-icons/bi'
-import { MdOutlineCancel } from 'react-icons/md'
-import { HiOutlineSaveAs } from 'react-icons/hi'
-import NotAuthModal from '../../components/Authenticacion/NotAuthModal'
 
+import { loginUser } from '../../Redux/actions/authActions'
+import UpdateImage from '../../components/UserAccount/UpdateImage'
 export interface User {
     provider?: string,
     email: string,
@@ -40,146 +48,210 @@ export interface User {
 
 const Account = () => {
     const [open, setOpen] = useState<boolean>(false)
+    const [openPassword, setOpenPassword] = useState<boolean>(false)
+    const [openImage, setOpenImage] = useState<boolean>(false)
     const [edit, setEdit] = useState<boolean>(false)
     const [overlay, setOverlay] = useState<boolean>(false)
-    const user: any = useSelector((state: any) => {
-        return state.authentication
-            ? state.authentication
-            : { logged: false }
-    })
-
-    if (!user.logged || !user) {
-        return (
-            <NotAuthModal />
-        )
-    }
-
+    const [logo, setLogo] = useState(DuoDeskLogo)
+    const notifications = useNotifications()
     const dispatch = useDispatch()
-
-    useEffect(() => {
-        dispatch(loginUser(true))
-    }, [])
-
-    console.log(!edit && user.user.provider !== 'local')
-
-    let logo
-    if (user.user.provider === 'google') logo = GoogleLogo
-    else if (user.user.provider === 'facebook') logo = FacebookLogo
-    else if (user.user.provider === 'microsoft') logo = MicrosoftLogo
-    else logo = DuoDeskLogo
+    
+    const user: any = useSelector((state: any) => {
+        // console.log(JSON.stringify(state))
+        return state.authentication
+        ? state.authentication
+        : { logged: false }
+    })
     const userForm = useForm({
         initialValues: {
-            email: user.user.email,
-            firstName: user.user.firstName,
-            lastName: user.user.lastName,
+            email: '',
+            firstName: '',
+            lastName: '',
         }
     })
 
-    const uploadHandler = async (values: any) => {
+    useEffect(() => {
+        dispatch(loginUser(false))
+    }, [])
 
+    useEffect(() => {
+        if(user.logged){
+            userForm.setValues({
+                email: user.user.email,
+                firstName: user.user.firstName,
+                lastName: user.user.lastName,
+            })
+            if (user.user.provider === 'google') setLogo(GoogleLogo)
+            else if (user.user.provider === 'facebook') setLogo(FacebookLogo)            
+            else if (user.user.provider === 'microsoft') setLogo(MicrosoftLogo)
+            else setLogo(DuoDeskLogo)  
+        }
+    }, [user])
+    
+
+    if (!user.logged) {
+        return (
+            <div className='bg-white'>
+                <NotAuthModal open={true} />
+            </div>
+        )
     }
 
+
+    const uploadHandler = async (values: any) => {
+        setEdit(false)
+        const data: any = {
+            firstName: userForm.values.firstName,
+            lastName: userForm.values.lastName,
+        }
+        if(userForm.values.email !== user.user.email){
+            data['email'] = userForm.values.email
+        }
+        const response = await axios.put('http://localhost:5000/user', data, { withCredentials: true }).catch((error) => {
+            userForm.reset()
+            if (error.response) {
+                return notifications.showNotification({
+                    title: 'Error',
+                    message: 'Ha ocurrido un problema actualizando la información, intenta de nuevo por favor',
+                    color: 'pink',
+                    icon: <HiOutlineUserRemove />
+                })
+            }
+            else {
+                return notifications.showNotification({
+                    title: 'Error en el registro',
+                    message: 'Hay un error en el servidor, por favor intentalo más tarde',
+                    color: 'pink',
+                    icon: <CgUnavailable />
+                })
+            }
+        })
+        if(typeof response !== 'string' && response.status){
+            dispatch(loginUser())
+            return notifications.showNotification({
+                title: 'Actualización exitosa',
+                message: 'Se ha actualizado tu información correctamente',
+                color: 'teal',
+                icon: <MdEditRoad />
+            })
+        }
+    }
+
+    console.log(JSON.stringify(logo))
+
     return (
-        <Center className='flex flex-col relative'>
-            {overlay && <Overlay opacity={0.6} color="#000" zIndex={10000} />}
-            <Head>
-                <title>DuoDesk: Mi cuenta</title>
-            </Head>
-            <Modal opened={open} onClose={() => setOpen(false)} title='Confirmar acción' >
-                <DeleteAccount setOpened={setOpen} setOverlay={setOverlay} />
-            </Modal>
-            <Card withBorder shadow='md' padding="xl" className='flex flex-col justify-center space-y-3 w-full md:w-2/5'>
-                <form>
-                    <Group position="center" direction="row" className="m-auto space-x-5">
-                        <Avatar src={user.user.image} size="xl" />
-                        <Divider orientation='vertical' />
-                        <Avatar src={logo.src} size='xl' radius='xl' />
-                    </Group>
-                    <div className='flex flex-col justify-center w-full space-y-4'>
-                        <div className='mx-auto text-center space-y-1'>
-                            <Title order={2}>Correo electronico</Title>
-                            <TextInput
-                                onChange={(event) => userForm.setFieldValue('email', event.target.value)}
-                                value={userForm.values.email}
-                                type="email"
-                                readOnly={!edit || user.user.provider !== 'local'}
-                                variant={edit && user.user.provider === 'local' ? 'default' : 'unstyled'}
-                                className='text-center'
-                                styles={{
-                                    input: {
-                                        textAlign: 'center',
-                                        fontSize: '18px'
-                                    }
-                                }}
-                            />
+        <DashboardNavBar>
+            <div className='flex flex-col relative h-auto'>
+                {overlay && <Overlay opacity={0.6} color="#000" zIndex={10000} />}
+                <Head>
+                    <title>DuoDesk: Mi cuenta</title>
+                </Head>
+                <Modal opened={open} onClose={() => setOpen(false)} title='Confirmar acción' >
+                    <DeleteAccount setOpened={setOpen} setOverlay={setOverlay} />
+                </Modal>
+                <Modal opened={openPassword} onClose={() => setOpenPassword(false)} title='Actualizar contraseña'>
+                    <UpdatePassword setOpen={setOpenPassword} open={openPassword} />
+                </Modal>
+                <Card withBorder shadow='md' padding="xl" className='flex flex-col justify-center space-y-3'>
+                    <form onSubmit={userForm.onSubmit(uploadHandler)}>
+                        <Modal opened={openImage} onClose={() => setOpenImage(false)} title='Actualizar foto de perfil'>
+                            <UpdateImage />
+                        </Modal>
+                        <Group position="center" direction="row" className="m-auto space-x-5">
+                            <Avatar onClick={() => setOpenImage(true)} src={user.user.image} size="xl" radius='xl' className='border rounded-full' />
+                            <Divider orientation='vertical' />
+                            <Avatar src={logo.src} size='xl'/>
+                        </Group>
+                        <div className='flex flex-col justify-center w-full space-y-4'>
+                            <div className='mx-auto text-center space-y-1'>
+                                <Title order={2}>Correo electronico</Title>
+                                <TextInput
+                                    onChange={(event) => userForm.setFieldValue('email', event.target.value)}
+                                    value={userForm.values.email}
+                                    type="email"
+                                    readOnly={!edit || user.user.provider !== 'local'}
+                                    variant={edit && user.user.provider === 'local' ? 'default' : 'unstyled'}
+                                    className='text-center'
+                                    styles={{
+                                        input: {
+                                            textAlign: 'center',
+                                            fontSize: '18px'
+                                        }
+                                    }}
+                                />
+                            </div>
+                            <div className='mx-auto text-center space-y-1'>
+                                <Title order={2}>Nombres</Title>
+                                <TextInput
+                                    onChange={(event) => userForm.setFieldValue('firstName', event.target.value)}
+                                    value={userForm.values.firstName}
+                                    readOnly={!edit}
+                                    variant={edit ? 'default' : 'unstyled'}
+                                    styles={{
+                                        input: {
+                                            textAlign: 'center',
+                                            fontSize: '18px'
+                                        }
+                                    }}
+                                />
+                            </div>
+                            <div className='mx-auto text-center space-y-1'>
+                                <Title order={2}>Apellidos</Title>
+                                <TextInput
+                                    onChange={(event) => userForm.setFieldValue('lastName', event.target.value)}
+                                    value={userForm.values.lastName}
+                                    readOnly={!edit}
+                                    variant={edit ? 'default' : 'unstyled'}
+                                    styles={{
+                                        input: {
+                                            textAlign: 'center',
+                                            fontSize: '18px'
+                                        }
+                                    }}
+                                />
+                            </div>
+                            <div className='mx-auto text-center space-y-1'>
+                                <Title order={2}>Fecha de registro de la cuenta</Title>
+                                <Text>
+                                    {new Date(user.user.createdDate).toLocaleDateString('es-CO', {
+                                        day: 'numeric',
+                                        weekday: 'long',
+                                        month: 'long',
+                                        year: 'numeric'
+                                    })}
+                                </Text>
+                            </div>
                         </div>
-                        <div className='mx-auto text-center space-y-1'>
-                            <Title order={2}>Nombres</Title>
-                            <TextInput
-                                onChange={(event) => userForm.setFieldValue('firstName', event.target.value)}
-                                value={userForm.values.firstName}
-                                type="email"
-                                readOnly={!edit}
-                                variant={edit ? 'default' : 'unstyled'}
-                                styles={{
-                                    input: {
-                                        textAlign: 'center',
-                                        fontSize: '18px'
-                                    }
-                                }}
-                            />
-                        </div>
-                        <div className='mx-auto text-center space-y-1'>
-                            <Title order={2}>Apellidos</Title>
-                            <TextInput
-                                onChange={(event) => userForm.setFieldValue('lastName', event.target.value)}
-                                value={userForm.values.lastName}
-                                type="email"
-                                readOnly={!edit}
-                                variant={edit ? 'default' : 'unstyled'}
-                                styles={{
-                                    input: {
-                                        textAlign: 'center',
-                                        fontSize: '18px'
-                                    }
-                                }}
-                            />
-                        </div>
-                        <div className='mx-auto text-center space-y-1'>
-                            <Title order={2}>Fecha de registro de la cuenta</Title>
-                            <Text>
-                                {new Date(user.user.createdDate).toLocaleDateString('es-CO', {
-                                    day: 'numeric',
-                                    weekday: 'long',
-                                    month: 'long',
-                                    year: 'numeric'
-                                })}
-                            </Text>
-                        </div>
-                    </div>
-                    {edit
-                        ?
-                        <Center className='mx-auto my-5 space-x-8 space-y-1'>
-                            <Button leftIcon={<HiOutlineSaveAs />} color='teal' variant='filled' onClick={() => console.log('AJA')}>Guardar</Button>
-                            <Button leftIcon={<MdOutlineCancel />} color='pink' variant='outline' onClick={() => {
-                                userForm.reset()
-                                setEdit(false)
-                            }}>
-                                Cancelar
-                            </Button>
-                        </Center>
-                        :
-                        <Center className='mx-auto my-5 space-x-8'>
-                            <Button leftIcon={<BiEdit />} color='indigo' onClick={() => setEdit(!edit)}>Editar cuenta</Button>
-                            {user.user.provider === 'local'
-                                ? <Button>Actualizar contraseña</Button>
-                                : null}
-                            <Button leftIcon={<TiWarningOutline />} color='pink' onClick={() => setOpen(true)}>Eliminar cuenta</Button>
-                        </Center>
-                    }
-                </form>
-            </Card>
-        </Center>
+                        {edit
+                            ?
+                            <Center className='mx-auto my-5 space-x-8 space-y-1'>
+                                <Button leftIcon={<HiOutlineSaveAs />} color='teal' variant='filled' type='submit'>Guardar</Button>
+                                <Button leftIcon={<MdOutlineCancel />} color='pink' variant='outline' onClick={() => {
+                                    userForm.reset()
+                                    setEdit(false)
+                                }}>
+                                    Cancelar
+                                </Button>
+                            </Center>
+                            :
+                            <Center className='mx-auto my-5 space-x-5'>
+                                <Button leftIcon={<BiEdit />} color='indigo' onClick={(event: any) => {
+                                    event.preventDefault()
+                                    setEdit(true)
+                                }} type='button'>Editar cuenta</Button>
+                                {user.user.provider === 'local'
+                                    ? <Button leftIcon={<AiOutlineFileProtect />} color='teal'
+                                        onClick={() => setOpenPassword(true)}>
+                                        Actualizar contraseña
+                                    </Button>
+                                    : null}
+                                <Button leftIcon={<TiWarningOutline />} color='pink' onClick={() => setOpen(true)}>Eliminar cuenta</Button>
+                            </Center>
+                        }
+                    </form>
+                </Card>
+            </div>
+        </DashboardNavBar>
     )
 }
 

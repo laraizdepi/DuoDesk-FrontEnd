@@ -1,4 +1,6 @@
+import { NotificationsProvider } from '@mantine/notifications';
 import { AppProps } from 'next/app';
+import { Provider } from 'react-redux';
 import Head from 'next/head';
 import Script from 'next/script'
 import {
@@ -8,21 +10,27 @@ import {
 	useStylesCleanup,
 	SsrProvider,
 } from '@mantine/core';
-import { NotificationsProvider } from '@mantine/notifications';
+
+import store from '../Redux';
+import '../styles/index.css'
+
+import DuoDeskLogo from '../Img/logos/DuoDeskLogo.png'
+
 import 'bootstrap/dist/css/bootstrap.min.css';
+
 import 'rsuite/dist/rsuite.min.css'
+
 import 'primereact/resources/themes/saga-blue/theme.css'
 import 'primereact/resources/primereact.min.css'
 import 'primeicons/primeicons.css'
-import '../styles/index.css'
+
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Provider } from 'react-redux';
-import store from '../Redux';
+
 import 'react-bnb-gallery/dist/style.css'
+
 import 'filepond/dist/filepond.min.css'
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
-import DuoDeskLogo from '../Img/logos/DuoDeskLogo.png'
 
 export default function App(props: AppProps) {
 	const { Component, pageProps } = props;
@@ -34,7 +42,7 @@ export default function App(props: AppProps) {
 			<Provider store={store}>
 				<SsrProvider>
 					<Head>
-						<title>DuoDesk Home</title>
+						<title>DuoDesk: Consigue tu espacio de trabajo ideal</title>
 						<meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
 						<link rel="shortcut icon" href={DuoDeskLogo.src} type="image/x-icon" />
 						{/* <link rel="preconnect" href="https://fonts.googleapis.com" />

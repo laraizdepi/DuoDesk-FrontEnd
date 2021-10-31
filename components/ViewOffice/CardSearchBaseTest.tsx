@@ -38,12 +38,9 @@ const CardSearchBaseTest: FC<CardSearchBaseTestProps> = (props) => {
                       <Col xs={12} md={6}>
                         <BCarousel>
                           {space.imagesUrls.map((image) => {
-                            const url = image.split('-', 2)
-                            const file = image.substring(image.indexOf(url[1]) + url[1].length + 1)
-                            const src = `http://localhost:5000/uploads/offices/${url[0]}/${url[1]}/${file}`
                             return (
                               <BCarousel.Item key={image} interval={3000}>
-                                <img src={src} alt="" style={{ objectFit: 'cover', height: '26rem', width: '700px' }} />
+                                <img src={image} alt="" style={{ objectFit: 'cover', height: '26rem', width: '700px' }} />
                               </BCarousel.Item>
                             )
                           })}

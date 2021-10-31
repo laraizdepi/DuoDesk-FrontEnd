@@ -16,7 +16,6 @@ export default function Home() {
          <HomeCards/>
          <HomePhrases/>
          <OpinionSlider/>
-         <SearchImputTest/>
       </div>
    );
 }

@@ -5,6 +5,10 @@ export const loginUser = (init: boolean = false) => {
         try{
             const request = await getUserData()
             if(request){
+                console.log({
+                    type: init ? "INIT" : "LOGIN",
+                    data: request.data
+                })
                 dispatch({
                     type: init ? "INIT" : "LOGIN",
                     data: request.data
@@ -49,5 +53,12 @@ export const logoutUser = () => {
                 error: `Error: ${error}`
             })
         }
+    }
+}
+
+export const updateUser = (data: any) => {
+    return{
+        type: 'UPDATE_USER',
+        data
     }
 }

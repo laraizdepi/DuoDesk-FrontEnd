@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import { Form, Formik, FormikConfig, FormikValues } from 'formik';
 import { Card, CardContent, CircularProgress, Grid, Step, StepLabel, Stepper } from '@material-ui/core';
 import { Button } from '@mantine/core'
@@ -84,7 +84,57 @@ const FormikStepper = ({ children, ...props }: FormikConfig<FormikValues>) => {
 	);
 }
 
-const RegisterSteps = () => {
+interface Office {
+	id: any,
+	name: string,
+	description: string,
+	host: any,
+	isActive: boolean,
+	generalAmenities: string[]
+	spaces: {
+		nameSpace: string,
+		typeSpace: string,
+		capacitySpace: number,
+		availableSpace: number,
+		hourPrice: number,
+		dayPrice: number,
+		weekPrice: number,
+		monthPrice: number,
+		nameAmenities: string[],
+		imagesUrls: string[],
+		isActive: boolean,
+		bookings?: {
+			idHost: any,
+			idUser: any,
+			idOffice: any,
+			idTransaction?: string,
+			startDate: string,
+			endDate: string,
+			people: number,
+			priceSubtotal: number,
+			priceTotal: number,
+			dateReservation: number | Date,
+			state: string,
+			isActive: boolean
+		}[]
+	}[],
+	address: any,
+	scores?: {
+		averageScore: number,
+		reviews: any
+	},
+	days: [{
+		day: string,
+		isAvailable: boolean,
+		startHour?: string,
+		endHour?: string
+	}],
+	notifications: string[],
+	official: string[],
+	openDate: string
+}
+
+const UpdateSteps: FC<{ office: Office }> = (props) => {
 	const notifications = useNotifications()
 
 	const toSlug = (text: string) => {
@@ -100,12 +150,11 @@ const RegisterSteps = () => {
 			<CardContent>
 				<FormikStepper
 					initialValues={{
-						title: '',
-						description: '',
-						"open-de-lunes-a-viernes": '',
-						"open-sabado": '',
-						"open-domingo": '',
-						direction: '',
+						title: props.office.name,
+						description: props.office.description,
+						officeAmenities: props.office.generalAmenities,
+						location: props.office.address,
+						direction: props.office.address.formatted_address,
 						nameSpace: '',
 						typeSpace: '',
 						capacitySpace: 1,
@@ -114,7 +163,14 @@ const RegisterSteps = () => {
 						dayPrice: 50000,
 						weekPrice: 400000,
 						monthPrice: 1000000,
+						spaces: props.office.spaces,
 						nameAmenities: [],
+						officialEmail: props.office.official[0],
+						officialPhone: props.office.official[1],
+						notificationEmailMain: props.office.notifications[0],
+						notificationPhoneMain: props.office.notifications[1],
+						numberNotifications: (props.office.notifications.length - 2) / 2,
+						notificationsContacts: props.office.notifications.slice(2)
 					}}
 					onSubmit={async (values, actions) => {
 						const progress = notifications.showNotification({
@@ -167,14 +223,19 @@ const RegisterSteps = () => {
 							data.append('location', JSON.stringify(values.location))
 						}
 						else {
-							notifications.updateNotification(progress, {
-								id: progress,
-								title: 'Algo ha salido mal',
-								message: `Por favor verifica que has colocado la
-								dirección de tu oficina`,
-								color: 'pink', icon: <MdErrorOutline />
-							})
-							return
+							if (props.office.address) {
+								data.append('location', JSON.stringify(props.office.address))
+							}
+							else {
+								notifications.updateNotification(progress, {
+									id: progress,
+									title: 'Algo ha salido mal',
+									message: `Por favor verifica que has colocado la
+									dirección de tu oficina`,
+									color: 'pink', icon: <MdErrorOutline />
+								})
+								return
+							}
 						}
 						if (values.description.length < 120) {
 							notifications.updateNotification(progress, {
@@ -187,7 +248,8 @@ const RegisterSteps = () => {
 							return
 						}
 						if (values.title.length < 16) {
-							notifications.showNotification({
+							notifications.updateNotification(progress, {
+								id: progress,
 								title: 'Algo ha salido mal',
 								message: `Por favor, introduce un titulo con
 								un minimo de 16 caracteres`,
@@ -216,19 +278,33 @@ const RegisterSteps = () => {
 							space.imagesUrls = []
 							console.log(space.spaceImages)
 							console.log(space)
-							for (let image of space.spaceImages) {
-								const url = `${toSlug(values.title)}-${toSlug(space.nameSpace)}-${toSlug(image.name)}`
-								data.append(url, image, url + image.name)
-								space.imagesUrls.push(url)
+							if (space.spaceImages) {
+								for (let image of space.spaceImages) {
+									if (typeof image !== 'string') {
+										const url = `${toSlug(values.title)}-${toSlug(space.nameSpace)}-${toSlug(image.name)}`
+										data.append(url, image, url + image.name)
+										space.imagesUrls.push(url)
+									}
+									else space.imagesUrls.push(image)
+								}
+								data.append('spaces', JSON.stringify(space))
 							}
-							data.append('spaces', JSON.stringify(space))
+							else {
+								for (let image of space.imagesUrls) {
+									if (typeof image !== 'string') {
+										const url = `${toSlug(values.title)}-${toSlug(space.nameSpace)}-${toSlug(image.name)}`
+										data.append(url, image, url + image.name)
+										space.imagesUrls.push(url)
+									}
+									else space.imagesUrls.push(image)
+								}
+								data.append('spaces', JSON.stringify(space))
+							}
 						}
 						data.append('notifications', values.notificationEmailMain)
 						data.append('notifications', values.notificationPhoneMain)
 						data.append('official', values.officialEmail)
 						data.append('official', values.officialPhone)
-						data.append('openDate', values.openDate)
-						console.log(values.openDate)
 						if (values.numberNotifications !== 0) {
 							for (let i = 0; i < Number(values.numberNotifications); i++) {
 								if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(values[`notificationEmail${i}`])) {
@@ -256,7 +332,14 @@ const RegisterSteps = () => {
 							}
 						}
 						try {
-							const response = await axios.post('http://localhost:5000/offices', data, { withCredentials: true })
+							console.log('DATA', Array.from(data.values()))
+							console.log('DATA', Array.from(data.entries()))
+							const response = await axios({
+								method: 'PUT',
+								url: 'http://localhost:5000/offices/',
+								data: data,
+								withCredentials: true
+							})
 							if (response.status === 201) {
 								notifications.updateNotification(progress, {
 									id: progress,
@@ -299,4 +382,4 @@ const RegisterSteps = () => {
 		</Card>)
 }
 
-export default RegisterSteps
+export default UpdateSteps

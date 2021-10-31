@@ -18,6 +18,12 @@ const authReducer = (state:any = {logged: false}, action:{type: string, data: an
             logged: false 
         }
     }
+    else if(action.type === 'UPDATE_USER'){
+        return {
+            logged: true,
+            user: action.data
+        }
+    }
     return state
 }
 

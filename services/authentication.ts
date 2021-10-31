@@ -11,8 +11,13 @@ export const getUserData = async () => {
 
 export const logOutService = async () => {
     try {
-        const response = await axios.get('http://localhost:5000/logout', { withCredentials: true })
-        console.log(response)
+        await axios.get('http://localhost:5000/logout', { withCredentials: true })
+        const cookies = document.cookie.split(';')
+        for(let cookie of cookies){
+            const eqPos = cookie.indexOf('=')
+            const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie
+            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT"
+        }
         return true
     }
     catch (error) {
@@ -22,30 +27,44 @@ export const logOutService = async () => {
 }
 
 export const signUp = async (email: string, password: string, firstName: string, lastName: string) => {
-    try {
-        const data = {
-            email,
-            password,
-            firstName,
-            lastName
+    const data = {
+        email,
+        password,
+        firstName,
+        lastName
+    }
+    const response = await axios.post('http://localhost:5000/auth/signup', data).catch((error) => {
+        if (error.response) {
+            console.log(error.response)
+            return {
+                status: error.response.status || 500
+            }
         }
-        const response = await axios.post('http://localhost:5000/auth/signup', data)
-        return response.data
-    }
-    catch (error) {
-        console.log(error)
-    }
+        else {
+            return {
+                status: 500
+            }
+        }
+    })
+    return response
 }
 
 export const logIn = async (email: string, password: string) => {
-    try {
-        const data = {
-            email, password
+    const data = {
+        email, password
+    }
+    const response = await axios.post('http://localhost:5000/auth/login', data, { withCredentials: true }).catch((error) => {
+        if (error.response) {
+            console.log(error.response)
+            return {
+                status: error.response.status || 500
+            }
         }
-        const response = await axios.post('http://localhost:5000/auth/login', data, { withCredentials: true })
-        return response
-    }
-    catch (error) {
-        console.log(error)
-    }
+        else {
+            return {
+                status: 500
+            }
+        }
+    })
+    return response
 }

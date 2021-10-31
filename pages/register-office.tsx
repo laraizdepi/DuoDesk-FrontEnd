@@ -17,7 +17,7 @@ const RegisterOffice = () => {
 	return (
 		<div>
 			<Head>
-				<title>Registrar oficina</title>
+				<title>DuoDesk: Registra tu oficina</title>
 			</Head>
 			<NavbarBoot />
 			<Container>

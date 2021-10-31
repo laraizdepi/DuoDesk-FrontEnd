@@ -127,14 +127,11 @@ const CardSearchBase: FC<{ office: Offices, date?: string, people?: number}> = (
                     <div>
                         <BCarousel>
                             {space.imagesUrls.map((image) => {
-                                const url = image.split('-', 2)
-                                const file = image.substring(image.indexOf(url[1]) + url[1].length + 1)
-                                const src = `http://localhost:5000/uploads/offices/${url[0]}/${url[1]}/${file}`
                                 return (
                                     <BCarousel.Item key={image} interval={5000}>
                                         <Image
                                             height="12rem"
-                                            src={src}
+                                            src={image}
                                             radius="lg"
                                             fit="contain" />
                                     </BCarousel.Item>

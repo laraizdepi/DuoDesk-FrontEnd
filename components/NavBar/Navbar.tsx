@@ -10,7 +10,6 @@ import { MdOutlinePeopleAlt } from 'react-icons/md';
 import { VscTypeHierarchy } from 'react-icons/vsc'
 
 import AuthModal from '../Authenticacion/AuthModal';
-import AuthDrawer from '../Authenticacion/AuthDrawer';
 
 import { loginUser, logoutUser } from '../../Redux/actions/authActions';
 import { getSearch, updateSearch } from '../../Redux/actions/searchActions';
@@ -19,7 +18,7 @@ import { getSearch, updateSearch } from '../../Redux/actions/searchActions';
 import Logo from '../../Img/logos/DuoDeskLogo.png'
 
 interface NavbarProps {
-	stick : string
+	stick?: string
 }
 const NavBar:FC<NavbarProps>= (props) => {
 	const stick = props.stick
@@ -200,7 +199,7 @@ const NavBar:FC<NavbarProps>= (props) => {
 					</div>
 					:
 					<div className="flex flex-row justify-end w-max">
-						<AuthDrawer color="teal" variant="link" text="Inicia sesión o registrate" form="login" />
+						<AuthModal color="teal" variant="link" text="Inicia sesión o registrate" form="login" />
 					</div>
 				}
 			</div>
