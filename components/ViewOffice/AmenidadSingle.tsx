@@ -14,7 +14,7 @@ const AmenidadSingle: FC<AmenidadSingle> = (props) => {
   if (amenidadGroup.length == 0) {
     return (
       <div>
-        
+
         <h3 className={style.titleAmenidad}>{title}</h3>
         <List>
           <List.Item>No hay amenidades en esta categoria</List.Item>
@@ -23,15 +23,15 @@ const AmenidadSingle: FC<AmenidadSingle> = (props) => {
     )
   } else {
     return (
-      <Col id = 'amenidades'>
+      <Col id='amenidades'>
         <h3 className={style.titleAmenidad}>{title}</h3>
-        <List className = {style.amenidadList}>
+        <List className={style.amenidadList}>
           {amenidadGroup.map((amenidad) => {
             return (
-                <List.Item>
-                  <h4>{amenidad}</h4>
-                  {/* {amenidad} */}
-                </List.Item>
+              <List.Item>
+                <p>{amenidad}</p>
+                {/* {amenidad} */}
+              </List.Item>
             )
           })}
         </List>

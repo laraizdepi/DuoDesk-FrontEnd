@@ -77,13 +77,13 @@ const PrevArrow: FC<ArrowsInterface> = (props) => {
     )
 }
 
-const CardSearchBase: FC<{ office: Offices, date?: string, people?: number}> = (props) => {
+const CardSearchBase: FC<{ office: Offices, date?: string, people?: number }> = (props) => {
     const [space, setSpace] = useState(props.office.spaces[0])
     let url = `/search/${props.office.id}?`
-    if(props.date){
+    if (props.date) {
         url = `${url}date=${props.date}&`
     }
-    if(props.people){
+    if (props.people) {
         url = `${url}people=${props.people}&`
     }
     const settings = {
@@ -123,17 +123,13 @@ const CardSearchBase: FC<{ office: Offices, date?: string, people?: number}> = (
                 withBorder radius="lg" shadow="lg"
                 style={{ margin: '1rem' }} className="hover:no-underline"
                 id={props.office.id}>
-                <Group direction="column" position="left" style={{ marginLeft: '1rem' }}>
+                <Group direction="column" position="left" style={{ marginLeft: '0rem' }}>
                     <div>
                         <BCarousel>
                             {space.imagesUrls.map((image) => {
                                 return (
-                                    <BCarousel.Item key={image} interval={5000}>
-                                        <Image
-                                            height="12rem"
-                                            src={image}
-                                            radius="lg"
-                                            fit="contain" />
+                                    <BCarousel.Item key={image} interval={3000}>
+                                        <img src={image} alt="" style={{ objectFit: 'cover', height: '12rem', width: '400px' }} />
                                     </BCarousel.Item>
                                 )
                             })}

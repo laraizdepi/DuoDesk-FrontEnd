@@ -2,6 +2,7 @@ import ViewOffice from "../../components/ViewOffice/ViewOffice"
 import Navbar from "../../components/NavBar/Navbar"
 import React, { FC } from "react"
 import Head from "next/head"
+import { GetStaticPaths } from "next"
 
 interface Office {
     id: any,
@@ -54,6 +55,41 @@ interface Office {
 }
 
 
+
+
+export const getStaticPaths = async () => {
+
+    // return {
+    //     paths: [], //indicates that no page needs be created at build time
+    //     fallback: 'blocking' //indicates the type of fallback
+    // }
+    // const id = context.params.id
+    const res = await fetch(`http://localhost:5000/offices/`)
+    const data = await res.json()
+
+    const paths = data.map((office) => {
+        return {
+            params: { id: office.id.toString() }
+        }
+    })
+    return {
+        paths,
+        fallback: false
+    }
+}
+
+export const getStaticProps = async (context: { params: { id: any; }; }) => {
+    // export const getStaticProps = async () => {
+    const id = context.params.id
+    const res = await fetch(`http://localhost:5000/offices/${id}`)
+    const data = await res.json()
+    return {
+        props: { oficina: data }
+    }
+}
+
+
+
 const Details: FC<{ oficina: Office }> = (props) => {
     const { oficina } = props
     return (
@@ -66,14 +102,4 @@ const Details: FC<{ oficina: Office }> = (props) => {
         </div>
     )
 }
-
-export const getStaticProps = async (context: { params: { id: any; }; }) => {
-    const id = context.params.id
-    const res = await fetch(`http://localhost:5000/offices/${id}`)
-    const data = await res.json()
-    return {
-        props: { oficina: data }
-    }
-}
-
 export default Details
