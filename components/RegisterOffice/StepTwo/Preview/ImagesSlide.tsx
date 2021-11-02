@@ -12,7 +12,8 @@ const ImagesSlide: FC<ImageProps> = (props) => {
 	const productTemplate = (image: any) => {
 		return (
 			<div>
-				<img src={image.objectURL} style={{ maxWidth: '100%' }} />
+				{/* <img src={image.objectURL} style={{ maxWidth: '100%' }} /> */}
+				<img src={image.objectURL} alt="" style={{ objectFit: 'cover', height: '12rem', width: '400px' }} />
 			</div>
 		);
 	};
