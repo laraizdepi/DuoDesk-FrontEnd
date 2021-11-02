@@ -1,19 +1,25 @@
-import { Accordion, ActionIcon, Menu, Table, Title, Text, Avatar, Group, Card, Divider, Button, Collapse, Tabs, Tab, Modal, List, ThemeIcon } from '@mantine/core'
-import { useNotifications } from '@mantine/notifications'
-import axios from 'axios'
-import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
+import { Accordion, ActionIcon, Menu, Table, Image, Text, Avatar, Group, Divider, Button, Modal, List, ThemeIcon } from '@mantine/core'
+import { useNotifications } from '@mantine/notifications'
+import { useRouter } from 'next/router'
+import axios from 'axios'
+import Head from 'next/head'
+import { useDispatch, useSelector } from 'react-redux'
+
 import { AiOutlineInfoCircle } from 'react-icons/ai'
 import { BiToggleRight } from 'react-icons/bi'
 import { GiSettingsKnobs } from 'react-icons/gi'
-import { HiOutlineOfficeBuilding } from 'react-icons/hi'
 import { MdOutlineSettingsSuggest } from 'react-icons/md'
 import { RiDeleteBin6Line } from 'react-icons/ri'
 import { TiEdit } from 'react-icons/ti'
 import { VscSymbolMethod } from 'react-icons/vsc'
-import { useDispatch, useSelector } from 'react-redux'
+
 import DashboardNavBar from '../../components/NavBar/DashboardNavBar'
 import { loginUser } from '../../Redux/actions/authActions'
+
+import NoOffice from '../../Img/dashboard/offices/no-offices.svg'
+import SearchingImage from '../../Img/dashboard/offices/searching.svg'
+import DoneImage from '../../Img/dashboard/offices/done.svg'
 
 interface Office {
     id: any,
@@ -68,16 +74,10 @@ interface Office {
 const Offices = () => {
     const [offices, setOffices] = useState<Office[]>([])
     const [openInfo, setOpenInfo] = useState<boolean[]>([])
-    const [state, setState] = useState<0 | 1 | 2 | 3>(0)
+    const [state, setState] = useState<0 | 1 | 2>(0)
     const dispatch = useDispatch()
     const router = useRouter()
     const notifications = useNotifications()
-
-    const user: any = useSelector((state: any) => {
-        return state.authentication
-            ? state.authentication
-            : { logged: false }
-    })
 
     const getOffices = async () => {
         try {
@@ -88,20 +88,20 @@ const Offices = () => {
             response.data.map((element: any) => setOpenInfo([...openInfo, false]))
         }
         catch (error) {
-            setState(3)
+            setState(2)
         }
     }
 
     const toggleOffice = async (office: Office) => {
-        try{
-            await axios.put('http://localhost:5000/offices/toggle', { office: office.id}, { withCredentials: true})
+        try {
+            await axios.put('http://localhost:5000/offices/toggle', { office: office.id }, { withCredentials: true })
             await getOffices()
             notifications.showNotification({
                 title: 'Proceso exitoso',
                 message: 'Se ha actualizado el estado de tu oficina',
             })
         }
-        catch(error){
+        catch (error) {
             notifications.showNotification({
                 title: 'Error',
                 message: 'Ha sucedido un error. Intenta de nuevo',
@@ -110,15 +110,15 @@ const Offices = () => {
     }
 
     const toggleSpace = async (office: Office, space: string) => {
-        try{
-            await axios.put('http://localhost:5000/offices/toggle', { office: office.id, space}, { withCredentials: true})
+        try {
+            await axios.put('http://localhost:5000/offices/toggle', { office: office.id, space }, { withCredentials: true })
             await getOffices()
             notifications.showNotification({
                 title: 'Proceso exitoso',
                 message: 'Se ha actualizado el estado de tu oficina',
             })
         }
-        catch(error){
+        catch (error) {
             notifications.showNotification({
                 title: 'Error',
                 message: 'Ha sucedido un error. Intenta de nuevo',
@@ -126,16 +126,16 @@ const Offices = () => {
         }
     }
 
-    const deleteSpace = async(office: Office, space: string) => {
-        try{
-            await axios.delete(`http://localhost:5000/offices/${office.id}/${space}`, { withCredentials: true})
+    const deleteSpace = async (office: Office, space: string) => {
+        try {
+            await axios.delete(`http://localhost:5000/offices/${office.id}/${space}`, { withCredentials: true })
             await getOffices()
             notifications.showNotification({
                 title: 'Proceso exitoso',
                 message: 'Se ha actualizado el estado de tu oficina',
             })
         }
-        catch(error){
+        catch (error) {
             notifications.showNotification({
                 title: 'Error',
                 message: 'Ha sucedido un error. Intenta de nuevo',
@@ -143,16 +143,16 @@ const Offices = () => {
         }
     }
 
-    const deleteOffice = async(office: Office) => {
-        try{
-            await axios.delete(`http://localhost:5000/offices/${office.id}`, { withCredentials: true})
+    const deleteOffice = async (office: Office) => {
+        try {
+            await axios.delete(`http://localhost:5000/offices/${office.id}`, { withCredentials: true })
             await getOffices()
             notifications.showNotification({
                 title: 'Proceso exitoso',
                 message: 'Se ha actualizado el estado de tu oficina',
             })
         }
-        catch(error){
+        catch (error) {
             notifications.showNotification({
                 title: 'Error',
                 message: 'Ha sucedido un error. Intenta de nuevo',
@@ -165,9 +165,65 @@ const Offices = () => {
         getOffices()
     }, [])
 
+    if (state === 0) {
+        return (
+            <DashboardNavBar>
+                <Head>
+                    <title>DuoDesk: Mis Oficinas</title>
+                </Head>
+                <div className='m-5 flex flex-col place-items-center'>
+                    <Image
+                        className='mx-auto my-0'
+                        src={SearchingImage.src}
+                        width='50%'
+                        caption={
+                            <div className='space-y-4 mx-32 my-0 flex flex-col justify-center'>
+                                <Text align="center" size="lg" transform="capitalize" weight="bold">
+                                    Estamos recopilando la información de tus oficinas. Por favor, ten algo
+                                    de paciencia. En breves tendremos la información lista.
+                                </Text>
+                            </div>
+                        }
+                    />
+                </div>
+            </DashboardNavBar>
+        )
+    }
+
+    if (state === 2) {
+        return (
+            <DashboardNavBar>
+                <Head>
+                    <title>DuoDesk: Mis Oficinas</title>
+                </Head>
+                <div className='m-5 flex flex-col place-items-center'>
+                    <Image
+                        className='mx-auto my-0'
+                        src={NoOffice.src}
+                        width='40%'
+                        caption={
+                            <div className='space-y-4 mx-32 my-0 flex flex-col justify-center'>
+                                <Text align="center" size="lg" transform="capitalize" weight="bold">
+                                    No hemos encontrado ninguna oficina en tu cuenta.
+                                    Sí deseas convertirte en <span style={{ textDecoration: 'underline #12b886' }}>DuoHost</span> puedes empezar registrando tu primera oficina
+                                </Text>
+                                <Button color='indigo' onClick={() => router.push('/register-office', '/register-office')}>
+                                    ¡Registrar mi primera oficina!
+                                </Button>
+                            </div>
+                        }
+                    />
+                </div>
+            </DashboardNavBar>
+        )
+    }
+
     return (
         <DashboardNavBar>
-            <Accordion initialItem={-1}>
+            <Head>
+                <title>DuoDesk: Mis Oficinas</title>
+            </Head>
+            <Accordion initialItem={-1} multiple >
                 {offices.map((office, index) => {
                     return (
                         <Accordion.Item key={office.name} label={
@@ -264,6 +320,24 @@ const Offices = () => {
                     )
                 })}
             </Accordion>
+            <div className='m-5 flex flex-col place-items-center'>
+                <Image
+                    className='mx-auto my-0'
+                    src={DoneImage.src}
+                    width='20%'
+                    caption={
+                        <div className='space-y-4 flex flex-col justify-center'>
+                            <Text align="center" size="lg" transform="capitalize" weight="bold">
+                                Nos encanta tenerte en nuestra plataforma. Y por eso te invitamos
+                                a seguir con nosotros. Sí deseas registrar nuevas oficinas da click abajo.
+                            </Text>
+                            <Button color='indigo' onClick={() => router.push('/register-office', '/register-office')}>
+                                Añadir más oficinas
+                            </Button>
+                        </div>
+                    }
+                />
+            </div>
         </DashboardNavBar >
     )
 }

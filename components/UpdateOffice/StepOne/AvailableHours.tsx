@@ -12,18 +12,8 @@ interface HoursProps {
 }
 
 const AvailableHours: FC<HoursProps> = React.forwardRef((props, ref: any) => {
-    const formikContext = useFormikContext()
+    const formikContext: any = useFormikContext()
     const [active, setActive] = useState<boolean>(props.disable || false)
-
-    useEffect(() => {
-        if(!props.disable){
-            formikContext.setFieldValue(`switch-${slugTitle}-time`, true)
-        }
-    }, [])
-
-    const handleDisable = () => {
-        setActive(!active)
-    }
 
     const slugTitle = props.title.toString().toLowerCase()
         .replace(/\s+/g, '-')
@@ -32,9 +22,44 @@ const AvailableHours: FC<HoursProps> = React.forwardRef((props, ref: any) => {
         .replace(/^-+/, '')
         .replace(/-+$/, '')
 
-    // if(!props.disable){
-    //     formikContext.setFieldValue(`switch-${slugTitle}-time`, true)
-    // }
+    useEffect(() => {
+        if (!props.disable) {
+            formikContext.setFieldValue(`switch-${slugTitle}-time`, true)
+        }
+        // if (Array.isArray(formikContext.values.schedule)) {
+        //     if (props.title === 'De Lunes a Viernes') {
+        //         const open = new Date(Date.now())
+        //         const openDate = formikContext.values.schedule[0].startHour.split(':')
+        //         open.setHours(Number(openDate[0]), Number(openDate[1]))
+        //         if (Object.prototype.toString.call(open) === '[object Date]') {
+        //             if (isNaN(open.getTime())) {
+        //                 alert('NO DATE')
+        //             }
+        //             else {
+        //                 alert('YES DATE')
+        //             }
+        //         }
+        //         else {
+        //             alert('NO DATE TYPE')
+        //         }
+        //         formikContext.setFieldValue(`open-${slugTitle}`, {
+        //             '$L': 'en',
+        //             '$u': undefined,
+        //             '$d': open,
+        //             '$x': {},
+        //             '$y': open.getFullYear(),
+        //             '$M': open.getMonth(),
+        //             '$D': open.getDate(),
+        //             '$W': 1,
+        //             '$H': open.getHours(),
+        //             '$m': open.getMinutes(),
+        //             '$s': 0,
+        //             '$ms': 0
+        //         })
+        //         formikContext.setFieldValue(`open-${slugTitle}-time`, formikContext.values.schedule[0].startHour)
+        //     }
+        // }
+    }, [])
 
     return (
         <div>
@@ -47,10 +72,10 @@ const AvailableHours: FC<HoursProps> = React.forwardRef((props, ref: any) => {
                         {({ field, form, meta }: any) => (
                             <LocalizationProvider dateAdapter={DateAdapter}>
                                 <Col span={6}>
-                                    <Switch id={`switch-${slugTitle}`} 
-                                    checked={field.value || false} 
-                                    onChange={() => form.setFieldValue(`switch-${slugTitle}-time`, !field.value)} 
-                                    label={field.value ? `Disponible ${props.title}` : `No disponible ${props.title}`} />
+                                    <Switch id={`switch-${slugTitle}`}
+                                        checked={field.value || false}
+                                        onChange={() => form.setFieldValue(`switch-${slugTitle}-time`, !field.value)}
+                                        label={field.value ? `Disponible ${props.title}` : `No disponible ${props.title}`} />
                                 </Col>
                             </LocalizationProvider>
                         )}

@@ -116,19 +116,36 @@ const Preview: FC<PreviewProps> = (props) => {
 				<Group direction="column" position="left">
 					<div>
 						<BCarousel>
-							{actualSpace.imagesUrls.map((image: any, index: number) => {
-								return (
-									<BCarousel.Item key={index} interval={5000}>
-										<Image
-											width="80%"
-											className="m-auto h-full"
-											src={image}
-											radius="lg"
-											fit="contain" 
+							{typeof actualSpace.imagesUrls !== 'undefined' ?
+								actualSpace.imagesUrls.map((image: any, index: number) => {
+									return (
+										<BCarousel.Item key={index} interval={5000}>
+											<Image
+												width="80%"
+												className="m-auto h-full"
+												src={image}
+												radius="lg"
+												fit="contain"
 											/>
-									</BCarousel.Item>
-								)
-							})}
+										</BCarousel.Item>
+									)
+								})
+								:
+								actualSpace.spaceImages.map((image: any, index: number) => {
+									return (
+										<BCarousel.Item key={index} interval={5000}>
+											<Image
+												height="auto"
+												width="80%"
+												className="m-auto"
+												src={image.objectURL}
+												radius="lg"
+												fit="contain"
+											/>
+										</BCarousel.Item>
+									)
+								})
+							}
 						</BCarousel>
 					</div>
 					<div>

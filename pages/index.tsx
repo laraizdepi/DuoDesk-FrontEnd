@@ -1,21 +1,32 @@
+import React from 'react'
+import { Image, Text } from '@mantine/core'
+
 import HeaderHome from '../components/Header/HeaderHome'
 import HomeCards from '../components/HomeCards/HomeCards'
-import Phrase from '../components/Phrases/BasePhrases';
-import HomePhrases from '../components/Phrases/HomePhrases'
-import Head from 'next/head'
-import AllCardsSecond from '../components/AllCardsSecond/AllCardsSecond'
-import ListWithSvg from '../components/ListOfSteps/ListWithSvg';
-import OpinionSlider from '../components/OpinionsHome/OpinionSlider';
 import NavBar from '../components/NavBar/Navbar';
-import SearchImputTest from '../components/SearchInput/SearchInput';
-export default function Home() {
+
+const Home = () => {
    return (
       <div className="w-full">
          <NavBar/>
          <HeaderHome />
          <HomeCards/>
-         <HomePhrases/>
-         <OpinionSlider/>
+         <div className='flex flex-row'>
+            <div className='m-auto'>
+               <Image
+                  src='https://landkit.goodthemes.co/assets/img/photos/photo-2.jpg'
+                  width='60%'
+               />
+            </div>
+            <div>
+               <Text>
+                  La solución perfecta y pensada para
+                  <span>personas creativas e intuitivas</span>
+               </Text>
+            </div>
+         </div>
       </div>
-   );
+   )
 }
+
+export default Home

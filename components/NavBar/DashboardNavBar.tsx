@@ -44,10 +44,10 @@ const DashboardNavBar: FC = (props) => {
 		router.push('/', '/')
 	}
 
-	if(!user.logged){
-		return(
+	if (!user.logged) {
+		return (
 			<div>
-				<NotAuthModal open={true}/>
+				<NotAuthModal open={true} />
 			</div>
 		)
 	}
@@ -66,21 +66,21 @@ const DashboardNavBar: FC = (props) => {
 							placement="center"
 							control={<Button variant='link' color='indigo'>Menú</Button>}
 						>
-							<Menu.Label variant='white' color='indigo' size='md' className='hover:text-teal' leftIcon={<FiHome />}>
+							<Menu.Item color='indigo' className='hover:text-teal' icon={<FiHome />}>
 								Inicio
-							</Menu.Label>
-							<Menu.Label variant='white' color='indigo' size='md' className='hover:text-teal' leftIcon={<VscAccount />} onClick={() => router.push('/dashboard/account', '/dashboard/account')}>
+							</Menu.Item>
+							<Menu.Item color='indigo' className='hover:text-teal' icon={<VscAccount />} onClick={() => router.push('/dashboard/account', '/dashboard/account')}>
 								Mi cuenta
-							</Menu.Label>
-							<Menu.Label variant='white' color='indigo' size='md' className='hover:text-teal' leftIcon={<HiOutlineOfficeBuilding />}>
+							</Menu.Item>
+							<Menu.Item color='indigo' className='hover:text-teal' icon={<HiOutlineOfficeBuilding />} onClick={() => router.push('/dashboard/offices', '/dashboard/offices')}>
 								Mis Oficinas
-							</Menu.Label>
-							<Menu.Label variant='white' color='indigo' size='md' className='hover:text-teal' leftIcon={<BiBookBookmark />}>
+							</Menu.Item>
+							<Menu.Item color='indigo' className='hover:text-teal' icon={<BiBookBookmark />}>
 								Historial
-							</Menu.Label>
-							<Menu.Label variant='white' color='indigo' size='md' className='hover:text-teal' leftIcon={<RiSecurePaymentLine />}>
+							</Menu.Item>
+							<Menu.Item color='indigo' className='hover:text-teal' icon={<RiSecurePaymentLine />}>
 								Pagos
-							</Menu.Label>
+							</Menu.Item>
 						</Menu>
 					</div>
 					<div>
@@ -104,52 +104,34 @@ const DashboardNavBar: FC = (props) => {
 	}
 
 	return (
-		<div className='flex flex-col h-screen border'>
+		<div>
 			<div className='py-3 px-5 flex flex-row justify-between items-center'>
 				<Image
 					src={Logo.src}
 					width={100}
 					onClick={() => router.push('/', '/')}
 				/>
-				<div className='flex flex-row place-items-center'>
-					<Button variant='white' color='indigo' size='md' className='hover:text-teal' leftIcon={<FiHome />} onClick={() => router.push('/dashboard/account', '/dashboard/account')}>
-						Inicio
-					</Button>
-					<Button variant='white' color='indigo' size='md' className='hover:text-teal' leftIcon={<VscAccount />} onClick={() => router.push('/dashboard/account', '/dashboard/account')}>
-						Mi cuenta
-					</Button>
-					<Button variant='white' color='indigo' size='md' className='hover:text-teal' leftIcon={<HiOutlineOfficeBuilding />}>
-						Mis Oficinas
-					</Button>
-					<Button variant='white' color='indigo' size='md' className='hover:text-teal' leftIcon={<BiBookBookmark />}>
-						Historial
-					</Button>
-					<Button variant='white' color='indigo' size='md' className='hover:text-teal' leftIcon={<RiSecurePaymentLine />}>
-						Pagos
-					</Button>
-				</div>
-				<div>
-					<Menu
-						placement="center"
-						control={<Avatar src={user.user.image} radius="xl" size="md" />}
-					>
-						<Menu.Label>Cuenta</Menu.Label>
-						<Menu.Item onClick={() => router.push('/dashboard/account', '/dashboard/account')}>Mi cuenta</Menu.Item>
-						<Menu.Item onClick={() => router.push('/register-office', '/register-office')}>Registrar una oficina</Menu.Item>
-						<Menu.Label>Sesión</Menu.Label>
-						<Menu.Item color="pink" onClick={logOutHandler}>Cerrar sesión</Menu.Item>
-					</Menu>
-				</div>
+
+				<Menu
+					placement="center"
+					control={<Avatar src={user.user.image} radius="xl" size="md" />}
+				>
+					<Menu.Label>Cuenta</Menu.Label>
+					<Menu.Item onClick={() => router.push('/dashboard/account', '/dashboard/account')}>Mi cuenta</Menu.Item>
+					<Menu.Item onClick={() => router.push('/register-office', '/register-office')}>Registrar una oficina</Menu.Item>
+					<Menu.Label>Sesión</Menu.Label>
+					<Menu.Item color="pink" onClick={logOutHandler}>Cerrar sesión</Menu.Item>
+				</Menu>
 			</div>
-			{/* <div className='flex flex-row h-full'> */}
-				{/* <div className='flex flex-col items-start w-1/5'>
+			<div className='flex flex-row'>
+				<div className='flex flex-col items-start w-1/5 h-3/4 space-y-5 mt-4'>
 					<Button variant='white' color='indigo' size='md' className='hover:text-teal' leftIcon={<FiHome />}>
 						Inicio
 					</Button>
-					<Button variant='white' color='indigo' size='md' className='hover:text-teal' leftIcon={<VscAccount />}>
+					<Button onClick={() => router.push('/dashboard/account', '/dashboard/account')} variant='white' color='indigo' size='md' className='hover:text-teal' leftIcon={<VscAccount />}>
 						Mi cuenta
 					</Button>
-					<Button variant='white' color='indigo' size='md' className='hover:text-teal' leftIcon={<HiOutlineOfficeBuilding />}>
+					<Button onClick={() => router.push('/dashboard/offices', '/dashboard/offices')} variant='white' color='indigo' size='md' className='hover:text-teal' leftIcon={<HiOutlineOfficeBuilding />}>
 						Mis Oficinas
 					</Button>
 					<Button variant='white' color='indigo' size='md' className='hover:text-teal' leftIcon={<BiBookBookmark />}>
@@ -158,11 +140,11 @@ const DashboardNavBar: FC = (props) => {
 					<Button variant='white' color='indigo' size='md' className='hover:text-teal' leftIcon={<RiSecurePaymentLine />}>
 						Pagos
 					</Button>
-				</div> */}
-				<div className='h-full overflow-y-scroll w-full'>
+				</div>
+				<div className='h-5/6 overflow-y-scroll w-full'>
 					{props.children}
 				</div>
-			{/* </div> */}
+			</div>
 		</div>
 	)
 }

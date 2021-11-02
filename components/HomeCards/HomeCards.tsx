@@ -17,7 +17,7 @@ const AllCards = () => {
         autoplay: true,
         speed: 1000,
         autoplaySpeed: 2000,
-        pauseOnHover: true,
+        pauseOnHover: false,
     }
 
     const info = [
@@ -46,10 +46,16 @@ const AllCards = () => {
             'link': 'https://trigalcoworking.com/coworking/9-razones-un-coworking-es-perfecto/'
         },
         {
-            'image': '',
-            'title': '',
-            'text': '',
-            'link': ''
+            'image': 'data:image/png;base64,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',
+            'title': 'Nómadas digitales',
+            'text': 'Según las predicciones de Pieter Levels, en el año 2035 habrá nueve mil millones de personas en la tierra de los que seis mil millones tendrán edad de trabajar, la mitad de éstos serán autónomos de los que un tercio – mil millones de personas – trabajarán en remoto, los llamados nómadas digitales.',
+            'link': 'https://www.segurcoworking.com/nomadas-digitales/'
+        },
+        {
+            'image': 'https://pbs.twimg.com/profile_images/1320687453871722501/rIFj6OVg_400x400.jpg',
+            'title': 'Los espacios coworking como solución a las nuevas necesidades',
+            'text': 'Trabajar desde un coworking destacan una serie de beneficios como; nuevas oportunidades laborales, el networking, vencerás el aislamiento de trabajar desde casa, o la productividad efectiva entre otros muchos beneficios',
+            'link': 'https://www.welink.es/blog/espacios-coworking-solucion-nuevas-necesidades'
         },
     ]
 

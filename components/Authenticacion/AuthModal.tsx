@@ -1,10 +1,9 @@
-import React, { FC, useEffect } from 'react';
-import { useState } from 'react';
-import { Modal, Group, Button, Tabs, Tab, Title, Text, Center } from '@mantine/core';
+import React, { FC, useEffect, useState } from 'react'
+import { Modal, Button, Tabs, Tab, Title, Text } from '@mantine/core'
+import { BiUserCheck, BiUserPlus } from 'react-icons/bi'
 
 import RegisterForm from './RegisterForm';
 import LoginForm from './LoginForm';
-import { BiUserCheck, BiUserPlus } from 'react-icons/bi';
 
 interface DataProps {
 	color: string,

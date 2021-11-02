@@ -1,14 +1,14 @@
 {
-  "extends": [
-    "@mantine/eslint-config",
-    "plugin:@typescript-eslint/recommended"],
+  "extends": ["@mantine/eslint-config", "plugin:@typescript-eslint/recommended"],
   "parserOptions": {
     "project": "./tsconfig.json"
   },
 
   "rules": {
+    "semi": 0,
+    "@typescript-eslint/semi": ["error"],
     "react/react-in-jsx-scope": "off",
-    "@typescript-eslint/indent": ["error", 3],
+    "@typescript-eslint/indent": ["error", 4],
     "@typescript-eslint/no-unused-vars": "error",
     "@typescript-eslint/no-explicit-any": "error"
   }

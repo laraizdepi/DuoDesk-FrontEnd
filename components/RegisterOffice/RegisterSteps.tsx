@@ -264,7 +264,8 @@ const RegisterSteps = () => {
 									message: `Felicitaciones, hemos añadido tu oficina. Ahora,
 									será disponible desde la fecha que has escogido. Sí necesitas modificar
 									información sobre tu oficina, dirigete al Dashboard`,
-									color: 'teal', icon: <MdDoneAll />
+									color: 'teal', icon: <MdDoneAll />,
+									autoClose: false
 								})
 							}
 							else {

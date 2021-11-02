@@ -1,28 +1,79 @@
-import Test from "../../components/test"
 import ViewOffice from "../../components/ViewOffice/ViewOffice"
 import Navbar from "../../components/NavBar/Navbar"
-import { useRouter } from "next/dist/client/router"
-import React from "react"
+import React, { FC } from "react"
 import Head from "next/head"
 
-export const getStaticProps = async (context: { params: { id: any; }; }) =>{
-    const id = context.params.id
-    const res = await fetch(`http://localhost:5000/offices/${id}`)
-    const data = await res.json()
-    return{
-        props : {oficina:data}
-    }
+interface Office {
+    id: any,
+    name: string,
+    description: string,
+    host: any,
+    isActive: boolean,
+    generalAmenities: string[]
+    spaces: {
+        nameSpace: string,
+        typeSpace: string,
+        capacitySpace: number,
+        availableSpace: number,
+        hourPrice: number,
+        dayPrice: number,
+        weekPrice: number,
+        monthPrice: number,
+        nameAmenities: string[],
+        imagesUrls: string[],
+        isActive: boolean,
+        bookings?: {
+            idHost: any,
+            idUser: any,
+            idOffice: any,
+            idTransaction?: string,
+            startDate: string,
+            endDate: string,
+            people: number,
+            priceSubtotal: number,
+            priceTotal: number,
+            dateReservation: number | Date,
+            state: string,
+            isActive: boolean
+        }[]
+    }[],
+    address: any,
+    scores?: {
+        averageScore: number,
+        reviews: any
+    },
+    days: [{
+        day: string,
+        isAvailable: boolean,
+        startHour?: string,
+        endHour?: string
+    }],
+    notifications: string[],
+    official: string[],
+    openDate: string
 }
 
-const Details = ({oficina}) => {
+
+const Details: FC<{ oficina: Office }> = (props) => {
+    const { oficina } = props
     return (
         <div>
             <Head>
                 <title>DuoDesk:{oficina.name}</title>
             </Head>
-            <Navbar stick  = {''}/>
-            <ViewOffice office = {oficina}/>
+            <Navbar stick={''} />
+            <ViewOffice office={oficina} />
         </div>
     )
 }
+
+export const getStaticProps = async (context: { params: { id: any; }; }) => {
+    const id = context.params.id
+    const res = await fetch(`http://localhost:5000/offices/${id}`)
+    const data = await res.json()
+    return {
+        props: { oficina: data }
+    }
+}
+
 export default Details

@@ -170,9 +170,11 @@ const UpdateSteps: FC<{ office: Office }> = (props) => {
 						notificationEmailMain: props.office.notifications[0],
 						notificationPhoneMain: props.office.notifications[1],
 						numberNotifications: (props.office.notifications.length - 2) / 2,
-						notificationsContacts: props.office.notifications.slice(2)
+						notificationsContacts: props.office.notifications.slice(2),
+						schedule: props.office.days
 					}}
 					onSubmit={async (values, actions) => {
+						notifications.clean()
 						const progress = notifications.showNotification({
 							loading: true,
 							title: 'Subiendo tus datos',
@@ -275,10 +277,10 @@ const UpdateSteps: FC<{ office: Office }> = (props) => {
 							}
 						}
 						for (let space of values.spaces) {
-							space.imagesUrls = []
-							console.log(space.spaceImages)
-							console.log(space)
+							alert(JSON.stringify(space.spaceImages))
+							alert(JSON.stringify(space.imagesUrls))
 							if (space.spaceImages) {
+								space.imagesUrls = []
 								for (let image of space.spaceImages) {
 									if (typeof image !== 'string') {
 										const url = `${toSlug(values.title)}-${toSlug(space.nameSpace)}-${toSlug(image.name)}`
@@ -290,14 +292,6 @@ const UpdateSteps: FC<{ office: Office }> = (props) => {
 								data.append('spaces', JSON.stringify(space))
 							}
 							else {
-								for (let image of space.imagesUrls) {
-									if (typeof image !== 'string') {
-										const url = `${toSlug(values.title)}-${toSlug(space.nameSpace)}-${toSlug(image.name)}`
-										data.append(url, image, url + image.name)
-										space.imagesUrls.push(url)
-									}
-									else space.imagesUrls.push(image)
-								}
 								data.append('spaces', JSON.stringify(space))
 							}
 						}
@@ -305,6 +299,7 @@ const UpdateSteps: FC<{ office: Office }> = (props) => {
 						data.append('notifications', values.notificationPhoneMain)
 						data.append('official', values.officialEmail)
 						data.append('official', values.officialPhone)
+						data.append('id', props.office.id)
 						if (values.numberNotifications !== 0) {
 							for (let i = 0; i < Number(values.numberNotifications); i++) {
 								if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(values[`notificationEmail${i}`])) {
@@ -344,10 +339,10 @@ const UpdateSteps: FC<{ office: Office }> = (props) => {
 								notifications.updateNotification(progress, {
 									id: progress,
 									title: 'Oficina registrada correctamente',
-									message: `Felicitaciones, hemos añadido tu oficina. Ahora,
-									será disponible desde la fecha que has escogido. Sí necesitas modificar
-									información sobre tu oficina, dirigete al Dashboard`,
-									color: 'teal', icon: <MdDoneAll />
+									message: `Tu oficina ha sido actualizada correctamente. En
+									pocos momentos serás redireccionado a tu Dashboard`,
+									color: 'teal', icon: <MdDoneAll />,
+									autoClose: false
 								})
 							}
 							else {

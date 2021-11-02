@@ -17,6 +17,27 @@ const ImagesSlide: FC<ImageProps> = (props) => {
 		);
 	};
 
+	if (typeof props.images[0] !== 'string') {
+		return (
+			<Card withBorder>
+				<Carousel>
+					{props.images.map((image) => {
+						return (
+							<Carousel.Item key={image} interval={5000}>
+								<Image
+									height="12rem"
+									src={image.objectURL}
+									radius="lg"
+									fit="contain"
+								/>
+							</Carousel.Item>
+						)
+					})}
+				</Carousel>
+			</Card>
+		)
+	}
+
 	return (
 		<Card withBorder>
 			<Carousel>

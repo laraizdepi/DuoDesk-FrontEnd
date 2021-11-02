@@ -227,7 +227,11 @@ const Account = () => {
                             <Center className='mx-auto my-5 space-x-8 space-y-1'>
                                 <Button leftIcon={<HiOutlineSaveAs />} color='teal' variant='filled' type='submit'>Guardar</Button>
                                 <Button leftIcon={<MdOutlineCancel />} color='pink' variant='outline' onClick={() => {
-                                    userForm.reset()
+                                    userForm.setValues({
+                                        email: user.user.email,
+                                        firstName: user.user.firstName,
+                                        lastName: user.user.lastName
+                                    })
                                     setEdit(false)
                                 }}>
                                     Cancelar
