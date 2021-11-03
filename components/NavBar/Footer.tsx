@@ -9,7 +9,7 @@ import { BsFacebook, BsInstagram, BsTwitter, BsWhatsapp } from 'react-icons/bs'
 
 const Footer = () => {
     return (
-        <div className='flex flex-col md:flex-row place-items-center justify-evenly p-4'>
+        <div className='border flex flex-col md:flex-row place-items-center justify-evenly p-4'>
             <div className='justify-self-center'>
                 <Image src={DuoDeskLogo.src} width='40%' />
             </div>

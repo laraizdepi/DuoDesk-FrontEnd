@@ -7,6 +7,7 @@ import NavBar from '../components/NavBar/Navbar';
 import Features from '../components/LandingComponents/Features/Features';
 import Roles from '../components/LandingComponents/Roles/Roles'
 import MadeForAll from '../components/LandingComponents/MadeForAll/MadeForAll';
+import Faq from '../components/LandingComponents/FAQ/Faq';
 
 const Home = () => {
    return (
@@ -17,6 +18,7 @@ const Home = () => {
             <HomeCards />
             <Roles/>
             <MadeForAll/>
+            <Faq />
          </NavBar>
       </div>
    )

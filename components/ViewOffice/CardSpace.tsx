@@ -51,7 +51,6 @@ const CardSpace: FC<{office : Offices}> = (props) => {
             <div>
                 <TabsSpace office = {office}/>
             </div>
-            {/* <CardSearchBaseTest office={props.office} /> */}
         </div>
     )
 }

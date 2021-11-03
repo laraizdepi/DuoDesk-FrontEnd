@@ -26,12 +26,12 @@ interface Offices {
         averageScore: number,
         reviews: any
     },
-    days: [{
+    days: {
         day: string,
         isAvailable: boolean,
         startHour?: string,
         endHour?: string
-    }],
+    }[],
     notifications: string[],
     official: string[],
     openDate: string
@@ -42,7 +42,6 @@ const Schedule: FC<{ office: Offices }> = (props) => {
     const tConvert = (time: any) => {
         // Check correct time format and split into components
         time = time.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
-
         if (time.length > 1) { // If time format correct
             time = time.slice(1);  // Remove full string match value
             time[5] = +time[0] < 12 ? ' AM' : ' PM'; // Set AM/PM
@@ -51,26 +50,25 @@ const Schedule: FC<{ office: Offices }> = (props) => {
         return time.join(''); // return adjusted time or original string
     }
 
-    const startWeek = tConvert(office.days.[0].startHour)
-    const endWeek = tConvert(office.days.[0].endHour)
+    const startWeek = tConvert(office.days[0].startHour)
+    const endWeek = tConvert(office.days[0].endHour)
 
     let dateSat = 'No abierto'
     let dateSun = 'No abierto'
 
     if (office.days.length === 2) {
-
-        const startSat = tConvert(office.days.[1].startHour)
-        const endSat = tConvert(office.days.[1].endHour)
+        const startSat = tConvert(office.days[1].startHour)
+        const endSat = tConvert(office.days[1].endHour)
 
         dateSat = `${startSat} - ${endSat}`
 
     } else if (office.days.length === 3) {
 
-        const startSat = tConvert(office.days.[1].startHour)
-        const endSat = tConvert(office.days.[1].endHour)
+        const startSat = tConvert(office.days[1].startHour)
+        const endSat = tConvert(office.days[1].endHour)
 
-        const startSun = tConvert(office.days.[2].startHour)
-        const endSun = tConvert(office.days.[2].endHour)
+        const startSun = tConvert(office.days[2].startHour)
+        const endSun = tConvert(office.days[2].endHour)
 
         dateSat = `${startSat} - ${endSat}`
         dateSun = `${startSun} - ${endSun}`

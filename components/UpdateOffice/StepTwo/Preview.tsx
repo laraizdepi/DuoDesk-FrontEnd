@@ -4,7 +4,7 @@ import { Carousel as BCarousel } from 'react-bootstrap'
 import { AiOutlineStar } from 'react-icons/ai'
 import _ from "lodash";
 
-import SpacesEmpty from '../../../../Img/register/spaces-empty.svg'
+import SpacesEmpty from '../../../Img/register/spaces-empty.svg'
 
 import Head from "next/head";
 import { HiArrowSmLeft, HiArrowSmRight } from "react-icons/hi";

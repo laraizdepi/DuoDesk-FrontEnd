@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { List, Tab, Tabs, ThemeIcon, Image, Text, Title } from '@mantine/core'
 import { IoPeopleOutline } from 'react-icons/io5'
 import { MdOutlineDesignServices } from 'react-icons/md'
@@ -11,7 +11,7 @@ import BusinessImage from '../../../Img/home/business.svg'
 const MadeForAll = () => {
     return (
         <div className='flex flex-col place-items-center'>
-            <Tabs variant='pills' className='p-5' color='indigo' position='center'>
+            <Tabs  variant='pills' className='p-5' color='indigo' position='center'>
                 <Tab label='DuoUser'>
                     <div className='flex flex-col md:flex-row p-5'>
                         <div className='flex flex-col space-y-5 w-2/3'>

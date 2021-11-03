@@ -2,7 +2,7 @@ import ViewOffice from "../../components/ViewOffice/ViewOffice"
 import Navbar from "../../components/NavBar/Navbar"
 import React, { FC } from "react"
 import Head from "next/head"
-import { GetStaticPaths } from "next"
+import { GetStaticPaths, GetStaticProps } from "next"
 
 interface Office {
     id: any,
@@ -57,17 +57,12 @@ interface Office {
 
 
 
-export const getStaticPaths = async () => {
+export const getStaticPaths: GetStaticPaths = async () => {
 
-    // return {
-    //     paths: [], //indicates that no page needs be created at build time
-    //     fallback: 'blocking' //indicates the type of fallback
-    // }
-    // const id = context.params.id
     const res = await fetch(`http://localhost:5000/offices/`)
     const data = await res.json()
 
-    const paths = data.map((office) => {
+    const paths = data.map((office: any) => {
         return {
             params: { id: office.id.toString() }
         }

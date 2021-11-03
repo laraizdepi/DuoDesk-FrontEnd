@@ -134,7 +134,7 @@ const TabsSpace: React.FC<{ office: Offices }> = (props) => {
     );
 }
 
-const AreThereExist = ({ space, available }) => {
+const AreThereExist:React.FC<{space: any, available: any}> = ({ space, available }) => {
     // if (Object.keys(space).length >= 0) {
     if (Object.keys(space).length > 0) {
         return (

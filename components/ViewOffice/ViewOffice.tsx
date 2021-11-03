@@ -48,7 +48,11 @@ interface Offices {
 }
 
 const ViewOffice: FC<{ office: Offices }> = (props) => {
-	let photos = []
+	let photos: {
+		photo: string,
+		caption: string,
+		subcaption: string,
+	}[] = []
 	const [isOpen, setIsOpen] = useState(false);
 	const [numberIma, setNumberIma] = useState(0)
 
@@ -61,7 +65,15 @@ const ViewOffice: FC<{ office: Offices }> = (props) => {
 		const [opacidad, setopacidad] = useState(0)
 
 		images.map((image) => {
-			let photo = {}
+			let photo: {
+				photo: string,
+				caption: string,
+				subcaption: string,
+			} = {
+				photo: '',
+				caption: '',
+				subcaption: ''
+			}
 			const src = image
 
 			photo['photo'] = src
@@ -69,8 +81,6 @@ const ViewOffice: FC<{ office: Offices }> = (props) => {
 			photo['subcaption'] = typeOfImages
 
 			photos.push(photo)
-			photo = {}
-
 		})
 	})
 	const changeOpenAndNumber = (number: number) => {
@@ -83,10 +93,7 @@ const ViewOffice: FC<{ office: Offices }> = (props) => {
 			<Row >
 				<Col xs={6} >
 					<div className={style.ImageBig} onClick={() => (changeOpenAndNumber(0))}>
-						{/* <img src={'https://coworker.imgix.net/photos/colombia/bogota/selina-chapinero-cowork/main.jpg?w=1200&h=0&q=90&auto=format,compress&fit=crop&mark=/template/img/wm_icon.png&markscale=5&markalign=center,middle'} alt="" className={style.ImageTest} /> */}
-						{/* <img src={'https://a0.muscache.com/im/pictures/29440d04-fafe-447b-bf09-249573647c46.jpg?im_w=1200' } alt="" className={style.ImageTest} /> */}
 						<img src={photos[0]['photo']} alt="" className={style.ImageTest} />
-						{/* <img src={'https://a0.muscache.com/im/pictures/f58d0928-2b9b-459e-9633-f0d3cf0a5546.jpg?im_w=960'} alt="" className={style.ImageTest} /> */}
 					</div>
 				</Col>
 

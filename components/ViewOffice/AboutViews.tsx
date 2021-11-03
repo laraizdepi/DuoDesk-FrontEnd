@@ -45,17 +45,17 @@ interface Offices {
 }
 const AboutViews: FC<{ office: Offices }> = (props) => {
 	const office = props.office
-	// const [scroll, scrollTo] = useWindowScroll();
+	const [scroll, scrollTo] = useWindowScroll();
 
-	// const onclick = () => {
-	// 	scrollTo({ y: 10000 })
-	// }
+	const onclick = () => {
+		scrollTo({ y: 10000 })
+	}
 
 	return (
 		<div style={{ width: '90%', marginLeft: '50px' }}>
 			<Row className={style.TitleComplete} style={{ display: 'flex', }}>
 				<Col md={10}>
-					<h1 className={style.titleAbout} id="titleOffice">
+					<h1 className={style.titleAbout}>
 						{office.name}
 					</h1>
 				</Col>
@@ -77,9 +77,6 @@ const AboutViews: FC<{ office: Offices }> = (props) => {
 							</h1>
 						</Col>
 					</Row>
-					{/* <h1>
-            <BsHeartFill />
-          </h1> */}
 				</Col>
 
 			</Row>
@@ -88,12 +85,7 @@ const AboutViews: FC<{ office: Offices }> = (props) => {
 				<GoLocation color='#E64980' />
 				{office.address.formatted_address}.&nbsp;
 				<p style={{ color: '#12B886', cursor: 'pointer' }} onClick={() => scrollTo({ y: 10000 })} > Mapa</p>
-				{/* <a href="#map">MAPSS</a> */}
 			</div>
-
-			{/* <div>
-        <NavbarSectionMateria />
-      </div> */}
 
 			<Row>
 				<Col xs={12} md={9} style={{ position: 'sticky', top: '0' }}>
@@ -101,7 +93,6 @@ const AboutViews: FC<{ office: Offices }> = (props) => {
 					<div className={style.description} dangerouslySetInnerHTML={{
 						__html: office.description
 					}}>
-						{/* <p>{office.description}</p> */}
 					</div>
 				</Col>
 				<Col xs={12} md={3}>
@@ -110,14 +101,7 @@ const AboutViews: FC<{ office: Offices }> = (props) => {
 					</div>
 				</Col>
 			</Row>
-			{/* 
-      <div className={style.description}>
-        <p>{office.description}</p>
-      </div> */}
-
 		</div >
-
-
 	)
 }
 

@@ -59,10 +59,10 @@ const NavbarSectionMateria = () => {
                         // color = '#12B886'
                         >
                             <Tab value="one" label="Imagenes" onClick={() => scrollTo({ y: 0 })} />
-                            <Tab value="two" label="Informacion General" onClick={() => window.location.href = '#titleOffice'} />
+                            <Tab value="two" label="Información General" onClick={() => window.location.href = '#titleOffice'} />
                             <Tab value="four" label="Amenidades" onClick={() => window.location.href = '#amenidades'} />
                             <Tab value="five" label="Espacios" onClick={() => window.location.href = '#spaces'} />
-                            <Tab value="three" label="Ubicacion" onClick={() => window.location.href = '#BigMap'} />
+                            <Tab value="three" label="Ubicación" onClick={() => window.location.href = '#BigMap'} />
                         </Tabs>
                     </div>
                 </Box>

@@ -3,7 +3,6 @@ import { Badge, Card, Divider, Group, Text, Title, Image, Grid, Col, List, Theme
 import { FaRegHeart, FaRegStar } from 'react-icons/fa'
 import { AiOutlineHeart, AiOutlineStar } from 'react-icons/ai'
 import { Carousel as BCarousel } from 'react-bootstrap'
-import { NextLink } from '../NextLink/NextLink'
 import { HiArrowSmLeft, HiArrowSmRight } from 'react-icons/hi'
 import Head from 'next/head'
 import Slider from "react-slick";

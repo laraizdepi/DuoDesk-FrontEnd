@@ -10,7 +10,7 @@ const SearchValues: FC<SearchProps> = (props) => {
     const space = props.space
     const router = useRouter()
     const periodComplete = `${router.query.period}Price`
-    const subtotal = router.query.cuantity * space[periodComplete]
+    const subtotal = Number(router.query.cuantity) * space[periodComplete]
     // const subtotalUgly = (subtotal)
     const subtotalUgly = (subtotal + subtotal * 15 / 100)
 
