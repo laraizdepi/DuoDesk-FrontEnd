@@ -45,17 +45,17 @@ interface Offices {
 }
 const AboutViews: FC<{ office: Offices }> = (props) => {
 	const office = props.office
-	const [scroll, scrollTo] = useWindowScroll();
+	// const [scroll, scrollTo] = useWindowScroll();
 
-	const onclick = () => {
-		scrollTo({ y: 10000 })
-	}
+	// const onclick = () => {
+	// 	scrollTo({ y: 10000 })
+	// }
 
 	return (
 		<div style={{ width: '90%', marginLeft: '50px' }}>
 			<Row className={style.TitleComplete} style={{ display: 'flex', }}>
 				<Col md={10}>
-					<h1 className={style.titleAbout}>
+					<h1 className={style.titleAbout} id="titleOffice">
 						{office.name}
 					</h1>
 				</Col>

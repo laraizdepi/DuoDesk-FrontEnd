@@ -44,19 +44,22 @@ const ChangeDates: FC<ChangeDatesProps> = () => {
   // const initPeople = parseInt(router.query.people) 
   // const initPeople = Number(router.query.people)
   // const initPeople = 3
+  const initPeriodBe = router.query.period
+  const initPeoriodTwo = Number(initPeriodBe)
+
   const initPeopleBe = router.query.people
   const initPeople = Number(initPeopleBe)
 
   const initCuantityBe = router.query.cuantity
   const initCuantity = Number(initCuantityBe)
 
-  const initDate = router.query.date 
+  const initDate = router.query.date
   const transfDate = Date.parse(initDate)
 
 
-  console.log('date',initDate)
-  console.log('transfateasd',transfDate)
-  
+  console.log('date', initDate)
+  console.log('transfateasd', transfDate)
+
 
 
   const [value, setValue] = React.useState<Date | null>(
@@ -79,20 +82,20 @@ const ChangeDates: FC<ChangeDatesProps> = () => {
     const people = values.people
 
     console.log('date', date);
-    console.log('New date', Date.parse(date)) 
+    console.log('New date', Date.parse(date))
     const numberDate = Date.parse(date)
 
     const transDate = new Date(Date.parse(date));
     console.log('transform date', transDate.toUTCString())
 
-    const date2 = Date.parse(date)/1000
+    const date2 = Date.parse(date) / 1000
     // const date3 = date2.getTime()
     console.log('date2', date2);
 
     const date5 = new Date(date2)
     console.log('date5', date5.getTime());
-    
-    
+
+
 
 
     // notification
@@ -146,7 +149,7 @@ const ChangeDates: FC<ChangeDatesProps> = () => {
                   ]}
                   placeholder="Elegi tu formato de tiempo"
                   label="Elige tu rango de tiempo"
-                  value={initPeriod}
+                  value={initPeoriodTwo}
                   // onChange={(event) => form.setFieldValue('period', event.currentTarget.value)}
                   onChange={event => handlePeriod(event)}
 
@@ -177,7 +180,7 @@ const ChangeDates: FC<ChangeDatesProps> = () => {
             <Col xs={12} md={2}>
               <div>
                 <NumberInput
-                  min={1}
+                  min={initPeople}
                   placeholder="Para Cuantas Personas"
                   label="Para cuantas personas"
                   radius="xs"

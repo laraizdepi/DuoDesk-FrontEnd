@@ -11,14 +11,16 @@ const SearchValues: FC<SearchProps> = (props) => {
     const router = useRouter()
     const periodComplete = `${router.query.period}Price`
     const subtotal = router.query.cuantity * space[periodComplete]
+    // const subtotalUgly = (subtotal)
     const subtotalUgly = (subtotal + subtotal * 15 / 100)
+
     const total = Intl.NumberFormat('de-DE', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(subtotalUgly)
     // console.log(new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(total));
     // console.log('router', router.query)
     // console.log(space.hourPrice)
-     
-    console.log('subtotal', );
-    
+
+    console.log('subtotal',);
+
     if (subtotal > 0) {
         console.log('type of number', typeof subtotal);
         console.log('there are a number', subtotalUgly);

@@ -116,7 +116,7 @@ const ViewOffice: FC<{ office: Offices }> = (props) => {
 
 						<Col xs={6} style={{ paddingLeft: '0px' }}>
 							<div className={style.imagesMainMediun} onClick={() => changeOpenAndNumber(4)}>
-								<img src={photos[3]['photo']} alt="" className={style.imagesSizeInvi} style={{ filter: 'brightness(30%)' }} />
+								<img src={photos[0]['photo']} alt="" className={style.imagesSizeInvi} style={{ filter: 'brightness(30%)' }} />
 								<p className={style.TextInside}>Hay {photos.length} images</p>
 							</div>
 							<div>
@@ -124,7 +124,7 @@ const ViewOffice: FC<{ office: Offices }> = (props) => {
 									show={isOpen}
 									photos={photos}
 									onClose={() => setIsOpen(false)}
-									activePhotoIndex={numberIma}
+									activePhotoIndex={0}
 								/>
 							</div>
 						</Col>
@@ -142,11 +142,11 @@ const ViewOffice: FC<{ office: Offices }> = (props) => {
 			<div id='spaces'>
 				<CardSpace office={office} />
 			</div>
-			<div className={style.titleEnterAme} id='BigMap'>
-				<h1>Ubicacion</h1>
+			<div className={style.titleEnterAme} >
+				<h1 id='BigMap'>Ubicacion</h1>
 			</div>
-			<div style = {{display : 'flex', justifyContent : 'center'}} >
-			{/* <div> */}
+			<div style={{ display: 'flex', justifyContent: 'center' }} >
+				{/* <div> */}
 				<div style={{ width: '1350px' }}>
 					<OfficeMap office={office} />
 				</div>

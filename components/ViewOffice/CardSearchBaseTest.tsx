@@ -26,7 +26,7 @@ const CardSearchBaseTest: FC<CardSearchBaseTestProps> = (props) => {
 
   return (
     <>
-      <Group direction="column" position="center"> 
+      <Group direction="column" position="center">
         <Card.Section>
           <div>
             {spaces.map((space: any[]) => {
@@ -60,7 +60,7 @@ const CardSearchBaseTest: FC<CardSearchBaseTestProps> = (props) => {
                                 </Col>
                                 <Col md={2}>
                                   <h2 style={{ display: 'flex', alignItems: 'center', fontSize: '22px' }}>
-                                  {/* <h2>   */}
+                                    {/* <h2>   */}
                                     <IoPeopleOutline style={{ marginBottom: '2px', marginRight: '5px' }} /> {space.capacitySpace}
                                   </h2>
                                 </Col>
@@ -83,19 +83,19 @@ const CardSearchBaseTest: FC<CardSearchBaseTestProps> = (props) => {
                             <Group position="apart">
                               <div>
                                 <Title order={6}>Por hora</Title>
-                                <Text>${space.hourPrice / 1000}k</Text>
+                                <Text>${(space.hourPrice + space.hourPrice * 15 / 100) / 1000}k</Text>
                               </div>
                               <div>
                                 <Title order={6}>Por día</Title>
-                                <Text>${space.dayPrice / 1000}k</Text>
+                                <Text>${(space.dayPrice + space.dayPrice * 15 / 100) / 1000}k</Text>
                               </div>
                               <div>
                                 <Title order={6}>Por semana</Title>
-                                <Text>${space.weekPrice / 1000}k</Text>
+                                <Text>${(space.weekPrice + space.weekPrice * 15 / 100) / 1000}k</Text>
                               </div>
                               <div>
                                 <Title order={6}>Por mes</Title>
-                                <Text>${space.monthPrice / 1000000}M</Text>
+                                <Text>${(space.monthPrice + space.monthPrice * 15 / 100) / 1000000}M</Text>
                               </div>
                             </Group>
                           </Card.Section>
