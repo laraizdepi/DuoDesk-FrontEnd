@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import React, { useState, useEffect, FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { Avatar, Button, Image, Menu } from '@mantine/core'
+import { Avatar, Button, Image, Menu, Modal, Title, Text } from '@mantine/core'
 
 import { loginUser, logoutUser } from '../../Redux/actions/authActions';
 
@@ -11,7 +11,8 @@ import { VscAccount } from 'react-icons/vsc';
 import { HiOutlineOfficeBuilding } from 'react-icons/hi';
 import { BiBookBookmark } from 'react-icons/bi';
 import { RiSecurePaymentLine } from 'react-icons/ri';
-import NotAuthModal from '../Authenticacion/NotAuthModal';
+import RegisterNotAuth from '../../Img/register/register-office.svg'
+import { Container } from 'react-bootstrap';
 
 
 const DashboardNavBar: FC = (props) => {
@@ -46,8 +47,41 @@ const DashboardNavBar: FC = (props) => {
 
 	if (!user.logged) {
 		return (
-			<div>
-				<NotAuthModal open={true} />
+			<div className='bg-white'>
+				<Container className='bg-white'>
+					<Modal opened onClose={() => { window.location.replace('/') }} title="Error de autenticación">
+						<Image
+							src={RegisterNotAuth.src}
+							caption={
+								<div>
+									<Text component={Title} order={4} align="center" size="lg" transform="capitalize" weight="bold" className="m-auto w-3/5">
+										Debes estar registrado para poder registrar una oficina.
+										Por favor, inicia sesión primero.
+									</Text>
+									<Button color="indigo" onClick={() => { window.location.replace('/') }} className='my-3 hover:bg-teal'>
+										Ir a la página principal
+									</Button>
+								</div>
+							}
+						/>
+					</Modal>
+					<div className='bg-white'>
+						<Image
+							src={RegisterNotAuth.src}
+							caption={
+								<div>
+									<Text component={Title} order={4} align="center" size="lg" transform="capitalize" weight="bold" className="m-auto w-3/5">
+										Debes estar registrado para poder registrar una oficina.
+										Por favor, inicia sesión primero.
+									</Text>
+									<Button color="indigo" onClick={() => { window.location.replace('/') }} className='my-3 hover:bg-teal'>
+										Ir a la página principal
+									</Button>
+								</div>
+							}
+						/>
+					</div>
+				</Container>
 			</div>
 		)
 	}

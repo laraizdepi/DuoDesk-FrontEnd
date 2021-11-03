@@ -1,7 +1,7 @@
 import React, { useState, FC } from 'react';
 import { useForm } from '@mantine/hooks';
 import { EnvelopeClosedIcon, LockClosedIcon } from '@modulz/radix-icons';
-import { TextInput, PasswordInput, Checkbox, Button, Paper, LoadingOverlay, Grid, Col } from '@mantine/core';
+import { TextInput, PasswordInput, Checkbox, Button, Paper, LoadingOverlay, Grid, Col, Divider } from '@mantine/core';
 import { signUp } from '../../services/authentication';
 import { TiVendorMicrosoft } from 'react-icons/ti';
 import { SiFacebook } from 'react-icons/si';
@@ -12,9 +12,12 @@ import { useNotifications } from '@mantine/notifications';
 import { RiUserUnfollowLine } from 'react-icons/ri'
 import { CgUnavailable } from 'react-icons/cg';
 import { IoCheckmarkDoneCircleOutline } from 'react-icons/io5';
+import { AiOutlineGooglePlus } from 'react-icons/ai';
+import { BsFacebook } from 'react-icons/bs';
 
 interface AuthForm {
-    changeTabs: Function
+    changeTabs: Function,
+    changeEmail: Function,
 }
 
 const RegisterForm: FC<AuthForm> = (props) => {
@@ -33,6 +36,7 @@ const RegisterForm: FC<AuthForm> = (props) => {
     })
 
     const submitHandler = async () => {
+        const input: any = document.getElementById('login-email-input')
         if (!form.values.termsOfService) {
             return notifications.showNotification({
                 title: 'Error en el registro',
@@ -58,13 +62,14 @@ const RegisterForm: FC<AuthForm> = (props) => {
                 icon: <CgUnavailable />
             })
         }
-        else{
+        else {
             notifications.showNotification({
                 title: 'Registro exitoso',
                 message: 'Tu cuenta ha sido creada, ya puedes iniciar sesión',
                 color: 'teal',
                 icon: <IoCheckmarkDoneCircleOutline />
             })
+            props.changeEmail(form.values.email)
             return props.changeTabs(0)
         }
     }
@@ -142,88 +147,11 @@ const RegisterForm: FC<AuthForm> = (props) => {
                         </Button>
                     </Col>
                 </Grid>
-                <div style={{ textAlign: 'center', marginBottom: '30px' }}>
-                    <Grid justify="center">
-                        <Col span={12} md={6}>
-                            <Button
-                                className={style.ButtonGoogle}
-                                component="a"
-                                rel="noopener noreferrer"
-                                href="http://localhost:5000/google/auth"
-                                leftIcon={<FcGoogle />}
-                                styles={{
-                                    root: {
-                                        backgroundColor: '#ffffff',
-                                        border: 1,
-                                        height: 42,
-                                        paddingLeft: 28,
-                                        paddingRight: 28,
-                                        marginBottom: 10,
-                                        marginTop: 10,
-                                        color: '#898989',
-                                    },
-                                    leftIcon: {
-                                        marginRight: 15,
-                                    },
-                                }}>
-                                Sign in with google
-                            </Button>
-                        </Col>
-                    </Grid>
-                    <Grid justify="center">
-                        <Col span={12} md={6}>
-                            <Button
-                                component="a"
-                                rel="noopener noreferrer"
-                                href="http://localhost:5000/facebook/auth"
-                                leftIcon={<SiFacebook />}
-                                styles={{
-                                    root: {
-                                        backgroundColor: '#4267b2',
-                                        border: 0,
-                                        height: 42,
-                                        paddingLeft: 20,
-                                        paddingRight: 20,
-                                        marginBottom: 10,
-                                        color: 'white'
-                                    },
-
-                                    leftIcon: {
-                                        marginRight: 15,
-                                    },
-
-                                }}
-                            >Sign in with Facebook
-                            </Button>
-                        </Col>
-                    </Grid>
-                    <Grid justify="center">
-                        <Col span={12} md={6}>
-                            {/* Button microsoft */}
-                            <Button
-                                component="a"
-                                href="http://localhost:5000/microsoft/auth"
-                                leftIcon={<TiVendorMicrosoft />}
-                                styles={{
-                                    root: {
-                                        backgroundColor: '#2f2f2f',
-                                        border: 0,
-                                        height: 42,
-                                        paddingLeft: 20,
-                                        paddingRight: 20,
-                                        marginBottom: 10,
-                                        color: 'white'
-                                    },
-
-                                    leftIcon: {
-                                        marginRight: 15,
-                                    },
-
-                                }}
-                            >Sign in with microsoft
-                            </Button>
-                        </Col>
-                    </Grid>
+                <Divider label='Iniciar sesión con redes sociales' labelPosition='center' margins='xl' />
+                <div className='flex flex-col space-y-4 mx-32 justify-center'>
+                    <Button component='a' href='http://localhost:5000/google/auth' className='hover:bg-red-500 hover:text-white' leftIcon={<AiOutlineGooglePlus />} color='red' variant='outline'>Google</Button>
+                    <Button component='a' href='http://localhost:5000/facebook/auth' className='hover:bg-blue-500 hover:text-white' leftIcon={<BsFacebook />} color='blue' variant='outline'>Facebook</Button>
+                    <Button component='a' href='http://localhost:5000/microsoft/auth' className='hover:bg-gray-900 hover:text-white' leftIcon={<TiVendorMicrosoft />} color='dark' variant='outline'>Microsoft</Button>
                 </div>
             </Paper>
         </form>

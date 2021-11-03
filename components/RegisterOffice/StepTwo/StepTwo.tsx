@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Row, Col } from 'react-bootstrap'
 import { ScrollPanel } from 'primereact/scrollpanel';
 import AddSpace from './AddSpace'
-import Preview from './Preview/Preview';
+import Preview from './Preview'
 import { useFormikContext } from 'formik';
 
 const StepTwo = () => {

@@ -217,7 +217,7 @@ const RegisterSteps = () => {
 							console.log(space.spaceImages)
 							console.log(space)
 							for (let image of space.spaceImages) {
-								const url = `${toSlug(values.title)}-${toSlug(space.nameSpace)}-${toSlug(image.name)}`
+								const url = `${toSlug(values.title)}-${toSlug(space.nameSpace)}-${toSlug(image.name)}${String(Date.now())}`
 								data.append(url, image, url + image.name)
 								space.imagesUrls.push(url)
 							}

@@ -9,6 +9,7 @@ import StepThree from './StepThree/StepThree'
 import axios from 'axios';
 import { useNotifications } from '@mantine/notifications';
 import { MdDoneAll, MdErrorOutline } from 'react-icons/md';
+import { useRouter } from 'next/router'
 
 interface FormikStepProps extends Pick<FormikConfig<FormikValues>, 'children' | 'validationSchema'> {
 	label: string;
@@ -123,12 +124,12 @@ interface Office {
 		averageScore: number,
 		reviews: any
 	},
-	days: [{
+	days: {
 		day: string,
 		isAvailable: boolean,
 		startHour?: string,
 		endHour?: string
-	}],
+	}[],
 	notifications: string[],
 	official: string[],
 	openDate: string
@@ -136,6 +137,7 @@ interface Office {
 
 const UpdateSteps: FC<{ office: Office }> = (props) => {
 	const notifications = useNotifications()
+	const router = useRouter()
 
 	const toSlug = (text: string) => {
 		return text.toString().toLowerCase()
@@ -262,18 +264,42 @@ const UpdateSteps: FC<{ office: Office }> = (props) => {
 						data.append('title', values.title)
 						data.append('description', values.description)
 						data.append('generalAmenities', values.officeAmenities)
-						data.append('weekSchedule', values["open-de-lunes-a-viernes"])
-						data.append('weekSchedule', values["close-de-lunes-a-viernes"])
+						if (values["open-de-lunes-a-viernes"] && values["open-de-lunes-a-viernes"]) {
+							data.append('weekSchedule', values["open-de-lunes-a-viernes"])
+							data.append('weekSchedule', values["close-de-lunes-a-viernes"])
+						}
+						else {
+							if (props.office.days[0].startHour && props.office.days[0].endHour) {
+								data.append('weekSchedule', props.office.days[0].startHour)
+								data.append('weekSchedule', props.office.days[0].endHour)
+							}
+						}
 						if (values['open-sabado-time'] && values[`switch-sabado-time`]) {
 							if (values['close-sabado-time']) {
-								data.append('saturdaySchedule', values['open-sabado-time'])
-								data.append('saturdaySchedule', values['close-sabado-time'])
+								data.append('saturdaySchedule', values['open-sabado'])
+								data.append('saturdaySchedule', values['close-sabado'])
+							}
+						}
+						else {
+							if (props.office.days[1].startHour && props.office.days[1].endHour && props.office.days[1].day === 'Saturday') {
+								data.append('saturdaySchedule', props.office.days[1].startHour)
+								data.append('saturdaySchedule', props.office.days[1].endHour)
 							}
 						}
 						if (values['open-domingo-time'] && values[`switch-domingo-time`]) {
 							if (values['close-domingo-time']) {
-								data.append('sundaySchedule', values['open-domingo-time'])
-								data.append('sundaySchedule', values['close-domingo-time'])
+								data.append('sundaySchedule', values['open-domingo'])
+								data.append('sundaySchedule', values['close-domingo'])
+							}
+						}
+						else {
+							if (props.office.days[1].startHour && props.office.days[1].endHour && props.office.days[1].day === 'Sunday') {
+								data.append('sundaySchedule', props.office.days[1].startHour)
+								data.append('sundaySchedule', props.office.days[1].endHour)
+							}
+							else if(props.office.days[2].startHour && props.office.days[2].endHour && props.office.days[2].day === 'Sunday'){
+								data.append('sundaySchedule', props.office.days[2].startHour)
+								data.append('sundaySchedule', props.office.days[2].endHour)
 							}
 						}
 						for (let space of values.spaces) {
@@ -283,7 +309,7 @@ const UpdateSteps: FC<{ office: Office }> = (props) => {
 								space.imagesUrls = []
 								for (let image of space.spaceImages) {
 									if (typeof image !== 'string') {
-										const url = `${toSlug(values.title)}-${toSlug(space.nameSpace)}-${toSlug(image.name)}`
+										const url = `${toSlug(values.title)}-${toSlug(space.nameSpace)}-${toSlug(image.name)}${String(Date.now())}`
 										data.append(url, image, url + image.name)
 										space.imagesUrls.push(url)
 									}
@@ -327,8 +353,6 @@ const UpdateSteps: FC<{ office: Office }> = (props) => {
 							}
 						}
 						try {
-							console.log('DATA', Array.from(data.values()))
-							console.log('DATA', Array.from(data.entries()))
 							const response = await axios({
 								method: 'PUT',
 								url: 'http://localhost:5000/offices/',
@@ -336,6 +360,7 @@ const UpdateSteps: FC<{ office: Office }> = (props) => {
 								withCredentials: true
 							})
 							if (response.status === 201) {
+								router.push(`/search/${response.data.data}`, `/search/${response.data.data}`)
 								notifications.updateNotification(progress, {
 									id: progress,
 									title: 'Oficina registrada correctamente',
