@@ -3,26 +3,26 @@ import { useDispatch } from 'react-redux';
 import { useForm } from '@mantine/hooks';
 import { EnvelopeClosedIcon, LockClosedIcon } from '@modulz/radix-icons';
 
-import { TextInput, PasswordInput, Button, Paper, LoadingOverlay, Grid, Col } from '@mantine/core';
+import { TextInput, PasswordInput, Button, Paper, LoadingOverlay, Grid, Col, ActionIcon, Divider } from '@mantine/core';
 
-import { TiVendorMicrosoft } from 'react-icons/ti';
-import { SiFacebook, SiWebauthn } from 'react-icons/si';
+
 import { FcGoogle } from 'react-icons/fc';
 
 import { logIn } from '../../services/authentication';
 import { loginUser } from '../../Redux/actions/authActions';
 
-import style from "./AuthModal.module.sass"
 import { useRouter } from 'next/dist/client/router';
 import { useNotifications } from '@mantine/notifications';
 import { HiOutlineUserRemove } from 'react-icons/hi';
 import { CgUnavailable } from 'react-icons/cg';
+import { SiWebauthn } from 'react-icons/si';
+import { BsFacebook } from 'react-icons/bs';
+import { TiVendorMicrosoft } from 'react-icons/ti';
+import { AiOutlineGooglePlus } from 'react-icons/ai';
 
-const LoginForm: FC = (props) => {
+const LoginForm: FC<{email?: string}> = (props) => {
 	const notifications = useNotifications()
 	const [loading, setLoading] = useState(false)
-	const [error, setError] = useState('')
-	const router = useRouter()
 	const form = useForm({
 		initialValues: { firstName: '', lastName: '', email: '', password: '', termsOfService: true, },
 		validationRules: {
@@ -30,8 +30,13 @@ const LoginForm: FC = (props) => {
 			password: (value) => /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/.test(value),
 		},
 	})
-
 	const dispatch = useDispatch()
+
+	useEffect(() => {
+		if(props.email && props.email !== ''){
+			form.setFieldValue('email', props.email)
+		}
+	}, [])
 
 	const handleSubmit = async (values: any) => {
 		const response = await logIn(form.values.email, form.values.password)
@@ -42,7 +47,7 @@ const LoginForm: FC = (props) => {
 				color: 'pink',
 				icon: <HiOutlineUserRemove />
 			})
-		} 
+		}
 		else if (response?.status === 500) {
 			return notifications.showNotification({
 				title: 'Error en el registro',
@@ -71,6 +76,7 @@ const LoginForm: FC = (props) => {
 						placeholder="Tu Correo"
 						label="Email"
 						radius="lg"
+						id='login-email-input'
 						icon={<EnvelopeClosedIcon />}
 						value={form.values.email}
 						onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
@@ -98,88 +104,11 @@ const LoginForm: FC = (props) => {
 					</div>
 				</Paper>
 			</form>
-			<div style={{ textAlign: 'center', marginBottom: '30px' }}>
-				<Grid justify="center">
-					<Col span={12} md={6}>
-						<Button
-							className={style.ButtonGoogle}
-							component="a"
-							rel="noopener noreferrer"
-							href="http://localhost:5000/google/auth"
-							leftIcon={<FcGoogle />}
-							styles={{
-								root: {
-									backgroundColor: '#ffffff',
-									border: 1,
-									height: 42,
-									paddingLeft: 28,
-									paddingRight: 28,
-									marginBottom: 10,
-									marginTop: 10,
-									color: '#898989',
-								},
-								leftIcon: {
-									marginRight: 15,
-								},
-							}}>
-							Sign in with google
-						</Button>
-					</Col>
-				</Grid>
-				<Grid justify="center">
-					<Col span={12} md={6}>
-						<Button
-							component="a"
-							rel="noopener noreferrer"
-							href="http://localhost:5000/facebook/auth"
-							leftIcon={<SiFacebook />}
-							styles={{
-								root: {
-									backgroundColor: '#4267b2',
-									border: 0,
-									height: 42,
-									paddingLeft: 20,
-									paddingRight: 20,
-									marginBottom: 10,
-									color: 'white'
-								},
-
-								leftIcon: {
-									marginRight: 15,
-								},
-
-							}}
-						>Sign in with Facebook
-						</Button>
-					</Col>
-				</Grid>
-				<Grid justify="center">
-					<Col span={12} md={6}>
-						{/* Button microsoft */}
-						<Button
-							component="a"
-							href="http://localhost:5000/microsoft/auth"
-							leftIcon={<TiVendorMicrosoft />}
-							styles={{
-								root: {
-									backgroundColor: '#2f2f2f',
-									border: 0,
-									height: 42,
-									paddingLeft: 20,
-									paddingRight: 20,
-									marginBottom: 10,
-									color: 'white'
-								},
-
-								leftIcon: {
-									marginRight: 15,
-								},
-
-							}}
-						>Sign in with microsoft
-						</Button>
-					</Col>
-				</Grid>
+			<Divider label='Iniciar sesión con redes sociales' labelPosition='center' margins='xl'/>
+			<div className='flex flex-col space-y-4 mx-32 justify-center'>
+				<Button component='a' href='http://localhost:5000/google/auth' className='hover:bg-red-500 hover:text-white' leftIcon={<AiOutlineGooglePlus/>} color='red' variant='outline'>Google</Button>
+				<Button component='a' href='http://localhost:5000/facebook/auth' className='hover:bg-blue-500 hover:text-white' leftIcon={<BsFacebook/>} color='blue' variant='outline'>Facebook</Button>
+				<Button component='a' href='http://localhost:5000/microsoft/auth' className='hover:bg-gray-900 hover:text-white' leftIcon={<TiVendorMicrosoft/>} color='dark' variant='outline'>Microsoft</Button>
 			</div>
 		</div>
 	)

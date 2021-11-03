@@ -14,7 +14,6 @@ import { CgUnavailable } from 'react-icons/cg'
 import { AiOutlineFileProtect } from 'react-icons/ai'
 
 import DeleteAccount from '../../components/UserAccount/DeleteAccount'
-import NotAuthModal from '../../components/Authenticacion/NotAuthModal'
 import UpdatePassword from '../../components/UserAccount/UpdatePassword'
 import DashboardNavBar from '../../components/NavBar/DashboardNavBar'
 
@@ -22,9 +21,11 @@ import GoogleLogo from '../../Img/logos/GoogleLogo.svg'
 import FacebookLogo from '../../Img/logos/FacebookLogo.svg'
 import MicrosoftLogo from '../../Img/logos/MicrosoftLogo.svg'
 import DuoDeskLogo from '../../Img/logos/DuoDeskLogo.png'
+import RegisterNotAuth from '../../Img/register/register-office.svg'
 
 import { loginUser } from '../../Redux/actions/authActions'
 import UpdateImage from '../../components/UserAccount/UpdateImage'
+import { Container } from 'react-bootstrap'
 export interface User {
     provider?: string,
     email: string,
@@ -55,12 +56,12 @@ const Account = () => {
     const [logo, setLogo] = useState(DuoDeskLogo)
     const notifications = useNotifications()
     const dispatch = useDispatch()
-    
+
     const user: any = useSelector((state: any) => {
         // console.log(JSON.stringify(state))
         return state.authentication
-        ? state.authentication
-        : { logged: false }
+            ? state.authentication
+            : { logged: false }
     })
     const userForm = useForm({
         initialValues: {
@@ -75,25 +76,56 @@ const Account = () => {
     }, [])
 
     useEffect(() => {
-        if(user.logged){
+        if (user.logged) {
             userForm.setValues({
                 email: user.user.email,
                 firstName: user.user.firstName,
                 lastName: user.user.lastName,
             })
             if (user.user.provider === 'google') setLogo(GoogleLogo)
-            else if (user.user.provider === 'facebook') setLogo(FacebookLogo)            
+            else if (user.user.provider === 'facebook') setLogo(FacebookLogo)
             else if (user.user.provider === 'microsoft') setLogo(MicrosoftLogo)
-            else setLogo(DuoDeskLogo)  
+            else setLogo(DuoDeskLogo)
         }
     }, [user])
-    
+
 
     if (!user.logged) {
         return (
-            <div className='bg-white'>
-                <NotAuthModal open={true} />
-            </div>
+            <Container className='bg-white'>
+                <Modal opened onClose={() => { window.location.replace('/') }} title="Error de autenticación">
+                    <Image
+                        src={RegisterNotAuth.src}
+                        caption={
+                            <div>
+                                <Text component={Title} order={4} align="center" size="lg" transform="capitalize" weight="bold" className="m-auto w-3/5">
+                                    Debes estar registrado para poder registrar una oficina.
+                                    Por favor, inicia sesión primero.
+                                </Text>
+                                <Button color="indigo" onClick={() => { window.location.replace('/') }} className='my-3 hover:bg-teal'>
+                                    Ir a la página principal
+                                </Button>
+                            </div>
+                        }
+                    />
+                </Modal>
+                <div className='bg-white'>
+                    <Image
+                        src={RegisterNotAuth.src}
+                        caption={
+                            <div>
+                                <Text component={Title} order={4} align="center" size="lg" transform="capitalize" weight="bold" className="m-auto w-3/5">
+                                    Debes estar registrado para poder registrar una oficina.
+                                    Por favor, inicia sesión primero.
+                                </Text>
+                                <Button color="indigo" onClick={() => { window.location.replace('/') }} className='my-3 hover:bg-teal'>
+                                    Ir a la página principal
+                                </Button>
+                            </div>
+                        }
+                    />
+                </div>
+            </Container>
         )
     }
 
@@ -104,11 +136,15 @@ const Account = () => {
             firstName: userForm.values.firstName,
             lastName: userForm.values.lastName,
         }
-        if(userForm.values.email !== user.user.email){
+        if (userForm.values.email !== user.user.email) {
             data['email'] = userForm.values.email
         }
         const response = await axios.put('http://localhost:5000/user', data, { withCredentials: true }).catch((error) => {
-            userForm.reset()
+            userForm.setValues({
+                email: user.user.email,
+                firstName: user.user.firstName,
+                lastName: user.user.lastName
+            })
             if (error.response) {
                 return notifications.showNotification({
                     title: 'Error',
@@ -126,7 +162,7 @@ const Account = () => {
                 })
             }
         })
-        if(typeof response !== 'string' && response.status){
+        if (typeof response !== 'string' && response.status) {
             dispatch(loginUser())
             return notifications.showNotification({
                 title: 'Actualización exitosa',
@@ -158,9 +194,9 @@ const Account = () => {
                             <UpdateImage />
                         </Modal>
                         <Group position="center" direction="row" className="m-auto space-x-5">
-                            <Avatar onClick={() => setOpenImage(true)} src={user.user.image} size="xl" radius='xl' className='border rounded-full' />
+                            <Avatar onClick={() => setOpenImage(true)} src={user.user.image} size="xl" className='border rounded-full' />
                             <Divider orientation='vertical' />
-                            <Avatar src={logo.src} size='xl'/>
+                            <Image src={logo.src} width='7%' />
                         </Group>
                         <div className='flex flex-col justify-center w-full space-y-4'>
                             <div className='mx-auto text-center space-y-1'>
@@ -171,11 +207,12 @@ const Account = () => {
                                     type="email"
                                     readOnly={!edit || user.user.provider !== 'local'}
                                     variant={edit && user.user.provider === 'local' ? 'default' : 'unstyled'}
-                                    className='text-center'
+                                    className='text-center w-full'
                                     styles={{
                                         input: {
                                             textAlign: 'center',
-                                            fontSize: '18px'
+                                            fontSize: '18px',
+                                            width: '100%'
                                         }
                                     }}
                                 />

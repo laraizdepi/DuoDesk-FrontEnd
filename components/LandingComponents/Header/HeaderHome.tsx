@@ -4,7 +4,7 @@ import { useNotifications } from '@mantine/notifications';
 import { MdDoneAll } from 'react-icons/md';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import LandingImage from '../../Img/home/landing-image.svg'
+import LandingImage from '../../../Img/home/landing-image.svg'
 
 const HeaderHome = () => {
     const router = useRouter()

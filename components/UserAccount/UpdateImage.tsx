@@ -60,7 +60,7 @@ const UpdateImage = () => {
                 onupdatefiles={(files) => {
                     setFiles(files)
                 }}
-                instantUpload
+                instantUpload={false}
                 server={{
                     process: {
                         url: 'http://localhost:5000/user/image',

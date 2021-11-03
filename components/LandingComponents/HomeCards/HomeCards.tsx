@@ -16,7 +16,7 @@ const AllCards = () => {
         slidesToScroll: 1,
         autoplay: true,
         speed: 1000,
-        autoplaySpeed: 2000,
+        autoplaySpeed: 3500,
         pauseOnHover: false,
     }
 
@@ -62,7 +62,7 @@ const AllCards = () => {
     return (
         <div className='my-3 p-5' style={{ backgroundColor: '#f6f8fb' }}>
             <div className="my-3">
-                <Title className="mb-15">Multiples servicios para tu comodidad</Title>
+                <Title className="mb-15">¿Qué se está diciendo sobre el Coworking?</Title>
             </div>
             <Slider {...settings} >
                 {info.map((element) => {

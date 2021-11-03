@@ -14,6 +14,7 @@ interface DataProps {
 
 const AuthModal: FC<DataProps> = (props) => {
 	const [opened, setOpened] = useState(false);
+	const [email, setEmail] = useState('')
 	const [activeTabs, setActiveTabs] = useState(0)
 
 	useEffect(() => {
@@ -24,14 +25,14 @@ const AuthModal: FC<DataProps> = (props) => {
 
 	return (
 		<div>
-			<Modal opened={opened} onClose={() => setOpened(false)} size={600}
+			<Modal opened={opened} onClose={() => setOpened(false)} size={500}
 				title={<Text component={Title} order={2}>Inicia sesión o registrate</Text>}>
 				<Tabs active={activeTabs} onTabChange={setActiveTabs}>
 					<Tab label="Iniciar sesión" icon={<BiUserCheck size="20px" />}>
-						<LoginForm />
+						<LoginForm email={email}/>
 					</Tab>
 					<Tab label="Registro" icon={<BiUserPlus size="20px" />}>
-						<RegisterForm changeTabs={setActiveTabs} />
+						<RegisterForm changeEmail={setEmail} changeTabs={setActiveTabs} />
 					</Tab>
 				</Tabs>
 			</Modal>

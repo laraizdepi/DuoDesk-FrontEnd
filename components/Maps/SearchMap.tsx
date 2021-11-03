@@ -120,7 +120,7 @@ const SearchMap: FC<{ offices: Offices[], city: string }> = (props) => {
         const initMap = (): void => {
             map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
                 center: { lat: -34.397, lng: 150.644 },
-                zoom: 11.3,
+                zoom: 11.4,
                 styles
             })
             const places = new google.maps.places.PlacesService(map)
@@ -139,16 +139,18 @@ const SearchMap: FC<{ offices: Offices[], city: string }> = (props) => {
                 map.setCenter({ lat: props.offices[0].address.geometry.location.lat, lng: props.offices[0].address.geometry.location.lng })
             }
 
+            let averageLat = 0
+            let averageLng = 0
 
             for (let office of props.offices) {
+                averageLat += office.address.geometry.location.lat
+                averageLng += office.address.geometry.location.lng
                 let images: string[] = []
                 for (let space of office.spaces) {
                     for (let image of space.imagesUrls) {
                         images.push(image)
                     }
                 }
-                // const url = office.spaces[0].imagesUrls[0].split('-', 2)
-                // const file = office.spaces[0].imagesUrls[0].substring(office.spaces[0].imagesUrls[0].indexOf(url[1]) + url[1].length + 1)
                 const src = office.spaces[0].imagesUrls[0]
                 const content = ReactDOMServer.renderToString(
                     <div className="max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800">
@@ -206,15 +208,7 @@ const SearchMap: FC<{ offices: Offices[], city: string }> = (props) => {
                     position: { lat: office.address.geometry.location.lat, lng: office.address.geometry.location.lng },
                     map,
                     title: office.name,
-                    icon: {
-                        path: "M10.453 14.016l6.563-6.609-1.406-1.406-5.156 5.203-2.063-2.109-1.406 1.406zM12 2.016q2.906 0 4.945 2.039t2.039 4.945q0 1.453-0.727 3.328t-1.758 3.516-2.039 3.070-1.711 2.273l-0.75 0.797q-0.281-0.328-0.75-0.867t-1.688-2.156-2.133-3.141-1.664-3.445-0.75-3.375q0-2.906 2.039-4.945t4.945-2.039z",
-                        fillColor: "blue",
-                        fillOpacity: 0.6,
-                        strokeWeight: 0,
-                        rotation: 0,
-                        scale: 2,
-                        anchor: new google.maps.Point(15, 30),
-                    },
+                    icon: 'https://api.geoapify.com/v1/icon/?type=material&color=%234c6ef5&size=small&icon=free-breakfast&textSize=small&noShadow&scaleFactor=1&apiKey=ad5268befa02405e96f3f275effe65f1'
                 })
 
                 let open = false
@@ -232,28 +226,17 @@ const SearchMap: FC<{ offices: Offices[], city: string }> = (props) => {
 
                 const card = document.getElementById(office.id)
                 card?.addEventListener('mouseover', (event: any) => {
-                    mark.setIcon({
-                        path: "M10.453 14.016l6.563-6.609-1.406-1.406-5.156 5.203-2.063-2.109-1.406 1.406zM12 2.016q2.906 0 4.945 2.039t2.039 4.945q0 1.453-0.727 3.328t-1.758 3.516-2.039 3.070-1.711 2.273l-0.75 0.797q-0.281-0.328-0.75-0.867t-1.688-2.156-2.133-3.141-1.664-3.445-0.75-3.375q0-2.906 2.039-4.945t4.945-2.039z",
-                        fillColor: "red",
-                        fillOpacity: 0.6,
-                        strokeWeight: 0,
-                        rotation: 0,
-                        scale: 2,
-                        anchor: new google.maps.Point(15, 30),
-                    })
+                    mark.setIcon('https://api.geoapify.com/v1/icon/?type=material&color=%23e64980&size=small&icon=free-breakfast&textSize=small&noShadow&apiKey=ad5268befa02405e96f3f275effe65f1')
                 })
                 card?.addEventListener('mouseleave', (event: any) => {
-                    mark.setIcon({
-                        path: "M10.453 14.016l6.563-6.609-1.406-1.406-5.156 5.203-2.063-2.109-1.406 1.406zM12 2.016q2.906 0 4.945 2.039t2.039 4.945q0 1.453-0.727 3.328t-1.758 3.516-2.039 3.070-1.711 2.273l-0.75 0.797q-0.281-0.328-0.75-0.867t-1.688-2.156-2.133-3.141-1.664-3.445-0.75-3.375q0-2.906 2.039-4.945t4.945-2.039z",
-                        fillColor: "blue",
-                        fillOpacity: 0.6,
-                        strokeWeight: 0,
-                        rotation: 0,
-                        scale: 2,
-                        anchor: new google.maps.Point(15, 30),
-                    })
+                    mark.setIcon('https://api.geoapify.com/v1/icon/?type=material&color=%234c6ef5&size=small&icon=free-breakfast&textSize=small&noShadow&scaleFactor=1&apiKey=ad5268befa02405e96f3f275effe65f1')
                 })
             }
+            // if(props.offices.length > 0){
+            //     alert(JSON.stringify({ lat: averageLat/props.offices.length, lng: averageLng/props.offices.length }))
+            //     alert(JSON.stringify({ lat: props.offices[0].address.geometry.location.lat, lng: props.offices[0].address.geometry.location.lng }))
+            //     map.setCenter({ lat: averageLat/props.offices.length, lng: averageLng/props.offices.length })
+            // }
         }
         initMap()
         return () => {

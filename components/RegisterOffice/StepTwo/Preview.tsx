@@ -4,15 +4,10 @@ import { Carousel as BCarousel } from 'react-bootstrap'
 import { AiOutlineStar } from 'react-icons/ai'
 import _ from "lodash";
 
-import Amenidades from "./Amenidades";
-import ImagesSlide from "./ImagesSlide";
+import SpacesEmpty from '../../../Img/register/spaces-empty.svg'
 
-import SpacesEmpty from '../../../../Img/register/spaces-empty.svg'
-
-import style from './stepTwo.module.sass'
 import Head from "next/head";
 import { HiArrowSmLeft, HiArrowSmRight } from "react-icons/hi";
-import { FaRegStar } from "react-icons/fa";
 import Slider from "react-slick";
 import { useFormikContext } from "formik";
 
@@ -113,39 +108,19 @@ const Preview: FC<PreviewProps> = (props) => {
 			<Card
 				withBorder radius="lg" shadow="lg"
 				style={{ margin: '1rem' }} className="p-5 hover:no-underline">
-				<Group direction="column" position="left">
+				<Group direction="column" position="center">
 					<div>
 						<BCarousel>
-							{typeof actualSpace.imagesUrls !== 'undefined' ?
-								actualSpace.imagesUrls.map((image: any, index: number) => {
-									return (
-										<BCarousel.Item key={index} interval={5000}>
-											<Image
-												width="80%"
-												className="m-auto h-full"
-												src={image}
-												radius="lg"
-												fit="contain"
-											/>
-										</BCarousel.Item>
-									)
-								})
-								:
-								actualSpace.spaceImages.map((image: any, index: number) => {
-									return (
-										<BCarousel.Item key={index} interval={5000}>
-											<Image
-												height="auto"
-												width="80%"
-												className="m-auto"
-												src={image.objectURL}
-												radius="lg"
-												fit="contain"
-											/>
-										</BCarousel.Item>
-									)
-								})
-							}
+							{actualSpace.spaceImages.map((image: any) => {
+								return (
+									<BCarousel.Item key={image} interval={5000}>
+										<img
+											className="m-auto object-cover h-60 w-auto"
+											src={image.objectURL}
+										/>
+									</BCarousel.Item>
+								)
+							})}
 						</BCarousel>
 					</div>
 					<div>

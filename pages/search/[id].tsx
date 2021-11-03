@@ -97,8 +97,9 @@ const Details: FC<{ oficina: Office }> = (props) => {
             <Head>
                 <title>DuoDesk:{oficina.name}</title>
             </Head>
-            <Navbar stick={''} />
-            <ViewOffice office={oficina} />
+            <Navbar stick={''}>
+                <ViewOffice office={oficina} />
+            </Navbar>
         </div>
     )
 }
