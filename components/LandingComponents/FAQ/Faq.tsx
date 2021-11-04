@@ -48,7 +48,7 @@ const Faq = () => {
     return (
         <div className='flex flex-col space-y-5 my-5'>
             <Text component={Title} align='center'>Preguntas y Respuestas frecuentes</Text>
-            <Accordion  initialItem={-1} className='px-80'>
+            <Accordion  initialItem={-1} className='px-10 md:px-80'>
                 {data.map((element) => {
                     return (
                         <Accordion.Item icon={element.icon} label={element.question} key={element.question}>

@@ -15,7 +15,7 @@ import { loginUser, logoutUser } from '../../Redux/actions/authActions';
 import { getSearch, updateSearch } from '../../Redux/actions/searchActions';
 
 
-import Logo from '../../Img/logos/DuoDeskLogo.png'
+import Logo from '../../Img/logos/LogoDuoDesk.svg'
 import Footer from './Footer';
 
 interface NavbarProps {
@@ -26,7 +26,6 @@ const NavBar: FC<NavbarProps> = (props) => {
 	const [opened, setOpened] = useState<boolean>(false)
 	const router = useRouter()
 	const dispatch = useDispatch()
-	const [scroll, scrollTo] = useWindowScroll()
 	const spaces = ["Oficina privada", "Escritorio personal", "Sala de conferencias", "Espacio abierto"]
 	const user = useSelector((state: any) => {
 		return state.authentication
@@ -106,11 +105,11 @@ const NavBar: FC<NavbarProps> = (props) => {
 	if (mobile) {
 		return (
 			<div>
-				<div className={`flex flex-row justify-between items-center m-3 mr-0 sticky top-0 z-10 bg-white shadow-md`}>
+				<div className={`flex flex-row justify-between place-items-stretch items-center w-full sticky top-0 p-3 z-10 bg-white shadow-md`}>
 					<div className="">
 						<Image
 							src={Logo.src}
-							width={50}
+							width={75}
 							onClick={() => router.push('/', '/')}
 						/>
 					</div>
@@ -190,25 +189,26 @@ const NavBar: FC<NavbarProps> = (props) => {
 						</div>
 						:
 						<div className="flex flex-row justify-end w-max">
-							<AuthModal color="teal" variant="link" text="Inicia sesión o registrate" form="login" />
+							<AuthModal color="teal" variant="link" text="Inicia sesión" form="login" />
 						</div>
 					}
 				</div>
 				<div>
 					{props.children}
 				</div>
+				<Footer/>
 			</div>
 		)
 	}
 
 	return (
 		<div>
-			<div className={`flex flex-row justify-around items-center sticky top-0 z-10 bg-white p-2 w-full shadow-md`}>
+			<div className={`flex flex-row justify-around items-center sticky top-0 z-10 bg-white p-3 w-full shadow-md`}>
 				<div>
 					<Image
 						src={Logo.src}
 						fit='cover'
-						width={100}
+						width={150}
 						onClick={() => router.push('/', '/')}
 					/>
 				</div>

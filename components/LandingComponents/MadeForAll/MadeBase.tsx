@@ -17,7 +17,7 @@ const MadeBase: FC<MadeProps> = (props) => {
                 </ThemeIcon>
             </div>
             <div className='flex flex-col space-y-5 my-3'>
-                <Text component={Title} align='center'>{props.title}</Text>
+                <Text className='text-center' component={Title}>{props.title}</Text>
                 <Text align='center'>{props.text}</Text>
             </div>
         </div>

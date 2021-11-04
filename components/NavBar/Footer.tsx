@@ -9,16 +9,16 @@ import { BsFacebook, BsInstagram, BsTwitter, BsWhatsapp } from 'react-icons/bs'
 
 const Footer = () => {
     return (
-        <div className='border flex flex-col md:flex-row place-items-center justify-evenly p-4'>
-            <div className='justify-self-center'>
-                <Image src={DuoDeskLogo.src} width='40%' />
+        <div className='border flex flex-col space-y-5 md:flex-row md:place-items-center justify-evenly p-4'>
+            <div className='flex flex-row md:w-1/3'>
+                <Image src={DuoDeskLogo.src} className='m-auto' width='50%' />
             </div>
             <div className='flex flex-col place-items-start'>
                 <Button color='teal' leftIcon={<IoLocationOutline />} size='lg' variant='white'>Bogotá, Colombia</Button>
                 <Button color='indigo' leftIcon={<TiPhoneOutline />} size='lg' variant='white'>+57 3133539142</Button>
                 <Button color='pink' leftIcon={<HiOutlineMailOpen />} size='lg' variant='white'>duodesk.support@duodesk.work</Button>
             </div>
-            <div className='w-1/3'>
+            <div className='md:w-1/3'>
                 <Title order={3}>Sobre DuoDesk</Title>
                 <Text size='sm'>
                     DuoDesk es una plataforma que actua como intermedio entre

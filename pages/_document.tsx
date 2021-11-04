@@ -1,6 +1,6 @@
 import Document, { Html, Head, Main, NextScript, DocumentContext } from 'next/document';
 import { SsrProvider, SheetsRegistry, ServerStyles } from '@mantine/core';import Script from 'next/script'
-import DuoDeskLogo from '../Img/logos/DuoDeskLogo.svg'
+import DuoDeskLogo from '../Img/logos/LogoDuoDesk.svg'
 
 export default class _Document extends Document {
 	static async getInitialProps(ctx: DocumentContext) {

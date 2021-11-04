@@ -41,7 +41,7 @@ const HeaderHome = () => {
 
     return (
         <div>
-            <Grid className='my-4 mx-1 flex flex-row justify-around' id="headerHome">
+            <Grid className='my-4 mx-1 flex flex-col place-items-center md:flex-row justify-around' id="headerHome">
                 <Col span={12} md={6} className="m-auto p-5">
                     <Text variant="gradient"
                     align="center"
@@ -56,7 +56,7 @@ const HeaderHome = () => {
                         es fundamental para un gran trabajo, y por eso, nuestro objetivo es que
                         puedas mejorarlo en las mejores oficinas.
                     </Text>
-                    <Group position="apart" spacing="xl" withGutter style={{ marginTop: '1.5rem' }}>
+                    <div style={{ marginTop: '1.5rem' }} className='flex flex-col space-y-3 md:flex-row md:space-x-5 md:items-baseline'>
                         <Button
                             size="lg"
                             radius="xl"
@@ -74,7 +74,7 @@ const HeaderHome = () => {
                         >
                             ¡Rentar una oficina!
                         </Button>
-                    </Group>
+                    </div>
                 </Col>
                 <Col span={12} md={6} className="m-auto">
                     <Image

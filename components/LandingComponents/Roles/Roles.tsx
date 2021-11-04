@@ -14,8 +14,8 @@ const MadeForAll = () => {
             <Tabs  variant='pills' className='p-5' color='indigo' position='center'>
                 <Tab label='DuoUser'>
                     <div className='flex flex-col md:flex-row p-5'>
-                        <div className='flex flex-col space-y-5 w-2/3'>
-                            <Text component={Title} align='center'>¿Qué puedo hacer como <span style={{ textDecoration: 'underline #4C6EF5' }}>DuoUser</span>?</Text>
+                        <div className='flex flex-col space-y-5 w-full md:w-2/3'>
+                            <Text className='text-center md:text-center' component={Title}>¿Qué puedo hacer como <span style={{ textDecoration: 'underline #4C6EF5' }}>DuoUser</span>?</Text>
                             <Text size='xl'>
                                 Consigue tu oficina ideal, en poco tiempo y a precios bajos.
                                 Solo tienes que hacer una busqueda con tus preferencias,
@@ -25,8 +25,8 @@ const MadeForAll = () => {
                                 impulsar grandes proyectos y mejorar tu trabajo en un ritmo exponencial.
                                 ¡Acelera el proceso y aumenta tu productividad de forma rápida!
                             </Text>
-                            <List className='flex flex-row space-x-3'>
-                                <List.Item className='flex flex-col place-items-center'
+                            <List className='flex flex-col space-x-0 md:flex-row md:space-x-3'>
+                                <List.Item className='flex flex-col text-left place-items-center'
                                     icon={
                                         <ThemeIcon color='indigo' variant='light' radius='xl' size='lg' className='flex flex-row justify-center'>
                                             <MdOutlineDesignServices size='1.5em' className='self-center' />
@@ -58,7 +58,7 @@ const MadeForAll = () => {
                 </Tab>
                 <Tab label='DuoHost' color='teal'>
                     <div className='flex flex-col md:flex-row p-5'>
-                        <div className='flex flex-col space-y-5 w-2/3'>
+                        <div className='flex flex-col space-y-5 w-full md:w-2/3'>
                             <Text component={Title} align='center'>¿Qué puedo hacer como <span style={{ textDecoration: 'underline #12b886' }}>DuoHost</span>?</Text>
                             <Text size='xl'>
                                 Comienza a rentar tu oficina en nuestra plataforma de manera sencilla.
@@ -68,7 +68,7 @@ const MadeForAll = () => {
                                 de que puedas centrarte en lo que más importa dentro de tu oficina y solo cobraremos una
                                 minima parte de las ganancias que nos servirá para expandir nuestra plataforma en beneficio mutuo.
                             </Text>
-                            <List className='flex flex-row space-x-3'>
+                            <List className='flex flex-col md:flex-row md:space-x-3'>
                                 <List.Item className='flex flex-col place-items-center'
                                     icon={
                                         <ThemeIcon color='teal' variant='light' radius='xl' size='lg' className='flex flex-row justify-center'>
@@ -94,7 +94,7 @@ const MadeForAll = () => {
                             </List>
                         </div>
                         <Image
-                            className='w-1/3'
+                            className='w-1/2 md:w-1/3'
                             src={BusinessImage.src}
                         />
                     </div>

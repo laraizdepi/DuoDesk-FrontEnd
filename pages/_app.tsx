@@ -14,7 +14,7 @@ import {
 import store from '../Redux';
 import '../styles/index.css'
 
-import DuoDeskLogo from '../Img/logos/DuoDeskLogo.png'
+import DuoDeskLogo from '../Img/logos/LogoDuoDesk.svg'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 

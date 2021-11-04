@@ -1,18 +1,33 @@
-import react from 'react'
 import Cards from './BaseCards'
-import { Col, Container, Row } from 'react-bootstrap';
 import { Title } from '@mantine/core'
-import meetingRoom from '../../Img/home/Business-Meeting.svg'
-import office from '../../Img/home/officePersonalCopy.svg'
-import coworking from '../../Img/home/coworkin.svg'
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Slider from 'react-slick';
 
 const AllCards = () => {
+    const [mobile, setMobile] = useState<boolean>(false)
+
+    useEffect(() => {
+        if (window.innerWidth <= 800) {
+			setMobile(true)
+		}
+		const handleResize = () => {
+			if (window.innerWidth <= 800) {
+				setMobile(true)
+			}
+			else {
+				setMobile(false)
+			}
+		}
+		window.addEventListener('resize', handleResize)
+		return () => {
+			window.removeEventListener('resize', handleResize)
+		}
+    }, [])
+
     const settings = {
         dots: true,
         infinite: true,
-        slidesToShow: 3,
+        slidesToShow: mobile ? 1 : 3,
         slidesToScroll: 1,
         autoplay: true,
         speed: 1000,

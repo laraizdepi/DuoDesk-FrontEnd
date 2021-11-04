@@ -33,7 +33,7 @@ const MadeForAll = () => {
 
     return (
         <div className='flex flex-col'>
-            <div className='mx-80'>
+            <div className='md:mx-80'>
                 <Text component={Title} align='center'>Hecho Para Todos</Text>
                 <div className='px-10'>
                     <Text size='xl' align='center'>
@@ -41,7 +41,7 @@ const MadeForAll = () => {
                     </Text>
                 </div>
             </div>
-            <div className='flex flex-col space-y-10 md:space-y-0 space-x-10 md:flex-row justify-around mx-5'>
+            <div className='flex flex-col space-y-10 md:space-y-0 space-x-10 md:flex-row justify-around md:mx-5'>
                 {data.map((element) => {
                     return(
                         <MadeBase key={element.title} {...element}/>

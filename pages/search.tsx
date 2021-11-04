@@ -135,18 +135,19 @@ const SearchPage = (props: any) => {
                 <Head>
                     <title>DuoDesk: Busca una oficina</title>
                 </Head>
-                <Navbar />
-                <Image
-                    src={WaitOfficeImage.src}
-                    width="35%"
-                    fit="cover"
-                    className="m-auto"
-                    caption={
-                        <Text align="center" size="lg" transform="capitalize" weight="bold" className="m-auto">
-                            Estamos buscando las mejores oficinas para ti,
-                            te pedimos que por favor esperes un momento.
-                        </Text>
-                    } />
+                <Navbar>
+                    <Image
+                        src={WaitOfficeImage.src}
+                        width="35%"
+                        fit="cover"
+                        className="m-auto"
+                        caption={
+                            <Text align="center" size="lg" transform="capitalize" weight="bold" className="m-auto">
+                                Estamos buscando las mejores oficinas para ti,
+                                te pedimos que por favor esperes un momento.
+                            </Text>
+                        } />
+                </Navbar>
             </div>
         )
     }
@@ -157,19 +158,20 @@ const SearchPage = (props: any) => {
                 <Head>
                     <title>DuoDesk: Busca una oficina</title>
                 </Head>
-                <Navbar />
-                <Image
-                    src={NoOfficesImages.src}
-                    width="35%"
-                    fit="cover"
-                    className="m-auto"
-                    caption={
-                        <Text align="center" size="lg" transform="capitalize" weight="bold" className="m-auto">
-                            No hay oficinas con esas caracteristicas. Lo sentimos.
-                            Por favor, intenta buscar con otros parametros o sí
-                            quieres puedes registrar una oficina.
-                        </Text>
-                    } />
+                <Navbar>
+                    <Image
+                        src={NoOfficesImages.src}
+                        width="35%"
+                        fit="cover"
+                        className="m-auto"
+                        caption={
+                            <Text align="center" size="lg" transform="capitalize" weight="bold" className="m-auto">
+                                No hay oficinas con esas caracteristicas. Lo sentimos.
+                                Por favor, intenta buscar con otros parametros o sí
+                                quieres puedes registrar una oficina.
+                            </Text>
+                        } />
+                </Navbar>
             </div>
         )
     }
@@ -181,7 +183,6 @@ const SearchPage = (props: any) => {
                     <title>DuoDesk: Busca una oficina</title>
                 </Head>
                 <Navbar>
-
                     <Container className="flex flex-col flex-grow">
                         <Button onClick={() => setOpenedDrawer(true)} color="indigo" className='m-auto'>
                             Filtar oficinas
@@ -294,7 +295,6 @@ const SearchPage = (props: any) => {
                 <title>DuoDesk: Busca una oficina</title>
             </Head>
             <Navbar>
-
                 <Grid id="id-search" style={{ width: '100%' }}>
                     <Col span={12} md={7}>
                         <ScrollPanel style={{ width: '100%', height: '90vh' }}>
