@@ -188,6 +188,8 @@ const Account = () => {
                 <Modal opened={openPassword} onClose={() => setOpenPassword(false)} title='Actualizar contraseña'>
                     <UpdatePassword setOpen={setOpenPassword} open={openPassword} />
                 </Modal>
+                <div>
+
                 <Card withBorder shadow='md' padding="xl" className='flex flex-col justify-center space-y-3'>
                     <form onSubmit={userForm.onSubmit(uploadHandler)}>
                         <Modal opened={openImage} onClose={() => setOpenImage(false)} title='Actualizar foto de perfil'>
@@ -291,6 +293,7 @@ const Account = () => {
                         }
                     </form>
                 </Card>
+                </div>
             </div>
         </DashboardNavBar>
     )

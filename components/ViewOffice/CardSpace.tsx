@@ -38,7 +38,7 @@ interface Offices {
     official: string[],
     openDate: string
 }
-const CardSpace: FC<{office : Offices}> = (props) => {
+const CardSpace: FC<{ office: Offices }> = (props) => {
     const office = props.office
     return (
         <div>
@@ -46,10 +46,10 @@ const CardSpace: FC<{office : Offices}> = (props) => {
                 <h1>Espacios</h1>
             </div>
             <div>
-            <ChangeDates/>
+                <ChangeDates />
             </div>
             <div>
-                <TabsSpace office = {office}/>
+                <TabsSpace office={office} />
             </div>
         </div>
     )

@@ -1,14 +1,9 @@
 import React, { FC, useState } from 'react'
-import { Badge, Card, Divider, Group, Text, Title, Image, List, ThemeIcon, Spoiler } from '@mantine/core'
-import { FaRegHeart, FaRegStar } from 'react-icons/fa'
-import { AiOutlineHeart, AiOutlineStar } from 'react-icons/ai'
+import { Badge, Card, Divider, Group, Text, Title, ThemeIcon, Spoiler } from '@mantine/core'
+import { AiOutlineStar } from 'react-icons/ai'
 import { Carousel as BCarousel } from 'react-bootstrap'
-import { Carousel as RCarousel } from 'rsuite';
-import { Box, IconButton, Tab, Tabs, Typography } from '@mui/material'
-import { Col, Row, Container } from 'react-bootstrap'
+import { Col, Row } from 'react-bootstrap'
 import { Button } from '@mantine/core'
-import { TabPanel } from '@mui/lab'
-import TabsSpace from './tabsSpace'
 import SearchValues from './SearchValues'
 import { IoPeopleOutline } from 'react-icons/io5'
 
@@ -34,8 +29,6 @@ interface CardSearchBaseTestProps {
 const CardSearchBaseTest: FC<CardSearchBaseTestProps> = (props) => {
 	const spaces = props.spaces
 	const [opacity, setopacity] = useState(1)
-	const available = props.available
-
 	return (
 		<div>
 			<Group direction="column" position="center">

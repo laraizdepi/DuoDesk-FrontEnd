@@ -1,14 +1,11 @@
-import { FC, useState } from "react"
+import React, { FC, useState } from "react"
 import { Col, Container, Row } from 'react-bootstrap'
-import * as React from "react";
-// Parts of page 
+import ReactBnbGallery from 'react-bnb-gallery';
+
 import AboutViews from "./AboutViews";
 import AmenidadesGeneral from "./AmenidadesGeneral";
 import CardSpace from "./CardSpace";
 import style from './VIew.module.sass'
-import ReactBnbGallery from 'react-bnb-gallery';
-import Maps from './Maps'
-import Schedule from './Schedule'
 import OfficeMap from "../Maps/OfficeMap";
 
 interface Offices {
@@ -54,17 +51,12 @@ const ViewOffice: FC<{ office: Offices }> = (props) => {
 		subcaption: string,
 	}[] = []
 	const [isOpen, setIsOpen] = useState(false);
-	const [numberIma, setNumberIma] = useState(0)
 
 	const office = props.office
 	const spaces = office.spaces
 
 	spaces.map((space) => {
-		const images = space.imagesUrls
-		const typeOfImages = space.typeSpace
-		const [opacidad, setopacidad] = useState(0)
-
-		images.map((image) => {
+		space.imagesUrls.map((image) => {
 			let photo: {
 				photo: string,
 				caption: string,
@@ -74,17 +66,15 @@ const ViewOffice: FC<{ office: Offices }> = (props) => {
 				caption: '',
 				subcaption: ''
 			}
-			const src = image
 
-			photo['photo'] = src
-			photo['caption'] = typeOfImages
-			photo['subcaption'] = typeOfImages
+			photo['photo'] = image
+			photo['caption'] = space.nameSpace
+			photo['subcaption'] = space.typeSpace
 
 			photos.push(photo)
 		})
 	})
 	const changeOpenAndNumber = (number: number) => {
-		setNumberIma(number)
 		setIsOpen(true)
 	}
 
@@ -153,14 +143,12 @@ const ViewOffice: FC<{ office: Offices }> = (props) => {
 				<h1 id='BigMap'>Ubicacion</h1>
 			</div>
 			<div style={{ display: 'flex', justifyContent: 'center' }} >
-				{/* <div> */}
 				<div style={{ width: '1350px' }}>
 					<OfficeMap office={office} />
 				</div>
 			</div>
 
 			<div>
-				{/* <Schedule office={office} /> */}
 			</div>
 		</div>
 	)

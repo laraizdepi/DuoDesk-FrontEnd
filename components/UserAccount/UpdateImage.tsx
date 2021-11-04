@@ -19,7 +19,7 @@ const UpdateImage = () => {
     const dispatch = useDispatch()
     const notifications = useNotifications()
     return (
-        <div className='flex flex-col space-y-5'>
+        <div className='w-1/2 flex flex-col space-y-5'>
             <div>
                 <Title>Actualiza tu imagen</Title>
                 <Text>En DuoDesk creemos que una imagen de perfil es fundamental.
@@ -90,7 +90,7 @@ const UpdateImage = () => {
                 }}
                 name="files"
                 labelIdle='Actualizar imagen de perfil'
-                className='cursor-pointer'
+                className='cursor-pointer w-auto'
                 stylePanelLayout='compact circle'
                 imageResizeTargetWidth={200}
                 imageResizeTargetHeight={200}
