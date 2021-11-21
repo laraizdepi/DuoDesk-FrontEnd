@@ -29,10 +29,10 @@ const Cards: FC<cardsProps> = (props) => {
 				</Text>
 			</div>
 			<div className="justify-self-auto flex flex-col space-y-4 justify-center">
-				<Button onClick={focusSearch} color="teal" className='hover:bg-indigo hover:cursor-pointer hover:text-white hover:no-underline'>
+				<Button onClick={focusSearch} color="teal" variant='light' className='hover:bg-indigo hover:cursor-pointer hover:text-white hover:no-underline'>
 					¡Empieza a reservar tu oficina!
 				</Button>
-				<Button onClick={() => window.open(props.link, '_blank')} color="pink" variant='outline' className='hover:bg-indigo hover:cursor-pointer hover:text-white hover:no-underline'>
+				<Button onClick={() => window.open(props.link, '_blank')} color="pink" variant='white' className='hover:bg-indigo hover:cursor-pointer hover:text-white hover:no-underline'>
 					¡Leer más!
 				</Button>
 			</div>

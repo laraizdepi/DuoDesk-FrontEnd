@@ -202,14 +202,14 @@ const RegisterSteps = () => {
 						data.append('weekSchedule', values["close-de-lunes-a-viernes"])
 						if (values['open-sabado-time'] && values[`switch-sabado-time`]) {
 							if (values['close-sabado-time']) {
-								data.append('saturdaySchedule', values['open-sabado-time'])
-								data.append('saturdaySchedule', values['close-sabado-time'])
+								data.append('saturdaySchedule', values['open-sabado'])
+								data.append('saturdaySchedule', values['close-sabado'])
 							}
 						}
 						if (values['open-domingo-time'] && values[`switch-domingo-time`]) {
 							if (values['close-domingo-time']) {
-								data.append('sundaySchedule', values['open-domingo-time'])
-								data.append('sundaySchedule', values['close-domingo-time'])
+								data.append('sundaySchedule', values['open-domingo'])
+								data.append('sundaySchedule', values['close-domingo'])
 							}
 						}
 						for (let space of values.spaces) {

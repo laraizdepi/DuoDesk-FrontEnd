@@ -1,7 +1,7 @@
 import React from 'react'
 import { ActionIcon, Button, Image, Text, ThemeIcon, Title } from '@mantine/core'
 
-import DuoDeskLogo from '../../Img/logos/DuoDeskLogo.png'
+import DuoDeskLogo from '../../Img/logos/LogoDuoDesk.svg'
 import { IoLocationOutline } from 'react-icons/io5'
 import { TiPhoneOutline } from 'react-icons/ti'
 import { HiOutlineMailOpen } from 'react-icons/hi'
@@ -10,7 +10,7 @@ import { BsFacebook, BsInstagram, BsTwitter, BsWhatsapp } from 'react-icons/bs'
 const Footer = () => {
     return (
         <div className='border flex flex-col space-y-5 md:flex-row md:place-items-center justify-evenly p-4'>
-            <div className='flex flex-row md:w-1/3'>
+            <div className='flex flex-row md:w-1/4'>
                 <Image src={DuoDeskLogo.src} className='m-auto' width='50%' />
             </div>
             <div className='flex flex-col place-items-start'>

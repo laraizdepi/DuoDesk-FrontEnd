@@ -6,6 +6,7 @@ import { Avatar, Button, Image, Menu, Modal, Title, Text } from '@mantine/core'
 import { loginUser, logoutUser } from '../../Redux/actions/authActions';
 
 import Logo from '../../Img/logos/DuoDeskLogo.png'
+import LogoHorizontal from '../../Img/logos/LogoDuoDesk.svg'
 import { FiHome } from 'react-icons/fi';
 import { VscAccount } from 'react-icons/vsc';
 import { HiOutlineOfficeBuilding } from 'react-icons/hi';
@@ -91,7 +92,7 @@ const DashboardNavBar: FC = (props) => {
 			<div className='flex flex-col h-screen border'>
 				<div className='py-3 flex flex-row justify-around items-center'>
 					<Image
-						src={Logo.src}
+						src={LogoHorizontal.src}
 						width={75}
 						onClick={() => router.push('/', '/')}
 					/>
@@ -141,8 +142,8 @@ const DashboardNavBar: FC = (props) => {
 		<div>
 			<div className='py-3 px-5 flex flex-row justify-between items-center'>
 				<Image
-					src={Logo.src}
-					width={100}
+					src={LogoHorizontal.src}
+					width={175}
 					onClick={() => router.push('/', '/')}
 				/>
 

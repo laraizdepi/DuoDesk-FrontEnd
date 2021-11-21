@@ -15,7 +15,7 @@ const SearchValues: FC<SearchProps> = (props) => {
     if (subtotal > 0) {
         return (
             <div>
-                <Text>$ {total}</Text>
+                <Text>{total}</Text>
             </div>
         )
     } else {

@@ -57,23 +57,23 @@ interface Office {
 
 
 
-export const getStaticPaths: GetStaticPaths = async () => {
+// export const getStaticPaths: GetStaticPaths = async () => {
 
-    const res = await fetch(`http://localhost:5000/offices/`)
-    const data = await res.json()
+//     const res = await fetch(`http://localhost:5000/offices/`)
+//     const data = await res.json()
 
-    const paths = data.map((office: any) => {
-        return {
-            params: { id: office.id.toString() }
-        }
-    })
-    return {
-        paths,
-        fallback: false
-    }
-}
+//     const paths = data.map((office: any) => {
+//         return {
+//             params: { id: office.id.toString() }
+//         }
+//     })
+//     return {
+//         paths,
+//         fallback: false
+//     }
+// }
 
-export const getStaticProps = async (context: { params: { id: any; }; }) => {
+export const getServerSideProps = async (context: { params: { id: any; }; }) => {
     // export const getStaticProps = async () => {
     const id = context.params.id
     const res = await fetch(`http://localhost:5000/offices/${id}`)

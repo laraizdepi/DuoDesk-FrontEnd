@@ -19,7 +19,7 @@ const UpdateImage = () => {
     const dispatch = useDispatch()
     const notifications = useNotifications()
     return (
-        <div className='w-1/2 flex flex-col space-y-5'>
+        <div className='flex flex-col space-y-5'>
             <div>
                 <Title>Actualiza tu imagen</Title>
                 <Text>En DuoDesk creemos que una imagen de perfil es fundamental.
